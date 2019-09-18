@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import TeacherAuthApiService from '../../'
+import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
 import './RegistrationForm.css';
 
 class RegistrationForm extends React.Component {
