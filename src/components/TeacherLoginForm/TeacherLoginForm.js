@@ -1,6 +1,7 @@
 import React from 'react';
 import TeacherAuthApiService from '../../services/teacher-auth-api-service'
 import TeacherContext from '../../contexts/TeacherContext';
+import { Link } from 'react-router-dom';
 import './TeacherLoginForm.css';
 
 
@@ -75,6 +76,9 @@ export default class TeacherLoginForm extends React.Component{
             <button className="submit" align="center" type='submit'>
               Login
             </button>
+            <div>
+            <Link to='/signup/teacher' className='login-link'>Don't have an account?</Link>
+            </div>
           </form>
         )
       }
