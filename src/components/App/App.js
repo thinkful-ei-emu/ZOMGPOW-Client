@@ -4,8 +4,8 @@ import RegistrationRoute from '../../Routes/RegistrationRoute/RegistrationRoute'
 import Header from '../Header/Header';
 import LandingPage from '../LandingPage/LandingPage';
 import TeacherLoginRoute from '../../Routes/TeacherLoginRoute/TeacherLoginRoute';
-import StudentLoginRoute from '../../Routes/StudentLoginRoute/student-login';
 import StudentDashboard from '../../Routes/StudentDashboard/StudentDashboard';
+import StudentLoginRoute from '../../Routes/StudentLoginRoute/StudentLogin';
 import './App.css';
 
 export default class App extends React.Component {
