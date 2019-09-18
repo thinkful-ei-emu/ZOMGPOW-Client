@@ -1,5 +1,5 @@
-import React from 'react'
-import './student-login.css'
+import React from 'react';
+import './student-login.css';
 
 
 class StudentLogin extends React.Component {

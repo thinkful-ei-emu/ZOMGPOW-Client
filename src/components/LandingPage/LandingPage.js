@@ -5,12 +5,12 @@ class LandingPage extends React.Component {
 
   handleTeacher = () => {
     console.log('push/link to teacher login')
-    // this.props.history.push('/teacer-login')
+    // this.props.history.push('/teacher/login')
   }
 
   handleStudent = () => {
     console.log('push/link to student login')
-    // this.props.history.push('/student-login')
+    // this.props.history.push('/student/login')
   }
   render(){
     return (
