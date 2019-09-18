@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import RegistrationRoute from '../../Routes/TeacherLoginRoute/TeacherLoginRoute';
+import RegistrationRoute from '../../Routes/RegistrationRoute/RegistrationRoute';
 import Header from '../Header/Header';
 import LandingPage from '../LandingPage/LandingPage';
 import TeacherLoginRoute from '../../Routes/TeacherLoginRoute/TeacherLoginRoute';
-import StudentLoginRoute from '../../Routes/StudentLoginRoute/student-login';
+import StudentLoginRoute from '../../Routes/StudentLoginRoute/StudentLogin';
 import './App.css';
 
 export default class App extends React.Component {
