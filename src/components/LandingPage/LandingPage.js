@@ -1,17 +1,9 @@
 import React from 'react';
 import './LandingPage.css';
+import { Link } from 'react-router-dom';
 
 class LandingPage extends React.Component {
 
-  handleTeacher = () => {
-    console.log('push/link to teacher login')
-    // this.props.history.push('/teacer-login')
-  }
-
-  handleStudent = () => {
-    console.log('push/link to student login')
-    // this.props.history.push('/student-login')
-  }
   render(){
     return (
       <div className="landing-page">
@@ -22,12 +14,13 @@ class LandingPage extends React.Component {
           Increasing the quality of formative assessments for both 
           teachers and students...
         </p>
-        <button onClick={this.handleTeacher}>
+        <Link to='/register'>
           I'm a Teacher
-        </button>
-        <button onClick={this.handleStudent}>
+        </Link>
+        {' '}
+        <Link to='/login/student'>
           I'm a Student
-        </button>
+        </Link>
       </div>
     )
   }

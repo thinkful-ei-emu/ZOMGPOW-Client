@@ -1,5 +1,5 @@
 import React from 'react';
-import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
+import RegistrationForm from '../../Components/RegistrationForm/RegistrationForm';
 import './RegistrationRoute.css';
 
 class RegistrationRoute extends React.Component {
