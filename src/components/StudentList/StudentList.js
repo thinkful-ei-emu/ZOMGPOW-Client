@@ -1,21 +1,23 @@
 import React from 'react';
+import StudentAuthApiService from '../../Services/student-auth-api-service';
 import './StudentList.css';
 
 class StudentList extends React.Component{
   state = {
+    error: null,
     students: [
-      {
-        name: 'studentA',
-        username: 'studentA123'
-      },
-      {
-        name: 'studentB',
-        username: 'studentB456'
-      },
-      {
-        name: 'studentC',
-        username: 'studentC789'
-      },
+      // {
+      //   name: 'studentA',
+      //   username: 'studentA123'
+      // },
+      // {
+      //   name: 'studentB',
+      //   username: 'studentB456'
+      // },
+      // {
+      //   name: 'studentC',
+      //   username: 'studentC789'
+      // },
       ],
       userInput: null,
       newStudent: null,
@@ -23,7 +25,15 @@ class StudentList extends React.Component{
 
   componentDidMount() {
     // Fetch students from API
-    
+    StudentAuthApiService.getAllStudents()
+      .then(res => {
+        this.setState({
+          students: res.students,
+        })
+      })
+      .catch(res => {
+        this.setState({ error: res.error })
+      })
   }
 
   // Updates state with every user input change
@@ -45,13 +55,17 @@ class StudentList extends React.Component{
 
 
   render() {
+    const { error } = this.state;
     const studentList = this.state.students.map(student => <li>{student.name} {student.username}</li>)
     return(
       <div className='StudentList-container'>
       <h2>Students</h2>
-        <ul>
-          {studentList}
-        </ul>
+      <div className='alert' role='alert'>
+        {error && <p>{error}</p>}
+      </div>
+          {studentList.length < 1 
+            ? <p>Add your students!</p> 
+            : <ul>{studentList}</ul>}
         <form onSubmit={this.handleSubmit}>
           <label 
             htmlFor='add-student'>Student Name: </label>
