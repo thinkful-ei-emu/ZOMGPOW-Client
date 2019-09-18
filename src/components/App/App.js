@@ -7,13 +7,10 @@ export default class App extends React.Componet {
   render(){
     return (
       <div className="App">
-       
          <Route 
            path={'/teacher-login'}
            component={TeacherLoginRoute}
          />  
-       
-        
       </div>
     );
   }
