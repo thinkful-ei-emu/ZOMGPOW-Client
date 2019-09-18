@@ -1,0 +1,7 @@
+header{
+  background-color: bisque;
+  display: flex;
+  justify-content: space-between;
+  height: 100px;
+  padding: 15px;
+}
