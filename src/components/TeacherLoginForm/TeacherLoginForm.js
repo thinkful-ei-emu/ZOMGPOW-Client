@@ -50,14 +50,14 @@ export default class TeacherLoginForm extends React.Component{
             <div role='alert'>
               {error && <p>{error}</p>}
             </div>
-            <div className="un" type="text" align="center" placeholder="Username">
-              <label htmlFor='login-username-input' className="login-labels">
+            <div className="un" type="text" align="center" placeholder="Email">
+              <label htmlFor='login-email-input' className="login-labels">
                 Username
               </label>
               <input
                 ref={this.firstInput}
-                id='login-username-input'
-                name='username'
+                id='login-email-input'
+                name='email'
                 required
               />
             </div>
