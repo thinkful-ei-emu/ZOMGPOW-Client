@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import RegistrationRoute from '../../Routes/RegistrationRoute/RegistrationRoute';
+import RegistrationRoute from '../../Routes/TeacherLoginRoute/TeacherLoginRoute';
 import Header from '../Header/Header';
 import LandingPage from '../LandingPage/LandingPage';
 import TeacherLoginRoute from '../../Routes/TeacherLoginRoute/TeacherLoginRoute';
