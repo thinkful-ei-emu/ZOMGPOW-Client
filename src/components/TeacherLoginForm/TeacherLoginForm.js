@@ -1,6 +1,7 @@
 import React from 'react';
-import TeacherAuthApiService from '../../Services/teacher-auth-api-service'
+import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
 import TeacherContext from '../../Contexts/TeacherContext';
+import { Link } from 'react-router-dom';
 import './TeacherLoginForm.css';
 
 
@@ -52,7 +53,7 @@ export default class TeacherLoginForm extends React.Component{
             </div>
             <div className="un" type="text" align="center" placeholder="Email">
               <label htmlFor='login-email-input' className="login-labels">
-                Username
+                Email
               </label>
               <input
                 ref={this.firstInput}
@@ -75,6 +76,9 @@ export default class TeacherLoginForm extends React.Component{
             <button className="submit" align="center" type='submit'>
               Login
             </button>
+            <div>
+              <Link to='/signup/teacher' className='login-link'>Don't have an account?</Link>
+            </div>
           </form>
         )
       }
