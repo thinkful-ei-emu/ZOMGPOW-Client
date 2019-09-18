@@ -1,23 +1,37 @@
 import React from 'react';
 import './Header.css';
+import { Link } from 'react-router-dom';
+import TeacherContext from '../../Contexts/TeacherContext';
+import TokenService from '../../Services/token-service';
 
 class Header extends React.Component {
+  static contextType = TeacherContext;
+
+  handleLogoutClick = () => {
+    this.context.processLogout();
+  }
 
   renderLogInLinks(){
     return (
-      <div className="login-buttons">
-        <button>Login</button>
-        <button>Sign Up</button>
-      </div>
+      <nav className="login-buttons">
+        <Link to='/login/teacher'>Teacher Login</Link>
+        <Link to='/login/student'>Student Login</Link>
+        <Link to='/register'>Sign Up</Link>
+      </nav>
     )
   }
 
   renderLogOutLinks(){
     return (
-      <div className="login-buttons">
-        <button>Link</button>
-        <button>Logout</button>
-      </div>
+      <nav>
+        <Link to='/link/path'>Link</Link>
+        {' '}
+        <Link 
+          onClick={this.handleLogoutClick}
+          to='/'>
+          Logout
+        </Link>
+      </nav>
     )
   }
 
@@ -25,16 +39,18 @@ class Header extends React.Component {
   render(){
     return (
       <header className="header" role="banner">
-        <h1>Name of Application</h1>
+        <h1>
+          <Link to='/'>
+          Name of Application
+          </Link>
+        </h1>
         <div className="links">
-          {this.renderLogInLinks()}
-          {this.renderLogOutLinks()}
-          {/* {loggedIn 
+          {TokenService.hasAuthToken() 
           ? this.renderLogOutLinks()
-          :this.renderLogInLinks()} */}
+          :this.renderLogInLinks()}
         </div>
       </header>
-    )
+    );
   }
 }
 
