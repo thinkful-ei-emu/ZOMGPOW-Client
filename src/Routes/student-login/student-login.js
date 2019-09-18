@@ -11,6 +11,7 @@ class StudentLogin extends React.Component {
       push: () => { },
     },
   }
+  static contextType = StudentContext
 
   state = {
     error: null,
