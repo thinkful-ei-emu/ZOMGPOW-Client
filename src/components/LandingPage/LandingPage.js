@@ -14,7 +14,7 @@ class LandingPage extends React.Component {
           Increasing the quality of formative assessments for both 
           teachers and students...
         </p>
-        <Link to='/login/teacher'>
+        <Link to='/register'>
           I'm a Teacher
         </Link>
         {' '}
