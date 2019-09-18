@@ -1,0 +1,23 @@
+.student-login{
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.student-login-form {
+  padding: 5%;
+  background-color: rgb(214, 204, 204);
+  border-radius: 7%;
+  border: rgb(117, 115, 115) 3px solid;
+  margin: 5% 40%;
+  min-height: 20vh;
+  
+}
+
+.student-username{
+  border-radius: 2%;
+  padding: 2% 0%;
+  width: 80%;
+  margin: 8% 0%;
+}
