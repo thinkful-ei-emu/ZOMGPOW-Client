@@ -7,7 +7,7 @@ import TeacherLoginRoute from '../../Routes/TeacherLoginRoute/TeacherLoginRoute'
 import StudentLoginRoute from '../../Routes/StudentLoginRoute/student-login';
 import './App.css';
 
-export default class App extends React.Componet {
+export default class App extends React.Component {
   render(){
     return (
       <div className="App">
@@ -18,11 +18,11 @@ export default class App extends React.Componet {
             component={TeacherLoginRoute}
           />  
           <Route
-            path='/register/teacher'
+            path='/register'
             component={RegistrationRoute}
           />
           <Route
-            path='/'
+            exact path='/'
             component={LandingPage}
           />
           <Route
