@@ -6,25 +6,25 @@ class StudentList extends React.Component{
   state = {
     error: null,
     students: [
-      // {
-      //   name: 'studentA',
-      //   username: 'studentA123'
-      // },
-      // {
-      //   name: 'studentB',
-      //   username: 'studentB456'
-      // },
-      // {
-      //   name: 'studentC',
-      //   username: 'studentC789'
-      // },
+      {
+        name: 'studentA',
+        username: 'studentA123'
+      },
+      {
+        name: 'studentB',
+        username: 'studentB456'
+      },
+      {
+        name: 'studentC',
+        username: 'studentC789'
+      },
       ],
-      userInput: null,
+      userInput: '',
       newStudent: null,
   }
 
   componentDidMount() {
-    // Fetch students from API
+    // Fetch students from API -- PSUEDO CODE, need to check with Back End
     StudentAuthApiService.getAllStudents()
       .then(res => {
         this.setState({
@@ -49,14 +49,29 @@ class StudentList extends React.Component{
     this.setState({
       newStudent: this.state.userInput,
     })
-    // Use Student Api Service to post student
-    // Re-render student list with updated name and username
+    // Use Student Api Service to post student - PSUEDO CODE
+    StudentAuthApiService.postStudent(this.state.newStudent)
+      .then(res => {
+        this.setState({
+          students: [...this.state.students, res.student],
+          newStudent: null,
+          userInput: '',
+        })
+      })
+      .catch(res => {
+        this.setState({
+          error: res.error,
+          newStudent: null,
+          userInput: '',
+        })
+      })
+    
   }
 
 
   render() {
     const { error } = this.state;
-    const studentList = this.state.students.map(student => <li>{student.name} {student.username}</li>)
+    const studentList = this.state.students.map((student, index) => <li key={index}>{student.name} {student.username}</li>)
     return(
       <div className='StudentList-container'>
       <h2>Students</h2>
@@ -71,6 +86,7 @@ class StudentList extends React.Component{
             htmlFor='add-student'>Student Name: </label>
             <input
             onChange={this.handleChange}
+            value={this.state.userInput}
             id='add-student'
             name='add-student'
             aria-label='Add student to list'
