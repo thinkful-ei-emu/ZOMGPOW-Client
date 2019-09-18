@@ -14,10 +14,11 @@ class LandingPage extends React.Component {
           Increasing the quality of formative assessments for both 
           teachers and students...
         </p>
-        <Link to='/teacher/login'>
+        <Link to='/login/teacher'>
           I'm a Teacher
         </Link>
-        <Link to='/student/login'>
+        {' '}
+        <Link to='/login/student'>
           I'm a Student
         </Link>
       </div>
