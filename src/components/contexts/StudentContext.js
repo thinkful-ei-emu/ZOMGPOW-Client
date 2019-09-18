@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import TeacherAuthApiService from '../services/teacher-auth-api-service'
+import StudentAuthApiService from '../../services/student-auth-api-service'
 import TokenService from '../services/token-service'
-import IdleService from '../../services/idle-service'
+import IdleService from '../services/idle-service'
 
-const TeacherContext = React.createContext({
+const StudentContext = React.createContext({
   user: {},
   error: null,
   setError: () => { },
@@ -13,9 +13,9 @@ const TeacherContext = React.createContext({
   processLogout: () => { },
 })
 
-export default TeacherContext
+export default StudentContext
 
-export class TeacherProvider extends Component {
+export class StudentProvider extends Component {
   constructor(props) {
     super(props)
     const state = { user: {}, error: null }
@@ -90,7 +90,7 @@ export class TeacherProvider extends Component {
   }
 
   fetchRefreshToken = () => {
-    TeacherAuthApiService.refreshToken()
+    StudentAuthApiService.refreshToken()
       .then(res => {
         TokenService.saveAuthToken(res.authToken)
         TokenService.queueCallbackBeforeExpiry(() => {
@@ -112,9 +112,9 @@ export class TeacherProvider extends Component {
       processLogout: this.processLogout
     }
     return (
-      <TeacherContext.Provider value={value}>
+      <StudentContext.Provider value={value}>
         {this.props.children}
-      </TeacherContext.Provider>
+      </StudentContext.Provider>
     )
   }
 }
