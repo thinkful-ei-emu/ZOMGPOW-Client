@@ -1,5 +1,5 @@
-import config from '../config'
-import TokenService from './token-service'
+import config from '../config';
+import TokenService from './token-service';
 
 const TeacherAuthApiService = {
   postUser(user) {
@@ -46,4 +46,4 @@ const TeacherAuthApiService = {
   },
 }
 
-export default TeacherAuthApiService
+export default TeacherAuthApiService;

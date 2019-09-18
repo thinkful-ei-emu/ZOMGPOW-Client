@@ -1,6 +1,6 @@
 import React from 'react';
-import TeacherAuthApiService from '../../services/teacher-auth-api-service'
-import TeacherContext from '../../contexts/TeacherContext';
+import TeacherAuthApiService from '../../Services/teacher-auth-api-service'
+import TeacherContext from '../../Contexts/TeacherContext';
 import './TeacherLoginForm.css';
 
 

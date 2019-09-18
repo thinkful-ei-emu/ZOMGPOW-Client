@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import TeacherLoginForm from '../../components/TeacherLoginForm/TeacherLoginForm'
+import React, { Component } from 'react';
+import TeacherLoginForm from '../../Components/TeacherLoginForm/TeacherLoginForm';
+import './TeacherLoginRoute.css';
 
 class TeacherLoginRoute extends Component {
   static defaultProps = {
@@ -27,4 +28,4 @@ class TeacherLoginRoute extends Component {
   }
 }
 
-export default TeacherLoginRoute
+export default TeacherLoginRoute;
