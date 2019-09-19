@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StudentList component renders a .StudentList by default 1`] = `
+<div
+  className="StudentList-container"
+>
+  <h2>
+    Students
+  </h2>
+  <div
+    className="alert"
+    role="alert"
+  />
+  <ul>
+    <li
+      key="0"
+    >
+      studentA
+       
+      studentA123
+    </li>
+    <li
+      key="1"
+    >
+      studentB
+       
+      studentB456
+    </li>
+    <li
+      key="2"
+    >
+      studentC
+       
+      studentC789
+    </li>
+  </ul>
+  <form
+    onSubmit={[Function]}
+  >
+    <label
+      htmlFor="add-student"
+    >
+      Student Name: 
+    </label>
+    <input
+      aria-label="Add student to list"
+      aria-required="true"
+      id="add-student"
+      name="add-student"
+      onChange={[Function]}
+      required={true}
+      value=""
+    />
+    <div>
+      <button
+        type="submit"
+      >
+        Add Student
+      </button>
+    </div>
+  </form>
+</div>
+`;
