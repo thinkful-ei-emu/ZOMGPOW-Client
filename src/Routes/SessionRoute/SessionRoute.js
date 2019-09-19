@@ -8,8 +8,8 @@ class SessionRoute extends React.Component {
     updatedPriority: null,
     students: [
       {
-        name: 'studentA',
-        username: 'studentA123',
+        fullname: 'John Smith',
+        username: 'JohnS',
         goal: 'Write a 5 paragraph essay',
         goalComplete: false,
         subGoal: null,
@@ -19,8 +19,8 @@ class SessionRoute extends React.Component {
         priority: 1,
       },
       {
-        name: 'studentB',
-        username: 'studentB456',
+        fullname: 'Marry Ann',
+        username: 'MarryA',
         goal: 'Write a 5 paragraph essay',
         goalComplete: false,
         subGoal: ['Write a thesis statement'],
@@ -30,8 +30,8 @@ class SessionRoute extends React.Component {
         priority: 1,
       },
       {
-        name: 'studentC',
-        username: 'studentC789',
+        fullname: 'Bob King',
+        username: 'BobK',
         goal: 'Write a 5 paragraph essay',
         goalComplete: false,
         subGoal: ['Make a brainmap', 'Choose 3 ideas from brainmap', 'Write thesis sentence'],
@@ -102,7 +102,7 @@ class SessionRoute extends React.Component {
           className={student.alert === true ? `alert ${student.priority}` : ''}
           onClick={e => this.toggleExpand(student.username)}
           >
-          <h3>{student.name}</h3>
+          <h3>{student.fullname}</h3>
           <p>{student.subgoal ? student.subgoal[0] : student.goal}</p>
           <div className='hidden'>
             <form>
@@ -111,7 +111,7 @@ class SessionRoute extends React.Component {
               <input
                 id='new-subgoal'
                 type='text'
-                name='new-subgoal'
+                fullname='new-subgoal'
                 placeholder='New Sub-Goal'
                 onChange={(e) => this.setState({updatedSubGoal: e.target.value})}
                 value={this.state.updatedSubGoal}
@@ -125,7 +125,7 @@ class SessionRoute extends React.Component {
                   type='radio'
                   value='0'
                   id='high'
-                  name='priority'
+                  fullname='priority'
                   onChange={(e) => this.setState({updatedPriority: 0})} />
                 <label
                   htmlFor='high'>High</label>
@@ -133,7 +133,7 @@ class SessionRoute extends React.Component {
                   type='radio'
                   value='1'
                   id='medium'
-                  name='priority'
+                  fullname='priority'
                   onChange={(e) => this.setState({updatedPriority: 1})} />
                 <label
                   htmlFor='medium'>Medium</label>
@@ -141,7 +141,7 @@ class SessionRoute extends React.Component {
                   type='radio'
                   value='2'
                   id='low'
-                  name='priority'
+                  fullname='priority'
                   onChange={(e) => this.setState({updatedPriority: 2})} />
                 <label
                   htmlFor='low'>Low</label>

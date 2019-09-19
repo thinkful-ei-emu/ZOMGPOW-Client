@@ -7,22 +7,22 @@ class StudentList extends React.Component{
     error: null,
     students: [
       {
-        name: 'studentA',
-        username: 'studentA123',
+        fullname: 'John Smith',
+        username: 'JohnS',
         goal: 'Write a 5 paragraph essay',
         goalComplete: false,
         subGoal: null,
       },
       {
-        name: 'studentB',
-        username: 'studentB456',
+        fullname: 'Marry Ann',
+        username: 'MarryA',
         goal: 'Write a 5 paragraph essay',
         goalComplete: false,
         subGoal: ['Write a thesis statement']
       },
       {
-        name: 'studentC',
-        username: 'studentC789',
+        fullname: 'Bob King',
+        username: 'BobK',
         goal: 'Write a 5 paragraph essay',
         goalComplete: false,
         subGoal: ['Make a brainmap', 'Choose 3 ideas from brainmap', 'Write thesis sentence']
@@ -80,7 +80,7 @@ class StudentList extends React.Component{
 
   render() {
     const { error } = this.state;
-    const studentList = this.state.students.map((student, index) => <li key={index}>{student.name} {student.username}</li>)
+    const studentList = this.state.students.map((student, index) => <li key={index}>{student.fullname} {student.username}</li>)
     return(
       <div className='StudentList-container'>
       <h2>Students</h2>
@@ -97,7 +97,7 @@ class StudentList extends React.Component{
             onChange={this.handleChange}
             value={this.state.userInput}
             id='add-student'
-            name='add-student'
+            fullname='add-student'
             aria-label='Add student to list'
             aria-required='true'
             required
