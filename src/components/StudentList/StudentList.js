@@ -18,14 +18,14 @@ class StudentList extends React.Component{
         username: 'studentB456',
         goal: 'Write a 5 paragraph essay',
         goalComplete: false,
-        subGoal: 'Write a thesis statement'
+        subGoal: ['Write a thesis statement']
       },
       {
         name: 'studentC',
         username: 'studentC789',
         goal: 'Write a 5 paragraph essay',
         goalComplete: false,
-        subGoal: 'Make a brainmap'
+        subGoal: ['Make a brainmap', 'Choose 3 ideas from brainmap', 'Write thesis sentence']
       },
       ],
       userInput: '',
