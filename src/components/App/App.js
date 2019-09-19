@@ -6,6 +6,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import TeacherLoginRoute from '../../Routes/TeacherLoginRoute/TeacherLoginRoute';
 import StudentDashboard from '../../Routes/StudentDashboard/StudentDashboard';
 import StudentLoginRoute from '../../Routes/StudentLoginRoute/StudentLogin';
+import TeacherDashboardRoute from '../../Routes/TeacherDashboardRoute/TeacherDashboardRoute';
 import './App.css';
 
 export default class App extends React.Component {
@@ -29,6 +30,10 @@ export default class App extends React.Component {
           <Route
             path='/login/student'
             component={StudentLoginRoute}
+          />
+          <Route
+            path='/dashboard/teacher'
+            component={TeacherDashboardRoute}
           />
           <Route 
             path='/dashboard/student'
