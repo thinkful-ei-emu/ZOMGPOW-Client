@@ -5,3 +5,8 @@ header{
   height: 100px;
   padding: 15px;
 }
+
+.login-buttons{
+  display: flex; 
+  flex-direction: column;
+}
