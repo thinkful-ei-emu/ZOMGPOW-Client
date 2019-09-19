@@ -4,7 +4,8 @@ import RegistrationRoute from '../../Routes/RegistrationRoute/RegistrationRoute'
 import Header from '../Header/Header';
 import LandingPage from '../LandingPage/LandingPage';
 import TeacherLoginRoute from '../../Routes/TeacherLoginRoute/TeacherLoginRoute';
-import StudentLoginRoute from '../../Routes/StudentLoginRoute/StudentLogin';
+import StudentDashboard from '../../Routes/StudentDashboard/StudentDashboard';
+import StudentLoginRoute from '../../Routes/StudentLoginRoute/StudentLoginRoute';
 import TeacherDashboardRoute from '../../Routes/TeacherDashboardRoute/TeacherDashboardRoute';
 import SessionRoute from '../../Routes/SessionRoute/SessionRoute';
 import './App.css';
@@ -31,13 +32,17 @@ export default class App extends React.Component {
             path='/login/student'
             component={StudentLoginRoute}
           />
-          <Route 
+          <Route
             path='/dashboard/teacher'
             component={TeacherDashboardRoute}
           />
           <Route 
             path='/session'
             component={SessionRoute}
+           />
+          <Route
+            path='/dashboard/student'
+            component={StudentDashboard}
           />
         </Switch>
       </div>

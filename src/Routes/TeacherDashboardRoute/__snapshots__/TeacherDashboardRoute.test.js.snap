@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TeacherDashboardRoute component renders a .TeacherDashboardRoute by default 1`] = `
+<section
+  className="TeacherDashboardRoute-section"
+>
+  <div
+    className="TeacherDashboardRoute-learning-target-submit"
+  >
+    <LearningTargetForm />
+  </div>
+  <div
+    className="TeacherDashboardRoute-student-list"
+  >
+    <StudentList />
+  </div>
+</section>
+`;

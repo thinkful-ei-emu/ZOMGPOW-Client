@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TeacherLoginRoute component renders a .TeacherLoginRoute by default 1`] = `
+<section>
+  <h2>
+    Login
+  </h2>
+  <TeacherLoginForm
+    onLoginSuccess={[Function]}
+  />
+</section>
+`;

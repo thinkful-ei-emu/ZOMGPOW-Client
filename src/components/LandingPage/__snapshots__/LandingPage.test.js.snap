@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header component renders a .LandingPage by default 1`] = `
+<div
+  className="landing-page"
+>
+  <h2>
+    Application Introduction
+  </h2>
+  <p>
+    App title is first and foremost a teacher tool designed to be used during classtime in order to set individual student goals real-time. Increasing the quality of formative assessments for both teachers and students...
+  </p>
+  <Link
+    to="/register"
+  >
+    I'm a Teacher
+  </Link>
+   
+  <Link
+    to="/login/student"
+  >
+    I'm a Student
+  </Link>
+</div>
+`;
+
+exports[`LandingPage component renders a .LandingPage by default 1`] = `
+<div
+  className="landing-page"
+>
+  <h2>
+    Application Introduction
+  </h2>
+  <p>
+    App title is first and foremost a teacher tool designed to be used during classtime in order to set individual student goals real-time. Increasing the quality of formative assessments for both teachers and students...
+  </p>
+  <Link
+    to="/register"
+  >
+    I'm a Teacher
+  </Link>
+   
+  <Link
+    to="/login/student"
+  >
+    I'm a Student
+  </Link>
+</div>
+`;
