@@ -1,0 +1,12 @@
+.SessionRoute-container ul{
+  list-style-type: none;
+  padding: 0;
+}
+
+.SessionRoute-container li {
+  border: solid 1px black;
+}
+
+/* .hidden {
+  display: none;
+} */
