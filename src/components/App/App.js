@@ -5,7 +5,7 @@ import Header from '../Header/Header';
 import LandingPage from '../LandingPage/LandingPage';
 import TeacherLoginRoute from '../../Routes/TeacherLoginRoute/TeacherLoginRoute';
 import StudentDashboard from '../../Routes/StudentDashboard/StudentDashboard';
-import StudentLoginRoute from '../../Routes/StudentLoginRoute/StudentLogin';
+import StudentLoginRoute from '../../Routes/StudentLoginRoute/StudentLoginRoute';
 import TeacherDashboardRoute from '../../Routes/TeacherDashboardRoute/TeacherDashboardRoute';
 import './App.css';
 

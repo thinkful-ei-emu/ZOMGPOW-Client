@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StudentLoginRoute component renders a .StudentLoginRoute by default 1`] = `
+<div
+  className="student-login"
+>
+  <form
+    className="student-login-form"
+    onSubmit={[Function]}
+  >
+    <div
+      role="alert"
+    />
+    <label>
+      Username:
+    </label>
+    <br />
+    <input
+      className="student-username"
+      name="student-username"
+      required={true}
+    />
+    <br />
+    <button
+      type="submit"
+    >
+      Submit
+    </button>
+  </form>
+</div>
+`;

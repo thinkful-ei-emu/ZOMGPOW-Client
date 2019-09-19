@@ -1,10 +1,10 @@
 import React from 'react'
-import './StudentLogin.css'
+import './StudentLoginRoute.css'
 import StudentAuthApiService from '../../Services/student-auth-api-service'
 import StudentContext from '../../Contexts/StudentContext';
 
 
-class StudentLogin extends React.Component {
+class StudentLoginRoute extends React.Component {
   static defaultProps = {
     location: {},
     history: {
@@ -64,4 +64,4 @@ class StudentLogin extends React.Component {
   
 }
 
-export default StudentLogin;
+export default StudentLoginRoute;
