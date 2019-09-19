@@ -1,3 +1,13 @@
 .landing-page{
+  display: flex; 
+  margin: auto;
+  flex-direction: column;
+  width: 80%;
   padding: 20px;
+}
+
+.landing-links{
+  display: flex;
+  margin: 30px;
+  justify-content: space-around;
 }
