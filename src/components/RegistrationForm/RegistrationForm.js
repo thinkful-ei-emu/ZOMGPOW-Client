@@ -15,22 +15,24 @@ class RegistrationForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     const {full_name, email, password } = e.target;
+    console.log(full_name, email, password);
     TeacherAuthApiService.postUser({
       full_name: full_name.value,
       email: email.value,
       password: password.value
     })
-    .then(user => {
-      full_name.value = ''
-      email.value = ''
-      password.value = ''
-      this.props.onRegistrationSuccess();
-    })
-    .catch(res => {
-      this.setState({
-        error: res.error
-      })
-    })
+    .then(console.log(full_name))
+    // .then(user => {
+    //   full_name.value = ''
+    //   email.value = ''
+    //   password.value = ''
+    //   this.props.onRegistrationSuccess();
+    // })
+    // .catch(res => {
+    //   this.setState({
+    //     error: res.error
+    //   })
+    // })
   }
 
   componentDidMount() {
