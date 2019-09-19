@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import StudentAuthApiService from '../../services/student-auth-api-service'
-import TokenService from '../services/token-service'
-import IdleService from '../services/idle-service'
+import StudentAuthApiService from '../Services/student-auth-api-service'
+import TokenService from '../Services/token-service';
+import IdleService from '../Services/idle-service'
 
 const StudentContext = React.createContext({
   user: {},

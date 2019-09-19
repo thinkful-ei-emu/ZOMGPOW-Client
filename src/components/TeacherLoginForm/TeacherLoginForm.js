@@ -77,7 +77,7 @@ export default class TeacherLoginForm extends React.Component{
               Login
             </button>
             <div>
-              <Link to='/signup/teacher' className='login-link'>Don't have an account?</Link>
+              <Link to='/register' className='login-link'>Don't have an account?</Link>
             </div>
           </form>
         )
