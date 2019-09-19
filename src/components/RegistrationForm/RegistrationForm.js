@@ -26,11 +26,11 @@ class RegistrationForm extends React.Component {
       password.value = ''
       this.props.onRegistrationSuccess();
     })
-    .catch(res => {
-      this.setState({
-        error: res.error
-      })
-    })
+    // .catch(res => {
+    //   this.setState({
+    //     error: res.error
+    //   })
+    // })
   }
 
   componentDidMount() {
@@ -48,13 +48,14 @@ class RegistrationForm extends React.Component {
         {error && <p>{error}</p>}
         </div>
         <div>
+          <h2>Sign up</h2>
           <label htmlFor='registration-full-name-input'>
           Full Name:
           </label>
           <input
             ref={this.firstInput}
             id='registration-full-name-input'
-            name='full-name'
+            name='full_name'
             placeholder='Tammy Teacher'
             aria-label='Registration full name input'
             aria-required='true'

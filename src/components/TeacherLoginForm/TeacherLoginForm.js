@@ -45,12 +45,13 @@ export default class TeacherLoginForm extends React.Component{
         const { error } = this.state
         return (
           <form
-            className='LoginForm'
+            className='teacher-login-form'
             onSubmit={this.handleSubmit}
           >
             <div role='alert'>
               {error && <p>{error}</p>}
             </div>
+            <h2>Teacher Login</h2>
             <div className="un" type="text" placeholder="Email">
               <label htmlFor='login-email-input' className="login-labels">
                 Email

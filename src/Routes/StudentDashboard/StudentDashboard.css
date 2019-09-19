@@ -7,5 +7,8 @@ ul{
 }
 
 .student-dashboard-section{
+  display: flex; 
+  flex-direction: column;
+  text-align: center;
   padding: 15px;
 }

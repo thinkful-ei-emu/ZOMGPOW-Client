@@ -53,9 +53,13 @@ class StudentLoginRoute extends React.Component {
         <div role='alert'>
           {error && <p>{error}</p>}
         </div>
+        <h2>Student Login</h2>
         <label>Username:</label><br></br>
           <input className= "student-username" name="student-username" required></input><br></br>
           <button type="submit">Submit</button>
+          <div className='student-help'>
+            Forgot your username? Ask your teacher for help.
+          </div>
         </form>
    
       </div>

@@ -3,7 +3,7 @@ import TokenService from './token-service';
 
 const TeacherAuthApiService = {
   postUser(user) {
-    return fetch(`${config.API_ENDPOINT}/user`, {
+    return fetch(`${config.API_ENDPOINT}/register/teacher`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -18,7 +18,7 @@ const TeacherAuthApiService = {
      
   },
   postLogin({ email, password }) {
-    return fetch(`${config.API_ENDPOINT}/auth/token`, {
+    return fetch(`${config.API_ENDPOINT}/auth/teacher/login`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -32,7 +32,7 @@ const TeacherAuthApiService = {
       )
   },
   refreshToken() {
-    return fetch(`${config.API_ENDPOINT}/auth/token`, {
+    return fetch(`${config.API_ENDPOINT}/auth/teacher/login`, {
       method: 'PUT',
       headers: {
         'authorization': `Bearer ${TokenService.getAuthToken()}`,

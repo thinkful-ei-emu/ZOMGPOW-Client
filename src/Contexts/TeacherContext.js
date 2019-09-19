@@ -25,7 +25,7 @@ export class TeacherProvider extends Component {
     if (jwtPayload)
       state.user = {
         id: jwtPayload.user_id,
-        fullname: jwtPayload.fullname,
+        full_name: jwtPayload.full_name,
         email: jwtPayload.email,
       }
 
@@ -64,10 +64,10 @@ export class TeacherProvider extends Component {
   processLogin = authToken => {
     TokenService.saveAuthToken(authToken)
     const jwtPayload = TokenService.parseAuthToken()
+    console.log(jwtPayload);
     this.setUser({
       id: jwtPayload.user_id,
-      fullname: jwtPayload.fullname,
-      email: jwtPayload.email,
+      email: jwtPayload.sub,
     })
     IdleService.regiserIdleTimerResets()
     TokenService.queueCallbackBeforeExpiry(() => {
