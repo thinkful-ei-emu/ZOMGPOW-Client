@@ -51,7 +51,7 @@ export default class TeacherLoginForm extends React.Component{
             <div role='alert'>
               {error && <p>{error}</p>}
             </div>
-            <div className="un" type="text" align="center" placeholder="Email">
+            <div className="un" type="text" placeholder="Email">
               <label htmlFor='login-email-input' className="login-labels">
                 Email
               </label>
@@ -62,7 +62,7 @@ export default class TeacherLoginForm extends React.Component{
                 required
               />
             </div>
-            <div className="pass" type="password" align="center" placeholder="password">
+            <div className="pass" type="password" placeholder="password">
               <label htmlFor='login-password-input' className="login-labels">
                 Password
               </label>
@@ -73,7 +73,7 @@ export default class TeacherLoginForm extends React.Component{
                 required
               />
             </div>
-            <button className="submit" align="center" type='submit'>
+            <button className="submit" type='submit'>
               Login
             </button>
             <div>
