@@ -8,15 +8,24 @@ class StudentList extends React.Component{
     students: [
       {
         name: 'studentA',
-        username: 'studentA123'
+        username: 'studentA123',
+        goal: 'Write a 5 paragraph essay',
+        goalComplete: false,
+        subGoal: null,
       },
       {
         name: 'studentB',
-        username: 'studentB456'
+        username: 'studentB456',
+        goal: 'Write a 5 paragraph essay',
+        goalComplete: false,
+        subGoal: 'Write a thesis statement'
       },
       {
         name: 'studentC',
-        username: 'studentC789'
+        username: 'studentC789',
+        goal: 'Write a 5 paragraph essay',
+        goalComplete: false,
+        subGoal: 'Make a brainmap'
       },
       ],
       userInput: '',
