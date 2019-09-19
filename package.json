@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "enzyme-to-json": "^3.4.0",
     "jwt-decode": "^2.2.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
@@ -31,6 +32,8 @@
     ]
   },
   "devDependencies": {
-    "case-sensitive-paths-webpack-plugin": "^2.2.0"
+    "case-sensitive-paths-webpack-plugin": "^2.2.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0"
   }
 }
