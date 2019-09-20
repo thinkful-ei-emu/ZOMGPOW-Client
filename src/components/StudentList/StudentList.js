@@ -20,6 +20,35 @@ class StudentList extends React.Component{
     this.setState({
       students: this.props.students
     })
+  componentDidMount() { 
+    // Fetch students from API -- PSUEDO CODE, need to check with Back End
+    console.log('logging context ins studentLIst', this.context)
+    let classid = this.context.teacherClass.teacherClass.id
+    this.setState({
+      class_id: classid
+    })
+   
+    console.log('teacher id from context', classid)
+    return fetch(`${config.API_ENDPOINT}/class/${classid}/students`, {
+      method: 'GET',
+      headers: {
+        'authorization': `Bearer ${TokenService.getAuthToken()}`,
+      },
+    })
+    .then(res =>
+      (!res.ok)
+        ? res.json().then(e => Promise.reject(e))
+        : res.json()
+    )
+      .then(resStudents => {       
+          (console.log(resStudents.students))
+        this.setState({
+          students: resStudents.students,
+        })
+      })
+      .catch(res => {
+        this.setState({ error: res.error })
+      })
   }
 
   // componentDidMount() {
