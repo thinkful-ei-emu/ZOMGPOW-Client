@@ -49,8 +49,8 @@ toggleTimer = () => {
           <StudentTimer />
         </div>
       </div>
-      <h3>Previous Goals</h3>
-      <ul>{prevGoals}</ul>
+      {/* <h3>Previous Goals</h3>
+      <ul>{prevGoals}</ul> */}
       </section>
     )
   }

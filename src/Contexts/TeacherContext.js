@@ -84,10 +84,10 @@ export class TeacherProvider extends Component {
     this.setUser({user})
     this.setClass({teacherClass})
 
-    // IdleService.regiserIdleTimerResets()
-    // TokenService.queueCallbackBeforeExpiry(() => {
-    //   this.fetchRefreshToken()
-   // })
+    IdleService.regiserIdleTimerResets()
+    TokenService.queueCallbackBeforeExpiry(() => {
+      this.fetchRefreshToken()
+   })
   }
 
   processLogout = () => {
