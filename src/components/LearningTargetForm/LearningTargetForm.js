@@ -1,8 +1,11 @@
 import React from 'react';
 import './LearningTargetForm.css';
+import config from '../../config';
+import TokenService from '../../Services/token-service';
+import TeacherContext from '../../Contexts/TeacherContext';
 
 class LearningTargetForm extends React.Component {
-
+  static contextType = TeacherContext;
   state = {
     error: null,
     learningTarget: '',
@@ -17,13 +20,27 @@ class LearningTargetForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // Post learning target to API -- WHAT ENDPOINT?
-    const { learningTarget } = e.target
-    console.log(learningTarget.value);
+    const { learningTarget } = e.target;
+    const classLearningTarget = {
+      goal_title: learningTarget.value,
+    }
+    const class_id = this.context.teacherClass.teacherClass.id;
+    fetch(`${config.API_ENDPOINT}/goals/class/${class_id}`, {
+      method: 'POST',
+      body: JSON.stringify(classLearningTarget),
+      headers: {
+        'content-type': 'application/json',
+        authorization: `bearer ${TokenService.getAuthToken()}`
+      }
+    }).then((res) => {
+      if(!res){
+        return res.json().then(e => Promise.reject(e));
+      }
+      return res.json();
+    })
     this.setState({
       learningTarget: ''
     })
-    // this.props.history.push('/session')
   }
 
   render() {

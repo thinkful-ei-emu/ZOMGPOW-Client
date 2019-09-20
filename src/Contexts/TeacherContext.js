@@ -6,6 +6,7 @@ import IdleService from '../Services/idle-service'
 const TeacherContext = React.createContext({
   user: {},
   error: null,
+  teacherClass: null,
   setError: () => { },
   clearError: () => { },
   setUser: () => { },
@@ -83,10 +84,10 @@ export class TeacherProvider extends Component {
     this.setUser({user})
     this.setClass({teacherClass})
 
-    IdleService.regiserIdleTimerResets()
-    TokenService.queueCallbackBeforeExpiry(() => {
-      this.fetchRefreshToken()
-    })
+    // IdleService.regiserIdleTimerResets()
+    // TokenService.queueCallbackBeforeExpiry(() => {
+    //   this.fetchRefreshToken()
+   // })
   }
 
   processLogout = () => {
