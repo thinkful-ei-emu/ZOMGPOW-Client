@@ -35,16 +35,16 @@ export class TeacherProvider extends Component {
       }
 
     this.state = state;
-    IdleService.setIdleCallback(this.logoutBecauseIdle)
+    // IdleService.setIdleCallback(this.logoutBecauseIdle)
   }
 
   componentDidMount() {
-    if (TokenService.hasAuthToken()) {
-      IdleService.regiserIdleTimerResets()
-      TokenService.queueCallbackBeforeExpiry(() => {
-        this.fetchRefreshToken()
-      })
-    }
+    // if (TokenService.hasAuthToken()) {
+    //   IdleService.regiserIdleTimerResets()
+    //   TokenService.queueCallbackBeforeExpiry(() => {
+    //     this.fetchRefreshToken()
+    //   })
+    // }
   }
 
   componentWillUnmount() {
@@ -83,10 +83,10 @@ export class TeacherProvider extends Component {
     this.setUser({user})
     this.setClass({teacherClass})
 
-    IdleService.regiserIdleTimerResets()
-    TokenService.queueCallbackBeforeExpiry(() => {
-      this.fetchRefreshToken()
-    })
+    // IdleService.regiserIdleTimerResets()
+    // TokenService.queueCallbackBeforeExpiry(() => {
+    //   this.fetchRefreshToken()
+    // })
   }
 
   processLogout = () => {
@@ -96,12 +96,12 @@ export class TeacherProvider extends Component {
     this.setUser({})
   }
 
-  logoutBecauseIdle = () => {
-    TokenService.clearAuthToken()
-    TokenService.clearCallbackBeforeExpiry()
-    IdleService.unRegisterIdleResets()
-    this.setUser({ idle: true })
-  }
+  // logoutBecauseIdle = () => {
+  //   TokenService.clearAuthToken()
+  //   TokenService.clearCallbackBeforeExpiry()
+  //   IdleService.unRegisterIdleResets()
+  //   this.setUser({ idle: true })
+  // }
 
   fetchRefreshToken = () => {
     TeacherAuthApiService.refreshToken()

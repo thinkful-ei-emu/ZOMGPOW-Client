@@ -3,7 +3,12 @@ import LearningTargetForm from '../../Components/LearningTargetForm/LearningTarg
 import StudentList from '../../Components/StudentList/StudentList';
 import './TeacherDashboardRoute.css';
 
+
 class TeacherDashboardRoute extends React.Component{
+
+  componentDidMount(){
+    
+  }
 
   render() {
     return (

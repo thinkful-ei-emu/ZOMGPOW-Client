@@ -1,7 +1,11 @@
 import config from '../config';
 import TokenService from './token-service';
 
+
+
+
 const TeacherAuthApiService = {
+  
   postUser(user) {
     return fetch(`${config.API_ENDPOINT}/register/teacher`, {
       method: 'POST',
