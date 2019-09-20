@@ -18,24 +18,24 @@ class LearningTargetForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     // Post learning target to API -- WHAT ENDPOINT?
-
-
+    const { learningTarget } = e.target
+    console.log(learningTarget.value);
     this.setState({
       learningTarget: ''
     })
-    // REDIRECT to session page?  Is this how?
-    // this.props.history.push('')
+    // this.props.history.push('/session')
   }
 
   render() {
     return (
-      <form className='learning-target-form'>
-            <label htmlFor='learning-target'>Learning Target:</label>
+      <form className='learning-target-form'
+        onSubmit={this.handleSubmit}>
+            <label htmlFor='learningTarget'>Learning Target:</label>
             <textarea 
               id='learning-target'
               onChange={this.handleChange}
               value={this.state.learningTarget}
-              name='learning-target'
+              name='learningTarget'
               aria-label='learning target'
               aria-required='true'
               required

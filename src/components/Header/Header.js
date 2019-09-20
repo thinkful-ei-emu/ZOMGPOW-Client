@@ -26,6 +26,8 @@ class Header extends React.Component {
       <nav>
         <Link to='/dashboard/teacher'>Dashboard</Link>
         {' '}
+        <Link to='/session'>Session Goals</Link>
+        {' '}
         <Link 
           onClick={this.handleLogoutClick}
           to='/'>
