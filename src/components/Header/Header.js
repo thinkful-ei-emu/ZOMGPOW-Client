@@ -14,9 +14,9 @@ class Header extends React.Component {
   renderLogInLinks(){
     return (
       <nav className="login-buttons">
-        <Link to='/login/teacher'>Teacher Login</Link>
-        <Link to='/login/student'>Student Login</Link>
-        <Link to='/register'>Sign Up</Link>
+        <Link to='/login/teacher' className='teacher'>Teacher Login</Link>
+        <Link to='/login/student' className='student'>Student Login</Link>
+        <Link to='/register' className='sign-up'>Sign Up</Link>
       </nav>
     )
   }
@@ -41,7 +41,7 @@ class Header extends React.Component {
       <header className="header" role="banner">
         <h1>
           <Link to='/'>
-          Name of Application
+          Sprout
           </Link>
         </h1>
         <div className="links">

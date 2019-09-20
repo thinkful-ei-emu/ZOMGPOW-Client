@@ -7,6 +7,8 @@ import TeacherLoginRoute from '../../Routes/TeacherLoginRoute/TeacherLoginRoute'
 import StudentDashboard from '../../Routes/StudentDashboard/StudentDashboard';
 import StudentLoginRoute from '../../Routes/StudentLoginRoute/StudentLoginRoute';
 import TeacherDashboardRoute from '../../Routes/TeacherDashboardRoute/TeacherDashboardRoute';
+import SessionRoute from '../../Routes/SessionRoute/SessionRoute';
+import NotFoundRoute from '../../Routes/NotFoundRoute/NotFoundRoute';
 import './App.css';
 
 export default class App extends React.Component {
@@ -36,8 +38,15 @@ export default class App extends React.Component {
             component={TeacherDashboardRoute}
           />
           <Route 
+            path='/session'
+            component={SessionRoute}
+           />
+          <Route
             path='/dashboard/student'
             component={StudentDashboard}
+          />
+          <Route
+            component={NotFoundRoute}
           />
         </Switch>
       </div>

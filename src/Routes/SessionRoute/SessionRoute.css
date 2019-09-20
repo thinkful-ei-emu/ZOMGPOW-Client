@@ -1,0 +1,132 @@
+.SessionRoute-container {
+  font-family: 'Lexend Deca', sans-serif;
+}
+
+.SessionRoute-container p {
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 0;
+}
+
+.SessionRoute-container h2 {
+  margin-bottom: 5px;
+}
+
+.SessionRoute-container h3 {
+  font-size: 25px;
+}
+
+.SessionRoute-container ul{
+  list-style-type: none;
+  padding: 0;
+  margin: 5px 20px;
+}
+
+.SessionRoute-container .learning-target {
+  font-size: 23px;
+  margin: 5px 20px;
+  margin-bottom: 20px;
+}
+
+.SessionRoute-container li {
+  /* box-shadow: 3px 3px 5px 3px rgb(210, 210, 210); */
+  border: solid 1px darkgray;
+  border-radius: 10px;
+  padding: 3px 8px;
+  margin-bottom: 30px;
+}
+
+.hidden {
+  display: none;
+}
+
+.high {
+background: #8B00B5;
+}
+
+.medium {
+background: #0ABAD4;
+}
+
+.low {
+background: #81D40A;
+}
+
+.student-list button {
+  color: white;
+  padding: 5px 15px 8px 15px;
+  border-radius: 15px;
+  font-size: 16px;
+  text-align: center;
+  font-family: 'Lexend Deca', sans-serif;
+  margin: 10px;
+}
+
+.student-list .check-in {
+  background: #8B00B5;
+}
+
+.student-list .cancel {
+  background: #0ABAD4;
+}
+
+.student-list .update-goal {
+  background: #81D40A;
+}
+
+.student-list .expired button {
+  background: white;
+  color: black;
+}
+
+.student-list .expired button:hover {
+  background: lightgray;
+  cursor: pointer;
+}
+
+.student-list button:hover {
+  background: black;
+  cursor: pointer;
+}
+
+.student-list textarea {
+  width: 90%;
+  padding: 8px 12px;
+  margin-top: 0px;
+  margin-right: 10px;
+  margin-left: 10px;
+  box-sizing: border-box;
+  border: 2px solid lightgray;
+  border-radius: 4px;
+}
+
+.SessionRoute-container h4 {
+  margin: 5px 20px;
+}
+
+.radio {
+  margin: 0px 5px;
+}
+
+.expired button {
+  background: white;
+  color: black;
+}
+
+/* MEDIA QUERIES */
+
+@media only screen and (min-width: 500px) {
+  .student-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .student-list li {
+    width: 300px;
+    margin-left: 10px;
+    margin-right: 10px;
+    min-height: 200px;
+  }
+}

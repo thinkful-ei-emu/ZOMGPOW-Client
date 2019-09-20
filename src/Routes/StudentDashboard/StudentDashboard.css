@@ -1,8 +1,8 @@
-li{
+.student-dashboard-section li{
   list-style: none;
 }
 
-ul{
+.student-dashboard-section ul{
   padding-left: 0;
 }
 
@@ -11,4 +11,43 @@ ul{
   flex-direction: column;
   text-align: center;
   padding: 15px;
+  font-family: 'Lexend Deca', sans-serif;
+} 
+
+.student-dashboard-section p {
+  margin: 0;
+  font-size: 20px;
+}
+
+.student-dashboard-section .hidden {
+  display: none;
+}
+
+.student-dashboard-section button {
+  color: white;
+  background: #0ABAD4;
+  margin: 10px auto;
+  padding: 5px 15px 8px 15px;
+  border-radius: 15px;
+  font-size: 16px;
+  text-align: center;
+  font-family: 'Lexend Deca', sans-serif;
+}
+
+.student-dashboard-section button:hover {
+  background: black;
+  cursor: pointer;
+}
+
+.student-dashboard-section .goals-container {
+/* border: solid 1px darkgray; */
+margin-bottom: 20px;
+}
+
+.student-dashboard-section .timer-container {
+  border: solid 1px darkgray;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 300px;
+  margin: 0 auto;
 }

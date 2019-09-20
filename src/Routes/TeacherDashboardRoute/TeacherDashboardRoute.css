@@ -1,7 +1,8 @@
-.TeacherDashboardRoute-section{
-  display: flex;
-  flex-direction: column;
-  width: 60%;
-  margin: auto;
-  padding: 3%;
-}
+ .TeacherDashboardRoute-section {
+   margin-top: 40px;
+   font-family: 'Lexend Deca', sans-serif;
+ }
+
+ .TeacherDashboardRoute-learning-target-submit {
+  border-bottom: solid 1px darkgray;
+ }

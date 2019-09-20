@@ -47,7 +47,6 @@ class RegistrationForm extends React.Component {
         <div className='alert' role='alert'>
         {error && <p>{error}</p>}
         </div>
-        <div>
           <h2>Sign up</h2>
           <label htmlFor='registration-full-name-input'>
           Full Name:
@@ -60,8 +59,6 @@ class RegistrationForm extends React.Component {
             aria-label='Registration full name input'
             aria-required='true'
             required />
-        </div>
-        <div>
           <label htmlFor='registration-email-input'>
             E-mail: 
           </label>
@@ -72,8 +69,6 @@ class RegistrationForm extends React.Component {
             aria-label='Registration email input'
             aria-required='true'
             required />
-        </div>
-        <div>
           <label
             htmlFor='registration-password-input'>
             Password: 
@@ -85,16 +80,13 @@ class RegistrationForm extends React.Component {
             aria-label='Registration password input'
             aria-required='true'
             required/>
-        </div>
-        <div>
           <button type='submit'>
             Sign Up!
           </button>
           {' '}
-          <div>
+          <div className='link-to-login'>
             <Link to='/login/teacher' className='login-link'>Already have an account?</Link>
           </div>
-        </div>
       </form>
     )
   }
