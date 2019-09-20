@@ -26,11 +26,11 @@ class RegistrationForm extends React.Component {
       password.value = ''
       this.props.onRegistrationSuccess();
     })
-    // .catch(res => {
-    //   this.setState({
-    //     error: res.error
-    //   })
-    // })
+    .catch(res => {
+      this.setState({
+        error: res.error
+      })
+    })
   }
 
   componentDidMount() {
