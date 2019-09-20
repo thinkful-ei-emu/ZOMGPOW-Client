@@ -10,7 +10,7 @@ class SessionRoute extends React.Component {
 
   state = {
     error: null,
-    learningTarget: 'Write a 5 paragraph essay',
+    learningTarget: '',
     updatedSubGoal: '',
     updatedPriority: null,
     students: [],
@@ -26,7 +26,10 @@ class SessionRoute extends React.Component {
       .then(res => {
         const setupStudents = this.setupStudents(res.students);
         // console.log(setupStudents);
-        this.setState({students: setupStudents})
+        this.setState({
+          students: setupStudents,
+          learningTarget: res.goals[0] ? res.goals[0].goal_title : ''
+        })
       })
       .catch(error => this.setState({ error }))
     } else {
@@ -66,8 +69,7 @@ class SessionRoute extends React.Component {
 
   handleUpdateGoal = (e, studentUsername) => {
     e.preventDefault();
-    //clear errors?
-    // const data = { subgoal: this.state.updatedSubGoal, priority: this.state.updatedPriority};
+    // const data = {goal_title: this.state.updatedSubGoal};
     // StudentApiService.updateStudent(studentUsername, data)
     //   .then(res => {
     //     const studentToUpdate = this.state.students.find(student => student.user_name === studentUsername);
