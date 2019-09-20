@@ -43,13 +43,11 @@ class StudentList extends React.Component{
     })
   }
 
-  // Updates state with user input submission
   handleSubmit = (e) => {
     e.preventDefault();
     this.setState({
       newStudent: this.state.userInput,
     })
-    // Use Student Api Service to post student - PSUEDO CODE
     StudentAuthApiService.postStudent(this.state.newStudent)
       .then(res => {
         this.setState({

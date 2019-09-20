@@ -24,7 +24,7 @@ class Header extends React.Component {
   renderLogOutLinks(){
     return (
       <nav>
-        <Link to='/link/path'>Link</Link>
+        <Link to='/dashboard/teacher'>Dashboard</Link>
         {' '}
         <Link 
           onClick={this.handleLogoutClick}

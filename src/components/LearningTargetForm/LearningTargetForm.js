@@ -29,7 +29,7 @@ class LearningTargetForm extends React.Component {
   render() {
     return (
       <form>
-            <label htmlFor='learning-target'>Learning Target:</label>
+            <label htmlFor='learning-target'>Learning Target: {this.state.learningTarget}</label>
             <input 
               id='learning-target'
               onChange={this.handleChange}

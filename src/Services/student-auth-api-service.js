@@ -3,7 +3,7 @@ import TokenService from './token-service'
 
 const StudentAuthApiService = {
   postStudent(student) {
-    return fetch(`${config.API_ENDPOINT}/user`, {
+    return fetch(`${config.API_ENDPOINT}/register/student`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -18,7 +18,7 @@ const StudentAuthApiService = {
      
   },
   postLogin({ username }) {
-    return fetch(`${config.API_ENDPOINT}/auth/token`, {
+    return fetch(`${config.API_ENDPOINT}/auth/studnet/login`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
