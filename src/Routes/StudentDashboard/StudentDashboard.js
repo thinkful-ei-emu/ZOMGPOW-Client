@@ -1,9 +1,11 @@
 import React from 'react';
+import StudentAuthApiService from '../../Services/student-auth-api-service';
 import StudentTimer from '../../Components/Timer/StudentTimer';
 import './StudentDashboard.css';
 
 class StudentDashboard extends React.Component{
   state = {
+    class_id: 1,
     error: null,
     timer: false,
     show: true,
@@ -13,19 +15,13 @@ class StudentDashboard extends React.Component{
     previousGoals: ['Make a brainmap', 'Read short article for inspiration']
   };
 
-//   componentDidMount() {
-//  Fetch goals from API -- PSUEDO CODE, need to check with Back End
-//       .then(res => {
-//         this.setState({
-//           goal: res.goal,
-//           currentGoal: res.currentGoal,
-//           previouGoals: res.previouGoals
-//         })
-//       })
-//       .catch(res => {
-//         this.setState({ error: res.error })
-//       })
-//   }
+  componentDidMount() {
+    StudentAuthApiService.getStudentGoals(this.state.class_id)
+      .then(res => console.log(res))
+      .catch(res => {
+        this.setState({ error: res.error })
+      })
+  }
 
 toggleTimer = () => {
   // toggle css hidden attribute

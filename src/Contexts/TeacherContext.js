@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import TeacherAuthApiService from '../Services/teacher-auth-api-service'
+// import TeacherAuthApiService from '../Services/teacher-auth-api-service'
 import TokenService from '../Services/token-service'
-import IdleService from '../Services/idle-service'
+// import IdleService from '../Services/idle-service'
 
 const TeacherContext = React.createContext({
   user: {},
   error: null,
+  teacherClass: null,
   setError: () => { },
   clearError: () => { },
   setUser: () => { },
@@ -38,19 +39,19 @@ export class TeacherProvider extends Component {
     // IdleService.setIdleCallback(this.logoutBecauseIdle)
   }
 
-  componentDidMount() {
-    // if (TokenService.hasAuthToken()) {
-    //   IdleService.regiserIdleTimerResets()
-    //   TokenService.queueCallbackBeforeExpiry(() => {
-    //     this.fetchRefreshToken()
-    //   })
-    // }
-  }
+  // componentDidMount() {
+  //   if (TokenService.hasAuthToken()) {
+  //     IdleService.regiserIdleTimerResets()
+  //     TokenService.queueCallbackBeforeExpiry(() => {
+  //       this.fetchRefreshToken()
+  //     })
+  //   }
+  // }
 
-  componentWillUnmount() {
-    IdleService.unRegisterIdleResets()
-    TokenService.clearCallbackBeforeExpiry()
-  }
+  // componentWillUnmount() {
+  //   IdleService.unRegisterIdleResets()
+  //   TokenService.clearCallbackBeforeExpiry()
+  // }
 
   setError = error => {
     console.error(error)
@@ -83,16 +84,16 @@ export class TeacherProvider extends Component {
     this.setUser({user})
     this.setClass({teacherClass})
 
-    // IdleService.regiserIdleTimerResets()
-    // TokenService.queueCallbackBeforeExpiry(() => {
-    //   this.fetchRefreshToken()
-    // })
+  //   IdleService.regiserIdleTimerResets()
+  //   TokenService.queueCallbackBeforeExpiry(() => {
+  //     this.fetchRefreshToken()
+  //  })
   }
 
   processLogout = () => {
     TokenService.clearAuthToken()
-    TokenService.clearCallbackBeforeExpiry()
-    IdleService.unRegisterIdleResets()
+    // TokenService.clearCallbackBeforeExpiry()
+    // IdleService.unRegisterIdleResets()
     this.setUser({})
   }
 
@@ -103,18 +104,20 @@ export class TeacherProvider extends Component {
   //   this.setUser({ idle: true })
   // }
 
-  fetchRefreshToken = () => {
-    TeacherAuthApiService.refreshToken()
-      .then(res => {
-        TokenService.saveAuthToken(res.authToken)
-        TokenService.queueCallbackBeforeExpiry(() => {
-          this.fetchRefreshToken()
-        })
-      })
-      .catch(err => {
-        this.setError(err)
-      })
-  }
+  // fetchRefreshToken = () => {
+  //   TeacherAuthApiService.refreshToken()
+  //     .then(res => {
+  //       TokenService.saveAuthToken(res.authToken)
+  //       TokenService.queueCallbackBeforeExpiry(() => {
+  //         this.fetchRefreshToken()
+  //       })
+  //     })
+  //     .catch(err => {
+  //       this.setError(err)
+  //     })
+  // }
+
+
   render() {
     const value = {
       user: this.state.user,

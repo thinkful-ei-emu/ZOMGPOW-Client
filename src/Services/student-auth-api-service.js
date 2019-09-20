@@ -20,7 +20,7 @@ const StudentAuthApiService = {
      
   },
   postLogin({ username }) {
-    return fetch(`${config.API_ENDPOINT}/auth/token`, {
+    return fetch(`${config.API_ENDPOINT}/auth/studnet/login`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -75,6 +75,18 @@ const StudentAuthApiService = {
       (!res.ok)
       ? res.json().then(e => Promise.reject(e))
       : res.json()
+    )
+  },
+  getStudentGoals(class_id){
+    return fetch(`${config.API_ENDPOINT}/goals/${class_id}`, {
+      headers: {
+        authorization: `bearer ${TokenService.getAuthToken()}`
+      },
+    })
+    .then(res =>
+      (!res.ok)
+        ? res.json().then(e => Promise.reject(e))
+        : res.json()
     )
   }
 }

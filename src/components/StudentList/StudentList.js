@@ -55,7 +55,6 @@ class StudentList extends React.Component{
     })
   }
 
-  // Updates state with user input submission
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(this.state.userInput)
