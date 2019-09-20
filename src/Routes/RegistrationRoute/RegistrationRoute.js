@@ -18,7 +18,7 @@ class RegistrationRoute extends React.Component {
     return (
       <section className="teacher-registration">
         <RegistrationForm 
-          onRegistrationSuccess={this.hnadleRegistrationSuccess}/>
+          onRegistrationSuccess={this.handleRegistrationSuccess}/>
       </section>
     )
   }

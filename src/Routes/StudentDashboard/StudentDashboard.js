@@ -6,6 +6,7 @@ class StudentDashboard extends React.Component{
   state = {
     error: null,
     timer: false,
+    show: true,
     goal: 'Write a 5 paragraph essay',
     goalComplete: false,
     currentGoal: 'Construct a thesis statement', 
@@ -26,18 +27,34 @@ class StudentDashboard extends React.Component{
 //       })
 //   }
 
+toggleTimer = () => {
+  // toggle css hidden attribute
+  // update state
+  this.setState({
+    show: !this.state.show,
+  })
+}
+
   render() {
     const prevGoals = this.state.previousGoals.map((goal, index) =>
       <li key={index}>{goal}</li>
     );
     return(
       <section className="student-dashboard-section">
-      <h3>Learning Target: {this.state.goal}</h3>
-      <h3>Current Goal: {this.state.currentGoal} </h3>
-      <button>Show/Hide Timer</button>
-      <StudentTimer />
-      <h3>Previous Goals</h3>
-      <ul>{prevGoals}</ul>
+      <div className='goals-container'>
+        <h2>Learning Target: </h2>
+        <p>{this.state.goal}</p>
+        <h2>Current Goal: </h2>
+        <p>{this.state.currentGoal}</p>
+      </div>
+      <div className='timer-container'>
+        <button onClick={this.toggleTimer}>{this.state.show ? 'Hide' : 'Timer'}</button>
+        <div className={this.state.show ? '' : 'hidden'}>
+          <StudentTimer />
+        </div>
+      </div>
+      {/* <h3>Previous Goals</h3>
+      <ul>{prevGoals}</ul> */}
       </section>
     )
   }

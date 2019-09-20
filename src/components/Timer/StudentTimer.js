@@ -1,9 +1,10 @@
 import React from 'react';
+import './StudentTimer.css';
 
 class StudentTimer extends React.Component {
   render() {
     return (
-      <div>Timer display</div>
+      <div className='timer'>4:35</div>
     )
   }
 }

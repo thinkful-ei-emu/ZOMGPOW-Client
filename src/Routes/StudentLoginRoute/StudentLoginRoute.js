@@ -50,15 +50,16 @@ class StudentLoginRoute extends React.Component {
     return (
       <div className="student-login">
         <form className="student-login-form" onSubmit={this.handleSubmit}>
-        <div role='alert'>
+          <div role='alert'>
           {error && <p>{error}</p>}
-        </div>
-        <h2>Student Login</h2>
-        <label>Username:</label><br></br>
+          </div>
+          <h2>Student Login</h2>
+          <label>Username:</label><br></br>
           <input className= "student-username" name="student-username" required></input><br></br>
           <button type="submit">Submit</button>
           <div className='student-help'>
-            Forgot your username? Ask your teacher for help.
+            <p>Forgot your username?</p>
+            <p>Ask your teacher for help.</p>
           </div>
         </form>
    
