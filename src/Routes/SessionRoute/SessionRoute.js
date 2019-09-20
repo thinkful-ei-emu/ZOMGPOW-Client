@@ -1,5 +1,6 @@
 import React from 'react';
 import StudentApiService from '../../Services/student-auth-api-service';
+import TokenService from '../../Services/token-service';
 import './SessionRoute.css';
 
 class SessionRoute extends React.Component {
@@ -8,64 +9,36 @@ class SessionRoute extends React.Component {
     learningTarget: 'Write a 5 paragraph essay',
     updatedSubGoal: '',
     updatedPriority: null,
-    students: [
-      {
-        name: 'studentA',
-        username: 'studentA123',
-        goal: 'Write a 5 paragraph essay',
-        goalComplete: false,
-        subGoal: null,
-        expand: false,
-        expired: false,
-        order: 0,
-        priority: 'low',
-      },
-      {
-        name: 'studentB',
-        username: 'studentB456',
-        goal: 'Write a 5 paragraph essay',
-        goalComplete: false,
-        subGoal: 'Write a thesis statement',
-        expand: false,
-        expired: false,
-        order: 0,
-        priority: 'low',
-      },
-      {
-        name: 'studentC',
-        username: 'studentC789',
-        goal: 'Write a 5 paragraph essay',
-        goalComplete: false,
-        subGoal: 'Make a brainmap',
-        expand: false,
-        expired: false,
-        order: 0,
-        priority: 'low',
-      },
-      ]
+    students: [],
   }
 
   componentDidMount() {
-    // Fetch learning target and students
-    // if(TokenService.hasAuthToken()) {
-    //   return StudentsApiService.getAllStudents()
-    //   .then(students => 
-    //  const setupStudents = this.setupStudents(students);
-    //  this.setState({students: setupStudents}))
-    //   .catch(error => this.setState({ error }))
-    // }
-    // this.props.history.push('/login/teacher');
+    if(TokenService.hasAuthToken()) {
+      //get learning target
+      //get students and goals
+      StudentApiService.getAllStudents(1)
+      .then(students => {
+        const setupStudents = this.setupStudents(students);
+        console.log(setupStudents);
+        this.setState({students: students})
+      })
+      .catch(error => this.setState({ error }))
+    } else {
+      this.props.history.push('/login/teacher');
+    }
+    
+    
   }
 
   setupStudents = (students) => {
     //students should be an array of objects
-    const addKeysStudents = students.map(student => {
+    return students.map(student => {
       student.expand = false;
       student.expired = false;
       student.order = 0;
       student.priority = 1;
+      return student;
     })
-    return addKeysStudents;
   }
 
   // Should set timer when sub goal is updated
@@ -142,7 +115,7 @@ class SessionRoute extends React.Component {
           key={student.username}
           className={student.expired === true ? `expired ${student.priority}` : ''}
           >
-          <h3>{student.name}</h3>
+          <h3>{student.full_name}</h3>
           <p>{student.subGoal ? student.subGoal : student.goal}</p>
           <button 
             className={student.expand ? 'cancel' : 'check-in'}
@@ -210,7 +183,7 @@ class SessionRoute extends React.Component {
   }
 
   render() {
-    const { error } = this.state;
+    const error = this.state.error;
     const learningTarget = this.state.learningTarget;
     const studentsToSort = this.state.students.filter(student => student.order !== 0)
     const sortedStudents = studentsToSort.sort((a, b) => a.order > b.order ? 1 : -1);
