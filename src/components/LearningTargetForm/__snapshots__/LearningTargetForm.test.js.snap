@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LearningTargetForm component renders a .LearningTargetForm by default 1`] = `
+<form>
+  <label
+    htmlFor="learning-target"
+  >
+    Learning Target:
+  </label>
+  <input
+    aria-label="learning target"
+    aria-required="true"
+    id="learning-target"
+    name="learning-target"
+    onChange={[Function]}
+    required={true}
+    value=""
+  />
+  <div>
+    <button
+      type="submit"
+    >
+      Start Session
+    </button>
+  </div>
+</form>
+`;

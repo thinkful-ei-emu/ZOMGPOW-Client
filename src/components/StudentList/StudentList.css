@@ -1,0 +1,53 @@
+.StudentList-container h2 {
+  font-size: 25px;
+}
+
+.StudentList-container ul{
+  list-style-type: none;
+} 
+
+.StudentList-container li {
+  font-size: 18px;
+}
+
+.StudentList-container li span {
+  margin: 0 15px;
+}
+
+.add-student-form {
+  display: flex; 
+  flex-direction: column;
+  padding: 15px;
+  border-radius: 15px;
+  margin: 20px auto;
+  width: 80%;
+  max-width: 300px;
+  align-items: center;
+}
+
+.add-student-form label {
+  font-weight: 800;
+}
+
+.add-student-form input {
+  border-radius: 5px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  border: solid 1px darkgray;
+  margin: 10px;
+}
+
+.add-student-form button {
+  color: white;
+  background: #0ABAD4;
+  padding: 5px 15px 8px 15px;
+  border-radius: 15px;
+  font-size: 16px;
+  text-align: center;
+  font-family: 'Lexend Deca', sans-serif;
+}
+
+.add-student-form button:hover {
+  background: black;
+  cursor: pointer;
+}

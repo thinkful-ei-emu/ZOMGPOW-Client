@@ -1,0 +1,51 @@
+.landing-page{
+  display: flex; 
+  margin: auto;
+  flex-direction: column;
+  width: 80%;
+  padding: 20px;
+}
+
+.landing-page h2{
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 30px;
+}
+
+.landing-page p{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+}
+
+.landing-page .teacher, .landing-page .student {
+  text-decoration: none;
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 30px;
+  padding: 30px;
+  border-radius: 15px;
+  color: white;
+  margin-top: 10px;
+  width: 250px;
+}
+
+.landing-page-link-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.landing-page .student {
+  background: #0ABAD4;
+  width: 80%;
+  max-width: 300px;
+}
+
+.landing-page .teacher {
+  background: #8B00B5;
+  width: 80%;
+  max-width: 300px;
+}
+
+.landing-page .student:hover, .landing-page .teacher:hover {
+  background: black;
+}

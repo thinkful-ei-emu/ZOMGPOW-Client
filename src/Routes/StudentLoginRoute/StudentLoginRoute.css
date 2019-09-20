@@ -1,0 +1,55 @@
+.student-login-form{
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  border-radius: 15px;
+  border: solid 1px darkgray;
+  margin: 40px auto;
+  width: 80%;
+  max-width: 300px;
+  align-items: center;
+}
+
+.student-login-form h2 {
+  font-size: 27px;
+  font-family: 'Lexend Deca', sans-serif;
+}
+
+.student-login-form label {
+  font-size: 20px;
+  font-family: 'Lexend Deca', sans-serif;
+}
+
+.student-login-form input{
+  border-radius: 5px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  border: solid 1px darkgray;
+  margin: 0px 10px;
+}
+
+.student-login-form p {
+  margin: 0;
+}
+
+.student-login-form button{
+  color: white;
+  background: #0ABAD4;
+  padding: 5px 15px 8px 15px;
+  border-radius: 15px;
+  font-size: 16px;
+  text-align: center;
+  font-family: 'Lexend Deca', sans-serif;
+  margin-bottom: 10px;
+}
+
+.student-login-form button:hover {
+  background: black;
+  cursor: pointer;
+}
+
+.student-help{
+  justify-content: center;
+  color: #8B00B5;
+  font-size: 15px;
+}
