@@ -5,11 +5,12 @@ import TokenService from '../../Services/token-service';
 import TeacherContext from '../../Contexts/TeacherContext';
 
 class LearningTargetForm extends React.Component {
-  static contextType = TeacherContext;
   state = {
     error: null,
     learningTarget: '',
   }
+  staticDefaultProps={}
+  static contextType = TeacherContext;
 
   // Updates state with every user input change
   handleChange = (e) => {
@@ -37,9 +38,15 @@ class LearningTargetForm extends React.Component {
         return res.json().then(e => Promise.reject(e));
       }
       return res.json();
+    }).then(res => {
+      this.setState({
+        learningTarget: ''
+      })
+      const { history } = this.props
+      history.push('/session')
     })
-    this.setState({
-      learningTarget: ''
+    .catch(error => {
+      console.error({ error })
     })
   }
 

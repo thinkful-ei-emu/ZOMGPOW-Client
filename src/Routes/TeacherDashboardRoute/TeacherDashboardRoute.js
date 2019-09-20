@@ -9,7 +9,7 @@ class TeacherDashboardRoute extends React.Component{
     return (
       <section className='TeacherDashboardRoute-section'>
         <div className='TeacherDashboardRoute-learning-target-submit'>
-          <LearningTargetForm />
+          <LearningTargetForm history={this.props.history}/>
         </div>
         <div className='TeacherDashboardRoute-student-list'>
           <StudentList />
