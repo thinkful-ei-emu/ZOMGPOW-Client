@@ -29,7 +29,6 @@ export default class TeacherLoginForm extends React.Component{
           .then(res => {
             email.value = ''
             password.value = ''
-            //this is where I need to add teacher and class to context
             this.context.processLogin(res)
             this.props.onLoginSuccess()
           })
