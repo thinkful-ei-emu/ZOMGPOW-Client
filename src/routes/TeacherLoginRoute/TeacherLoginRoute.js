@@ -18,8 +18,7 @@ class TeacherLoginRoute extends Component {
 
   render() {
     return (
-      <section>
-        <h2>Login</h2>
+      <section className="teacher-login">
         <TeacherLoginForm
           onLoginSuccess={this.handleLoginSuccess}
         />

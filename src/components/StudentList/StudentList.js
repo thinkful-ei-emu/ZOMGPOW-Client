@@ -80,7 +80,7 @@ class StudentList extends React.Component{
 
   render() {
     const { error } = this.state;
-    const studentList = this.state.students.map((student, index) => <li key={index}>{student.name} {student.username}</li>)
+    const studentList = this.state.students.map((student, index) => <li key={index}><span>{student.name}</span><span>{student.username}</span></li>)
     return(
       <div className='StudentList-container'>
       <h2>Students</h2>
@@ -90,7 +90,9 @@ class StudentList extends React.Component{
           {studentList.length < 1 
             ? <p>Add your students!</p> 
             : <ul>{studentList}</ul>}
-        <form onSubmit={this.handleSubmit}>
+        <form 
+          onSubmit={this.handleSubmit}
+          className='add-student-form'>
           <label 
             htmlFor='add-student'>Student Name: </label>
             <input

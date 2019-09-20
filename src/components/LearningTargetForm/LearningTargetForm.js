@@ -1,4 +1,5 @@
 import React from 'react';
+import './LearningTargetForm.css';
 
 class LearningTargetForm extends React.Component {
 
@@ -28,9 +29,9 @@ class LearningTargetForm extends React.Component {
 
   render() {
     return (
-      <form>
+      <form className='learning-target-form'>
             <label htmlFor='learning-target'>Learning Target:</label>
-            <input 
+            <textarea 
               id='learning-target'
               onChange={this.handleChange}
               value={this.state.learningTarget}

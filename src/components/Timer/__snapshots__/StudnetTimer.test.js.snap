@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StudentTimer component renders a .StudentTimer by default 1`] = `
+<div>
+  Timer display
+</div>
+`;

@@ -11,15 +11,14 @@ class RegistrationRoute extends React.Component {
 
   handleRegistrationSuccess = () => {
     const { history } = this.props;
-    history.push('/login')
+    history.push('/login/teacher')
   }
 
   render() {
     return (
-      <section>
-        <h2>Sign up</h2>
+      <section className="teacher-registration">
         <RegistrationForm 
-          onRegistrationSuccess={this.hnadleRegistrationSuccess}/>
+          onRegistrationSuccess={this.handleRegistrationSuccess}/>
       </section>
     )
   }

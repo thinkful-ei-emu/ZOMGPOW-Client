@@ -1,4 +1,8 @@
 .landing-page{
+  display: flex; 
+  margin: auto;
+  flex-direction: column;
+  width: 80%;
   padding: 20px;
 }
 
@@ -32,10 +36,14 @@
 
 .landing-page .student {
   background: #0ABAD4;
+  width: 80%;
+  max-width: 300px;
 }
 
 .landing-page .teacher {
   background: #8B00B5;
+  width: 80%;
+  max-width: 300px;
 }
 
 .landing-page .student:hover, .landing-page .teacher:hover {
