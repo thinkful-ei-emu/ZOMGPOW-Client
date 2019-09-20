@@ -32,7 +32,7 @@ class StudentList extends React.Component{
       newStudent: null,
   }
 
-  componentDidMount() {
+  componentDidMount() { 
     // Fetch students from API -- PSUEDO CODE, need to check with Back End
     StudentAuthApiService.getAllStudents()
       .then(res => {
