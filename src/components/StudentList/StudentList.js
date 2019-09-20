@@ -34,15 +34,15 @@ class StudentList extends React.Component{
 
   componentDidMount() {
     // Fetch students from API -- PSUEDO CODE, need to check with Back End
-    StudentAuthApiService.getAllStudents()
-      .then(res => {
-        this.setState({
-          students: res.students,
-        })
-      })
-      .catch(res => {
-        this.setState({ error: res.error })
-      })
+    // StudentAuthApiService.getAllStudents()
+    //   .then(res => {
+    //     this.setState({
+    //       students: res.students,
+    //     })
+    //   })
+    //   .catch(res => {
+    //     this.setState({ error: res.error })
+    //   })
   }
 
   // Updates state with every user input change

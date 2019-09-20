@@ -18,40 +18,20 @@ class SessionRoute extends React.Component {
 
   componentDidMount() {
     if(TokenService.hasAuthToken()) {
-      // Set classId to context when it is working
-      console.log(this.context.teacherClass)
+      // Set classId to context when it is working ------------**
       let classId = 1;
-      //get learning target
-      // console.log(this.context.user);
-      this.fetchLearningTarget(classId);
 
-      //get students and goals
+      //get students, goals, and subgoals
       StudentApiService.getAllStudents(classId)
-      .then(students => {
-        const setupStudents = this.setupStudents(students);
+      .then(res => {
+        const setupStudents = this.setupStudents(res.students);
         // console.log(setupStudents);
-        this.setState({students: students})
+        this.setState({students: setupStudents})
       })
       .catch(error => this.setState({ error }))
     } else {
       this.props.history.push('/login/teacher');
-    }
-    
-    
-  }
-
-  //get learning target --> move to service later
-  fetchLearningTarget = (classId) => {
-    return fetch(`${config.API_ENDPOINT}/goals/${classId}/`, {
-      headers: {
-        authorization: `bearer ${TokenService.getAuthToken()}`
-      },
-    })
-    .then(res =>
-      (!res.ok)
-        ? res.json().then(e => Promise.reject(e))
-        : res.json()
-    )
+    } 
   }
 
   setupStudents = (students) => {
