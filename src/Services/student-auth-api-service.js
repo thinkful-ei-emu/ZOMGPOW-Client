@@ -10,7 +10,6 @@ const StudentAuthApiService = {
       headers: {
         'authorization': `Bearer ${TokenService.getAuthToken()}`,
         'content-type': 'application/json',
-        'authorization': `Bearer ${TokenService.getAuthToken()}`
       },
       body: JSON.stringify(student),
     })
@@ -21,13 +20,13 @@ const StudentAuthApiService = {
       )
      
   },
-  postLogin({ username }) {
+  postLogin(user_name) {
     return fetch(`${config.API_ENDPOINT}/auth/student/login`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify({ username }),
+      body: JSON.stringify({user_name}),
     })
       .then(res =>
         (!res.ok)

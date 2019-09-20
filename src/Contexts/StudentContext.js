@@ -24,9 +24,9 @@ export class StudentProvider extends Component {
 
     if (jwtPayload)
       state.user = {
-        id: jwtPayload.user_id,
-        fullname: jwtPayload.fullname,
-        email: jwtPayload.email,
+        id: jwtPayload.id,
+        username: jwtPayload.user_name,
+
       }
 
     this.state = state;
@@ -62,12 +62,13 @@ export class StudentProvider extends Component {
   }
 
   processLogin = authToken => {
+    console.log('in process login in context')
     TokenService.saveAuthToken(authToken)
     const jwtPayload = TokenService.parseAuthToken()
+    console.log(jwtPayload)
     this.setUser({
-      id: jwtPayload.user_id,
-      fullname: jwtPayload.fullname,
-      email: jwtPayload.email,
+      id: jwtPayload.id,
+      username: jwtPayload.user_name,
     })
     // IdleService.regiserIdleTimerResets()
     // TokenService.queueCallbackBeforeExpiry(() => {
@@ -112,7 +113,7 @@ export class StudentProvider extends Component {
       setUser: this.setUser,
       processLogin: this.processLogin,
       processLogout: this.processLogout
-    }
+    } 
     return (
       <StudentContext.Provider value={value}>
         {this.props.children}
