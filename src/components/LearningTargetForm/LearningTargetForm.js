@@ -8,6 +8,7 @@ class LearningTargetForm extends React.Component {
   state = {
     error: null,
     learningTarget: '',
+    teacher_id: null
   }
   staticDefaultProps={}
   static contextType = TeacherContext;

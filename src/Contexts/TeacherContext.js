@@ -77,8 +77,8 @@ export class TeacherProvider extends Component {
     const user = response.user;
     const teacherClass = response.class;
 
-    console.log('user from context', user)
-    console.log('teacherClass from context', teacherClass)
+    // console.log('user from context', user)
+    // console.log('teacherClass from context', teacherClass)
 
     TokenService.saveAuthToken(authToken)
     this.setUser({user})
