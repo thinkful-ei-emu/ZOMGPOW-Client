@@ -1,43 +1,46 @@
 import React from 'react';
 import StudentAuthApiService from '../../Services/student-auth-api-service';
 import './StudentList.css';
+import TeacherContext from '../../Contexts/TeacherContext'
+import config from '../../config'
+import TokenService from '../../Services/token-service'
 
 class StudentList extends React.Component{
+
+  static contextType = TeacherContext;
+
   state = {
     error: null,
-    students: [
-      {
-        name: 'studentA',
-        username: 'studentA123',
-        goal: 'Write a 5 paragraph essay',
-        goalComplete: false,
-        subGoal: null,
-      },
-      {
-        name: 'studentB',
-        username: 'studentB456',
-        goal: 'Write a 5 paragraph essay',
-        goalComplete: false,
-        subGoal: ['Write a thesis statement']
-      },
-      {
-        name: 'studentC',
-        username: 'studentC789',
-        goal: 'Write a 5 paragraph essay',
-        goalComplete: false,
-        subGoal: ['Make a brainmap', 'Choose 3 ideas from brainmap', 'Write thesis sentence']
-      },
-      ],
+    students: [],
       userInput: '',
       newStudent: null,
+      class_id: this.context.teacherClass.teacherClass.id
   }
 
-  componentDidMount() {
+  componentDidMount() { 
     // Fetch students from API -- PSUEDO CODE, need to check with Back End
-    StudentAuthApiService.getAllStudents()
-      .then(res => {
+    console.log('logging context ins studentLIst', this.context)
+    let teacherid = this.context.teacherClass.teacherClass.id
+    this.setState({
+      class_id: teacherid
+    })
+   
+    console.log('teacher id from context', teacherid)
+    return fetch(`${config.API_ENDPOINT}/class/${teacherid}/students`, {
+      method: 'GET',
+      headers: {
+        'authorization': `Bearer ${TokenService.getAuthToken()}`,
+      },
+    })
+    .then(res =>
+      (!res.ok)
+        ? res.json().then(e => Promise.reject(e))
+        : res.json()
+    )
+      .then(resStudents => {
+          (console.log(resStudents))
         this.setState({
-          students: res.students,
+          students: resStudents,
         })
       })
       .catch(res => {
@@ -54,14 +57,20 @@ class StudentList extends React.Component{
 
   handleSubmit = (e) => {
     e.preventDefault();
+    console.log(this.state.userInput)
     this.setState({
       newStudent: this.state.userInput,
     })
-    StudentAuthApiService.postStudent(this.state.newStudent)
+    // Use Student Api Service to post student - PSUEDO CODE
+    console.log('console newstudent', this.state.newStudent)
+    let newStudent = {full_name: this.state.userInput, class_id: this.state.class_id}
+    console.log('newstudent:', newStudent)
+    StudentAuthApiService.postStudent(newStudent)
       .then(res => {
+        console.log(res)
         this.setState({
-          students: [...this.state.students, res.student],
-          newStudent: null,
+          students: [...this.state.students, res],
+          // newStudent: null,
           userInput: '',
         })
       })
@@ -78,7 +87,8 @@ class StudentList extends React.Component{
 
   render() {
     const { error } = this.state;
-    const studentList = this.state.students.map((student, index) => <li key={index}><span>{student.name}</span><span>{student.username}</span></li>)
+    console.log('students',this.state.students)
+    const studentList = this.state.students.map((student, index) => <li key={index}><span>{student.full_name}</span><span>{student.user_name}</span></li>)
     return(
       <div className='StudentList-container'>
       <h2>Students</h2>

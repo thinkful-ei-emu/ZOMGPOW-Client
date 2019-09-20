@@ -1,12 +1,14 @@
 import config from '../config'
 import TokenService from './token-service'
 
+
 const StudentAuthApiService = {
   // this endpoint requries an authorization header on the backend
   postStudent(student) {
     return fetch(`${config.API_ENDPOINT}/register/student`, {
       method: 'POST',
       headers: {
+        'authorization': `Bearer ${TokenService.getAuthToken()}`,
         'content-type': 'application/json',
         'authorization': `Bearer ${TokenService.getAuthToken()}`
       },
@@ -47,7 +49,7 @@ const StudentAuthApiService = {
       )
   },
   getAllStudents() {
-    return fetch(`${config.API_ENDPOINT}/students`, {
+    return fetch(`${config.API_ENDPOINT}/class/`, {
       method: 'GET',
       headers: {
         'authorization': `Bearer ${TokenService.getAuthToken()}`,
