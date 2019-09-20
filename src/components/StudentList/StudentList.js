@@ -2,8 +2,8 @@ import React from 'react';
 import StudentAuthApiService from '../../Services/student-auth-api-service';
 import './StudentList.css';
 import TeacherContext from '../../Contexts/TeacherContext'
-import config from '../../config'
-import TokenService from '../../Services/token-service'
+// import config from '../../config'
+// import TokenService from '../../Services/token-service'
 
 class StudentList extends React.Component{
 
@@ -12,41 +12,42 @@ class StudentList extends React.Component{
   state = {
     error: null,
     students: [],
-      userInput: '',
-      newStudent: null,
-      class_id: this.context.teacherClass.teacherClass.id
+    userInput: '',
+    newStudent: null,
   }
 
-  componentDidMount() {
-    // Fetch students from API -- PSUEDO CODE, need to check with Back End
-    console.log('logging context ins studentLIst', this.context)
-    let teacherid = this.context.teacherClass.teacherClass.id
+  componentDidMount = () => {
     this.setState({
-      class_id: teacherid
+      students: this.props.students
     })
-   
-    console.log('teacher id from context', teacherid)
-    return fetch(`${config.API_ENDPOINT}/class/${teacherid}/students`, {
-      method: 'GET',
-      headers: {
-        'authorization': `Bearer ${TokenService.getAuthToken()}`,
-      },
-    })
-    .then(res =>
-      (!res.ok)
-        ? res.json().then(e => Promise.reject(e))
-        : res.json()
-    )
-      .then(resStudents => {
-          (console.log(resStudents))
-        this.setState({
-          students: resStudents,
-        })
-      })
-      .catch(res => {
-        this.setState({ error: res.error })
-      })
   }
+
+  // componentDidMount() {
+  //   // Fetch students from API -- PSUEDO CODE, need to check with Back End
+  //   let class_id = this.context.teacherClass.teacherClass.id
+  //   console.log(class_id);
+  //   console.log(this.props);
+  //   return fetch(`${config.API_ENDPOINT}/class/${this.props.class_id}/students`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'authorization': `Bearer ${TokenService.getAuthToken()}`,
+  //     },
+  //   })
+  //   .then(res =>
+  //     (!res.ok)
+  //       ? res.json().then(e => Promise.reject(e))
+  //       : res.json()
+  //   )
+  //     .then(resStudents => {
+  //         (console.log(resStudents))
+  //       this.setState({
+  //         students: resStudents,
+  //       })
+  //     })
+  //     .catch(res => {
+  //       this.setState({ error: res.error })
+  //     })
+  // }
 
   // Updates state with every user input change
   handleChange = (e) => {
@@ -87,7 +88,7 @@ class StudentList extends React.Component{
 
   render() {
     const { error } = this.state;
-    console.log('students',this.state.students)
+    // console.log('students',this.props.students)
     const studentList = this.state.students.map((student, index) => <li key={index}><span>{student.full_name}</span><span>{student.user_name}</span></li>)
     return(
       <div className='StudentList-container'>
