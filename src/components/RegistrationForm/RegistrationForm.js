@@ -4,8 +4,8 @@ import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
 import './RegistrationForm.css';
 
 class RegistrationForm extends React.Component {
-  static defaultProps = {
-    onRegistrationSuccess: () => { }
+  static defaultProps = { 
+    onRegistrationSuccess: () => { } 
   }
 
   state = { error: null }

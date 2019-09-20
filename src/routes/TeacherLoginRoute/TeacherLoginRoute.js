@@ -9,7 +9,7 @@ class TeacherLoginRoute extends Component {
       push: () => { },
     },
   }
-
+ 
   handleLoginSuccess = () => {
     const { location, history } = this.props
     const destination = (location.state || {}).from || '/'
