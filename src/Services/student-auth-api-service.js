@@ -1,11 +1,13 @@
 import config from '../config'
 import TokenService from './token-service'
 
+
 const StudentAuthApiService = {
   postStudent(student) {
     return fetch(`${config.API_ENDPOINT}/register/student`, {
       method: 'POST',
       headers: {
+        'authorization': `Bearer ${TokenService.getAuthToken()}`,
         'content-type': 'application/json',
       },
       body: JSON.stringify(student),
