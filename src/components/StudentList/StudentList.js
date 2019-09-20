@@ -17,7 +17,7 @@ class StudentList extends React.Component{
       class_id: this.context.teacherClass.teacherClass.id
   }
 
-  componentDidMount() {
+  componentDidMount() { 
     // Fetch students from API -- PSUEDO CODE, need to check with Back End
     console.log('logging context ins studentLIst', this.context)
     let classid = this.context.teacherClass.teacherClass.id

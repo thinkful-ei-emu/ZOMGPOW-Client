@@ -5,7 +5,17 @@ import './index.css';
 import App from './Components/App/App';
 import * as serviceWorker from './serviceWorker';
 import { TeacherProvider } from './Contexts/TeacherContext';
+import { StudentProvider } from './Contexts/StudentContext';
 
-ReactDOM.render(<BrowserRouter><TeacherProvider><App /></TeacherProvider></BrowserRouter>, document.getElementById('root'));
+
+ReactDOM.render(
+  <BrowserRouter>
+    <TeacherProvider>
+      <StudentProvider>
+        <App />
+      </StudentProvider>
+    </TeacherProvider>
+  </BrowserRouter>,
+  document.getElementById('root'));
 
 serviceWorker.unregister();
