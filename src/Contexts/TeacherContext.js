@@ -9,6 +9,7 @@ const TeacherContext = React.createContext({
   setError: () => { },
   clearError: () => { },
   setUser: () => { },
+  setClass: () => { },
   processLogin: () => { },
   processLogout: () => { },
 })
@@ -18,7 +19,11 @@ export default TeacherContext
 export class TeacherProvider extends Component {
   constructor(props) {
     super(props)
-    const state = { user: {}, error: null }
+    const state = { 
+      user: {}, 
+      teacherClass: {}, 
+      error: null 
+    }
 
     const jwtPayload = TokenService.parseAuthToken()
 
@@ -61,14 +66,23 @@ export class TeacherProvider extends Component {
     this.setState({ user })
   }
 
-  processLogin = authToken => {
+  setClass = teacherClass => {
+    this.setState({teacherClass})
+  }
+
+  processLogin = response => {
+
+    const authToken = response.authToken;
+    const user = response.user;
+    const teacherClass = response.class;
+
+    console.log('user from context', user)
+    console.log('teacherClass from context', teacherClass)
+
     TokenService.saveAuthToken(authToken)
-    const jwtPayload = TokenService.parseAuthToken()
-    console.log(jwtPayload);
-    this.setUser({
-      id: jwtPayload.user_id,
-      email: jwtPayload.sub,
-    })
+    this.setUser({user})
+    this.setClass({teacherClass})
+
     IdleService.regiserIdleTimerResets()
     TokenService.queueCallbackBeforeExpiry(() => {
       this.fetchRefreshToken()
@@ -104,10 +118,12 @@ export class TeacherProvider extends Component {
   render() {
     const value = {
       user: this.state.user,
+      teacherClass: this.state.teacherClass,
       error: this.state.error,
       setError: this.setError,
       clearError: this.clearError,
       setUser: this.setUser,
+      setClass: this.setClass,
       processLogin: this.processLogin,
       processLogout: this.processLogout
     }
