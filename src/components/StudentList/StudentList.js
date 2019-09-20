@@ -20,13 +20,13 @@ class StudentList extends React.Component{
   componentDidMount() {
     // Fetch students from API -- PSUEDO CODE, need to check with Back End
     console.log('logging context ins studentLIst', this.context)
-    let teacherid = this.context.teacherClass.teacherClass.id
+    let classid = this.context.teacherClass.teacherClass.id
     this.setState({
-      class_id: teacherid
+      class_id: classid
     })
    
-    console.log('teacher id from context', teacherid)
-    return fetch(`${config.API_ENDPOINT}/class/${teacherid}/students`, {
+    console.log('teacher id from context', classid)
+    return fetch(`${config.API_ENDPOINT}/class/${classid}/students`, {
       method: 'GET',
       headers: {
         'authorization': `Bearer ${TokenService.getAuthToken()}`,
@@ -37,10 +37,10 @@ class StudentList extends React.Component{
         ? res.json().then(e => Promise.reject(e))
         : res.json()
     )
-      .then(resStudents => {
-          (console.log(resStudents))
+      .then(resStudents => {       
+          (console.log(resStudents.students))
         this.setState({
-          students: resStudents,
+          students: resStudents.students,
         })
       })
       .catch(res => {
