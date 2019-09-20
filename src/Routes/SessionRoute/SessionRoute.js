@@ -19,16 +19,17 @@ class SessionRoute extends React.Component {
   componentDidMount() {
     if(TokenService.hasAuthToken()) {
       // Set classId to context when it is working ------------**
-      let classId = 1;
+      let classId = 5;
 
       //get students, goals, and subgoals
       StudentApiService.getAllStudents(classId)
       .then(res => {
         const setupStudents = this.setupStudents(res.students);
+        const learningTarget = res.goals[0] ? res.goals.pop() : ''
         // console.log(setupStudents);
         this.setState({
           students: setupStudents,
-          learningTarget: res.goals[0] ? res.goals[0].goal_title : ''
+          learningTarget: res.goals[0] ? learningTarget.goal_title : learningTarget
         })
       })
       .catch(error => this.setState({ error }))
@@ -122,7 +123,8 @@ class SessionRoute extends React.Component {
           className={student.expired === true ? `expired ${student.priority}` : ''}
           >
           <h3>{student.full_name}</h3>
-          <p>{student.subGoal ? student.subGoal : student.goal}</p>
+          {/* RECONFIGURE ONCE SUBGOALS CAN POST AND WE KNOW WHAT WE'RE GETTING BACK */}
+          <p>{student.subGoal ? student.subGoal : this.state.learningTarget}</p>
           <button 
             className={student.expand ? 'cancel' : 'check-in'}
             onClick={e => this.toggleExpand(student.user_name)}>{student.expand ? 'Cancel' : 'Check In'}</button>
