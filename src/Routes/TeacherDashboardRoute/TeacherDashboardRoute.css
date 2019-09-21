@@ -1,8 +1,9 @@
  .TeacherDashboardRoute-section {
    margin-top: 40px;
-   font-family: 'Lexend Deca', sans-serif;
+   font-family: var(--heading-font);
  }
 
  .TeacherDashboardRoute-learning-target-submit {
   border-bottom: solid 1px darkgray;
  }
+ 

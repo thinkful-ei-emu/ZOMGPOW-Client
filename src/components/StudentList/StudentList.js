@@ -113,7 +113,7 @@ class StudentList extends React.Component{
             required
             />
           <div>
-            <button type='submit'>Add Student</button>
+            <button type='submit' className='button blue-button'>Add Student</button>
           </div>
         </form>
       </div>

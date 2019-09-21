@@ -20,7 +20,7 @@
 
  .teacher-login-form input{
   border-radius: 5px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--body-font);
   font-size: 15px;
   border: solid 1px darkgray;
   margin: 10px;
@@ -28,12 +28,12 @@
 
 .teacher-login-form button {
   color: white;
-  background: #8B00B5;
+  background: var(--purple);
   padding: 5px 15px 8px 15px;
   border-radius: 15px;
   font-size: 16px;
   text-align: center;
-  font-family: 'Lexend Deca', sans-serif;
+  font-family: var(--heading-font);
 }
 
 .teacher-login-form button:hover {
@@ -46,7 +46,7 @@
 }
 
 .login-link a{
-  color: #0ABAD4;
+  color: var(--blue);
   font-size: 15px;
 }
 
