@@ -42,7 +42,7 @@ class RegistrationForm extends React.Component {
 
     return (
       <form
-        className='registration-form'
+        className='form'
         onSubmit={this.handleSubmit}>
         <div className='alert' role='alert'>
         {error && <p>{error}</p>}
@@ -80,7 +80,7 @@ class RegistrationForm extends React.Component {
             aria-label='Registration password input'
             aria-required='true'
             required/>
-          <button type='submit'>
+          <button type='submit' className='button purple-button'>
             Sign Up!
           </button>
           {' '}

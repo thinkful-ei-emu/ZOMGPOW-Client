@@ -1,13 +1,117 @@
+/* CSS VARIABLES */
+:root {
+  --title-font: 'Vibes', cursive;
+  --heading-font: 'Lexend Deca', sans-serif;
+  --body-font: 'Montserrat', sans-serif;
+  --purple: #8B00B5;
+  --blue: #0ABAD4;
+  --green: #81D40A;
+}
+
+/* BUTTONS NEED TWO CLASSES, MAIN BUTTON CLASS AND COLOR */
+/* Main Button Class */
+.button {
+  color: white;
+  text-decoration: none;
+  padding: 5px 15px 8px 15px;
+  border-radius: 15px;
+  font-size: 16px;
+  text-align: center;
+  font-family: var(--heading-font);
+  margin-right: 10px;
+  margin-top: 5px;
+}
+/* Button Colors */
+.purple-button {
+  background:var(--purple);
+}
+.green-button {
+  background:var(--green);
+}
+.blue-button {
+  background:var(--blue);
+}
+
+/* FOR ERROR DIVS */
+.alert {
+  color: red;
+  font-family: var(--body-font);
+  font-size: 12px;
+}
+
+/* LOGIN/REGISTRATION FORMS */
+.form {
+  display: flex; 
+  flex-direction: column;
+  padding: 15px;
+  border-radius: 15px;
+  border: solid 1px darkgray;
+  margin: 40px auto;
+  width: 80%;
+  max-width: 300px;
+  align-items: center;
+  font-family: var(--heading-font);
+}
+
+/* HIDING ELEMENTS */
+.hidden {
+  display: none;
+}
+
+/* Design Standards (styles automatically apply) */
+.button:hover {
+  background: black;
+  cursor: pointer;
+}
+
+a:hover:not(.button) {
+  color: black;
+  cursor: pointer;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+label {
+  font-size: 20px;
 }
+
+input {
+  border-radius: 5px;
+  font-family: var(--body-font);
+  font-size: 15px;
+  border: solid 1px darkgray;
+  margin: 10px;
+}
+
+h1 {
+  font-family: var(--title-font);
+  font-size: 80px;
+  font-weight: 800;
+  line-height: 1.3;
+  margin: 0 30px;
+}
+
+h2 {
+  font-family: var(--heading-font);
+  font-size: 30px;
+}
+
+h3 {
+  font-size: 25px;
+} 
+
+p {
+  font-family: var(--body-font);
+  font-size: 18px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 5px 20px;
+}
+
