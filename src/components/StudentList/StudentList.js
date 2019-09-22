@@ -6,7 +6,6 @@ import TeacherContext from '../../Contexts/TeacherContext'
 // import TokenService from '../../Services/token-service'
 
 class StudentList extends React.Component{
-
   static contextType = TeacherContext;
 
   state = {
@@ -20,63 +19,7 @@ class StudentList extends React.Component{
     this.setState({
       students: this.props.students
     })
-  componentDidMount() { 
-    // Fetch students from API -- PSUEDO CODE, need to check with Back End
-    console.log('logging context ins studentLIst', this.context)
-    let classid = this.context.teacherClass.teacherClass.id
-    this.setState({
-      class_id: classid
-    })
-   
-    console.log('teacher id from context', classid)
-    return fetch(`${config.API_ENDPOINT}/class/${classid}/students`, {
-      method: 'GET',
-      headers: {
-        'authorization': `Bearer ${TokenService.getAuthToken()}`,
-      },
-    })
-    .then(res =>
-      (!res.ok)
-        ? res.json().then(e => Promise.reject(e))
-        : res.json()
-    )
-      .then(resStudents => {       
-          (console.log(resStudents.students))
-        this.setState({
-          students: resStudents.students,
-        })
-      })
-      .catch(res => {
-        this.setState({ error: res.error })
-      })
   }
-
-  // componentDidMount() {
-  //   // Fetch students from API -- PSUEDO CODE, need to check with Back End
-  //   let class_id = this.context.teacherClass.teacherClass.id
-  //   console.log(class_id);
-  //   console.log(this.props);
-  //   return fetch(`${config.API_ENDPOINT}/class/${this.props.class_id}/students`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'authorization': `Bearer ${TokenService.getAuthToken()}`,
-  //     },
-  //   })
-  //   .then(res =>
-  //     (!res.ok)
-  //       ? res.json().then(e => Promise.reject(e))
-  //       : res.json()
-  //   )
-  //     .then(resStudents => {
-  //         (console.log(resStudents))
-  //       this.setState({
-  //         students: resStudents,
-  //       })
-  //     })
-  //     .catch(res => {
-  //       this.setState({ error: res.error })
-  //     })
-  // }
 
   // Updates state with every user input change
   handleChange = (e) => {
@@ -111,8 +54,7 @@ class StudentList extends React.Component{
           userInput: '',
         })
       })
-    
-  }
+    }
 
 
   render() {
@@ -152,3 +94,61 @@ class StudentList extends React.Component{
 }
 
 export default StudentList;
+
+
+  // componentDidMount() { 
+  //   // Fetch students from API -- PSUEDO CODE, need to check with Back End
+  //   console.log('logging context ins studentLIst', this.context)
+  //   let classid = this.context.teacherClass.teacherClass.id
+  //   this.setState({
+  //     class_id: classid
+  //   })
+   
+  //   console.log('teacher id from context', classid)
+  //   return fetch(`${config.API_ENDPOINT}/class/${classid}/students`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'authorization': `Bearer ${TokenService.getAuthToken()}`,
+  //     },
+  //   })
+  //   .then(res =>
+  //     (!res.ok)
+  //       ? res.json().then(e => Promise.reject(e))
+  //       : res.json()
+  //   )
+  //     .then(resStudents => {       
+  //         (console.log(resStudents.students))
+  //       this.setState({
+  //         students: resStudents.students,
+  //       })
+  //     })
+  //     .catch(res => {
+  //       this.setState({ error: res.error })
+  //     })
+  // }
+
+  // componentDidMount() {
+  //   // Fetch students from API -- PSUEDO CODE, need to check with Back End
+  //   let class_id = this.context.teacherClass.teacherClass.id
+  //   console.log(class_id);
+  //   console.log(this.props);
+  //   return fetch(`${config.API_ENDPOINT}/class/${this.props.class_id}/students`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'authorization': `Bearer ${TokenService.getAuthToken()}`,
+  //     },
+  //   })
+  //   .then(res =>
+  //     (!res.ok)
+  //       ? res.json().then(e => Promise.reject(e))
+  //       : res.json()
+  //   )
+  //     .then(resStudents => {
+  //         (console.log(resStudents))
+  //       this.setState({
+  //         students: resStudents,
+  //       })
+  //     })
+  //     .catch(res => {
+  //       this.setState({ error: res.error })
+  //     })
