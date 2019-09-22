@@ -44,7 +44,9 @@ toggleTimer = () => {
         <p>{this.state.currentGoal}</p>
       </div>
       <div className='timer-container'>
-        <button onClick={this.toggleTimer}>{this.state.show ? 'Hide' : 'Timer'}</button>
+        <button 
+        className='button blue-button'
+        onClick={this.toggleTimer}>{this.state.show ? 'Hide' : 'Timer'}</button>
         <div className={this.state.show ? '' : 'hidden'}>
           <StudentTimer />
         </div>

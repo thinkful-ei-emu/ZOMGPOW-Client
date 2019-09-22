@@ -1,24 +1,5 @@
-.SessionRoute-container {
-  font-family: 'Lexend Deca', sans-serif;
-}
-
-.SessionRoute-container p {
-  font-family: 'Montserrat', sans-serif;
-  margin-top: 0;
-}
-
-.SessionRoute-container h2 {
-  margin-bottom: 5px;
-}
-
-.SessionRoute-container h3 {
-  font-size: 25px;
-}
-
-.SessionRoute-container ul{
-  list-style-type: none;
-  padding: 0;
-  margin: 5px 20px;
+ .SessionRoute-container {
+  font-family: var(--heading-font);
 }
 
 .SessionRoute-container .learning-target {
@@ -27,50 +8,16 @@
   margin-bottom: 20px;
 }
 
-.SessionRoute-container li {
-  /* box-shadow: 3px 3px 5px 3px rgb(210, 210, 210); */
-  border: solid 1px darkgray;
-  border-radius: 10px;
-  padding: 3px 8px;
-  margin-bottom: 30px;
-}
-
-.hidden {
-  display: none;
-}
-
 .high {
-background: #8B00B5;
+background: var(--purple);
 }
 
 .medium {
-background: #0ABAD4;
+background: var(--blue);
 }
 
 .low {
-background: #81D40A;
-}
-
-.student-list button {
-  color: white;
-  padding: 5px 15px 8px 15px;
-  border-radius: 15px;
-  font-size: 16px;
-  text-align: center;
-  font-family: 'Lexend Deca', sans-serif;
-  margin: 10px;
-}
-
-.student-list .check-in {
-  background: #8B00B5;
-}
-
-.student-list .cancel {
-  background: #0ABAD4;
-}
-
-.student-list .update-goal {
-  background: #81D40A;
+background: var(--green);
 }
 
 .student-list .expired button {
@@ -83,15 +30,10 @@ background: #81D40A;
   cursor: pointer;
 }
 
-.student-list button:hover {
-  background: black;
-  cursor: pointer;
-}
-
 .student-list textarea {
   width: 90%;
   padding: 8px 12px;
-  margin-top: 0px;
+  margin-top: 15px;
   margin-right: 10px;
   margin-left: 10px;
   box-sizing: border-box;
@@ -107,9 +49,11 @@ background: #81D40A;
   margin: 0px 5px;
 }
 
-.expired button {
-  background: white;
-  color: black;
+.SessionRoute-container li {
+  border: solid 1px darkgray;
+  border-radius: 10px;
+  padding: 3px 8px;
+  margin-bottom: 30px;
 }
 
 /* MEDIA QUERIES */
