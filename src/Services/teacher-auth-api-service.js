@@ -1,9 +1,6 @@
 import config from '../config';
 import TokenService from './token-service';
 
-
-
-
 const TeacherAuthApiService = {
   
   postUser(user) {
