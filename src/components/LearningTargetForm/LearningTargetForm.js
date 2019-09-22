@@ -62,7 +62,7 @@ class LearningTargetForm extends React.Component {
               required
               />
             <div>
-              <button type='submit'>Start Session</button>
+              <button type='submit' className='button green-button'>Start Session</button>
             </div>
           </form>
     )
