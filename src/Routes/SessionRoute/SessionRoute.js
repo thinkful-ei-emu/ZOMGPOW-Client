@@ -3,6 +3,7 @@ import StudentApiService from '../../Services/student-auth-api-service';
 import TokenService from '../../Services/token-service';
 import config from '../../config';
 import TeacherContext from '../../Contexts/TeacherContext';
+import TeacherAuthService from '../../Services/teacher-auth-api-service';
 import './SessionRoute.css';
 
 class SessionRoute extends React.Component {
@@ -31,18 +32,27 @@ class SessionRoute extends React.Component {
         const learningTarget = res.goals[0] ? res.goals.pop() : ''
         // console.log(setupStudents);
         this.setState({
-          students: setupStudents,
-          learningTarget: res.goals[0] ? learningTarget.goal_title : learningTarget
+          class_id: class_id
         })
-      })
-      .catch(error => this.setState({ error }))
 
-    } else {
-      this.props.history.push('/login/teacher');
-    } 
-
-    
-  }
+      })    
+          //get students, goals, and subgoals
+          StudentApiService.getAllStudents(class_id)
+          .then(res => {
+            const setupStudents = this.setupStudents(res.students);
+            const learningTarget = res.goals[0] ? res.goals.pop() : ''
+            // console.log(setupStudents);
+            this.setState({
+              students: setupStudents,
+              learningTarget: res.goals[0] ? learningTarget.goal_title : learningTarget
+            })
+          })
+          .catch(error => this.setState({ error }))
+        } else {
+          this.props.history.push('/login/teacher');
+      } 
+      } 
+  
 
   getGoal(student_id) {
     //get student goals
@@ -227,7 +237,7 @@ class SessionRoute extends React.Component {
     return (
       <section className='SessionRoute-container'>
         <div className='alert' role='alert'>
-        {error && <p>{error}</p>}
+        {error && <p>{error.message}</p>}
         </div>
         <div>
           <h2>Learning Target: </h2>
