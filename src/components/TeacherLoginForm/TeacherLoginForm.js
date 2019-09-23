@@ -1,7 +1,7 @@
-import React from './node_modules/react';
+import React from 'react';
 import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
 import TeacherContext from '../../Contexts/TeacherContext';
-import { Link } from './node_modules/react-router-dom';
+import { Link } from 'react-router-dom';
 import './TeacherLoginForm.css';
 
 

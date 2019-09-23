@@ -1,6 +1,6 @@
-import React from './node_modules/react';
+import React from 'react';
 import './LandingPage.css';
-import { Link } from './node_modules/react-router-dom';
+import { Link } from 'react-router-dom';
 
 class LandingPage extends React.Component {
 
