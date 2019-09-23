@@ -17,7 +17,6 @@ class StudentDashboard extends React.Component{
 
   componentDidMount() {
     StudentAuthApiService.getStudentGoals(this.state.class_id)
-      .then(res => console.log(res))
       .catch(res => {
         this.setState({ error: res.error })
       })
