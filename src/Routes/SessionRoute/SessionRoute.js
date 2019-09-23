@@ -95,7 +95,7 @@ class SessionRoute extends React.Component {
     const student = this.state.students.filter(student => student.user_name === studentUsername).pop();
     
     const goalId = student.mainGoalId;
-    debugger;
+    // debugger;
     StudentApiService.postStudentSubgoal(goalId, data)
       .then(res => {
         console.log('POST STUDENT SUBGOAL RES', res)
