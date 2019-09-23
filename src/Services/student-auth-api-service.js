@@ -47,8 +47,8 @@ const StudentAuthApiService = {
           : res.json()
       )
   },
-  getAllStudents() {
-    return fetch(`${config.API_ENDPOINT}/class/`, {
+  getAllStudents(classId) {
+    return fetch(`${config.API_ENDPOINT}/class/${classId}/students`, {
       method: 'GET',
       headers: {
         'authorization': `Bearer ${TokenService.getAuthToken()}`,

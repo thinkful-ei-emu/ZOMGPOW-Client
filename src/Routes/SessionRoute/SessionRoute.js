@@ -1,71 +1,55 @@
 import React from 'react';
-// import StudentApiService from '../../Services/student-auth-api-service';
+import StudentApiService from '../../Services/student-auth-api-service';
+import TokenService from '../../Services/token-service';
+import config from '../../config';
+import TeacherContext from '../../Contexts/TeacherContext';
 import './SessionRoute.css';
 
 class SessionRoute extends React.Component {
+  static contextType = TeacherContext;
+
   state = {
     error: null,
-    learningTarget: 'Write a 5 paragraph essay',
+    learningTarget: '',
     updatedSubGoal: '',
     updatedPriority: null,
-    students: [
-      {
-        name: 'studentA',
-        username: 'studentA123',
-        goal: 'Write a 5 paragraph essay',
-        goalComplete: false,
-        subGoal: null,
-        expand: false,
-        expired: false,
-        order: 0,
-        priority: 'low',
-      },
-      {
-        name: 'studentB',
-        username: 'studentB456',
-        goal: 'Write a 5 paragraph essay',
-        goalComplete: false,
-        subGoal: 'Write a thesis statement',
-        expand: false,
-        expired: false,
-        order: 0,
-        priority: 'low',
-      },
-      {
-        name: 'studentC',
-        username: 'studentC789',
-        goal: 'Write a 5 paragraph essay',
-        goalComplete: false,
-        subGoal: 'Make a brainmap',
-        expand: false,
-        expired: false,
-        order: 0,
-        priority: 'low',
-      },
-      ]
+    class_id: null,
+    students: [],
   }
 
   componentDidMount() {
-    // Fetch learning target and students
-    // if(TokenService.hasAuthToken()) {
-    //   return StudentsApiService.getAllStudents()
-    //   .then(students => 
-    //  const setupStudents = this.setupStudents(students);
-    //  this.setState({students: setupStudents}))
-    //   .catch(error => this.setState({ error }))
-    // }
-    // this.props.history.push('/login/teacher');
+    if(TokenService.hasAuthToken()) {
+      const class_id = this.context.teacherClass.teacherClass.id;
+    this.setState({
+      class_id: class_id
+    })
+
+      //get students, goals, and subgoals
+      StudentApiService.getAllStudents(class_id)
+      .then(res => {
+        const setupStudents = this.setupStudents(res.students);
+        const learningTarget = res.goals[0] ? res.goals.pop() : ''
+        // console.log(setupStudents);
+        this.setState({
+          students: setupStudents,
+          learningTarget: res.goals[0] ? learningTarget.goal_title : learningTarget
+        })
+      })
+      .catch(error => this.setState({ error }))
+    } else {
+      this.props.history.push('/login/teacher');
+    } 
   }
 
   setupStudents = (students) => {
     //students should be an array of objects
-    const addKeysStudents = students.map(student => {
+    return students.map(student => {
       student.expand = false;
       student.expired = false;
       student.order = 0;
       student.priority = 1;
+      return student;
     })
-    return addKeysStudents;
   }
 
   // Should set timer when sub goal is updated
@@ -80,29 +64,28 @@ class SessionRoute extends React.Component {
   // Setting the order allows the first timer that ends to remain first in line and
   // subsequent timers to follow in line after
   handleExpire = studentUsername => {
-    const expiredStudent = this.state.students.find(student => student.username === studentUsername);
+    const expiredStudent = this.state.students.find(student => student.user_name === studentUsername);
     const studentOrder = {...expiredStudent, expired: true, order: new Date()};
     this.setState({
-      students: this.state.students.map(student => student.username !== studentUsername ? student: studentOrder)
+      students: this.state.students.map(student => student.user_name !== studentUsername ? student: studentOrder)
     })
   }
 
   handleUpdateGoal = (e, studentUsername) => {
     e.preventDefault();
-    //clear errors?
-    // const data = { subgoal: this.state.updatedSubGoal, priority: this.state.updatedPriority};
+    // const data = {goal_title: this.state.updatedSubGoal};
     // StudentApiService.updateStudent(studentUsername, data)
     //   .then(res => {
-    //     const studentToUpdate = this.state.students.find(student => student.username === studentUsername);
+    //     const studentToUpdate = this.state.students.find(student => student.user_name === studentUsername);
     //     const updatedStudent = {
     //       ...studentToUpdate,
     //       ...data,
     //       expand: false,
     //       order: 0,
     //     }
-    //     this.handleTimer(updatedStudent.username, this.state.updatedPriority);
+    //     this.handleTimer(updatedStudent.user_name, this.state.updatedPriority);
     //     this.setState({
-    //       students: this.state.students.map(student => student.username !== studentUsername ? student : updatedStudent),
+    //       students: this.state.students.map(student => student.user_name !== studentUsername ? student : updatedStudent),
     //       subgoal: '',
     //       priority: 'low'
     //     });
@@ -111,11 +94,11 @@ class SessionRoute extends React.Component {
     //     console.error(error);
     //     this.setState({ error })
     //   });
-    const studentToUpdate = this.state.students.find(student => student.username === studentUsername)
+    const studentToUpdate = this.state.students.find(student => student.user_name === studentUsername)
     const updatedStudent = {...studentToUpdate, subGoal: this.state.updatedSubGoal, priority: this.state.updatedPriority, expand: false}
     this.handleTimer(studentUsername, this.state.updatedPriority);
     this.setState({
-      students: this.state.students.map(student => student.username === studentUsername ? updatedStudent : student),
+      students: this.state.students.map(student => student.user_name === studentUsername ? updatedStudent : student),
       updatedSubGoal: '',
       updatedPriority: ''
     })
@@ -123,12 +106,12 @@ class SessionRoute extends React.Component {
 
   // Should toggle when clicking to expand and hide extra student information
   toggleExpand = (studentUsername) => {
-    const studentToExpand = this.state.students.find(student => student.username === studentUsername);
+    const studentToExpand = this.state.students.find(student => student.user_name === studentUsername);
     const expiredCheck = studentToExpand.expired === false ? 0 : studentToExpand.order;
     const expandedStudent = {...studentToExpand, expand: !studentToExpand.expand, expired: false, order: expiredCheck};
     
     this.setState({
-      students: this.state.students.map(student => student.username !== studentUsername ? student : expandedStudent),
+      students: this.state.students.map(student => student.user_name !== studentUsername ? student : expandedStudent),
       updatedSubGoal: '',
       updatedPriority: ''
     })
@@ -139,16 +122,17 @@ class SessionRoute extends React.Component {
     const allStudents = students.map((student) => {
       return (
         <li 
-          key={student.username}
+          key={student.user_name}
           className={student.expired === true ? `expired ${student.priority}` : ''}
           >
-          <h3>{student.name}</h3>
-          <p>{student.subGoal ? student.subGoal : student.goal}</p>
+          <h3>{student.full_name}</h3>
+          {/* RECONFIGURE ONCE SUBGOALS CAN POST AND WE KNOW WHAT WE'RE GETTING BACK */}
+          <p>{student.subGoal ? student.subGoal : this.state.learningTarget}</p>
           <button 
             className={student.expand ? ' button blue-button' : 'button purple-button'}
-            onClick={e => this.toggleExpand(student.username)}>{student.expand ? 'Cancel' : 'Check In'}</button>
+            onClick={e => this.toggleExpand(student.user_name)}>{student.expand ? 'Cancel' : 'Check In'}</button>
           <div className={student.expand ? '' : 'hidden'}>
-            <form onSubmit={e => this.handleUpdateGoal(e, student.username)}>
+            <form onSubmit={e => this.handleUpdateGoal(e, student.user_name)}>
               <label
               htmlFor='new-subgoal' />
               <textarea
@@ -210,7 +194,7 @@ class SessionRoute extends React.Component {
   }
 
   render() {
-    const { error } = this.state;
+    const error = this.state.error;
     const learningTarget = this.state.learningTarget;
     const studentsToSort = this.state.students.filter(student => student.order !== 0)
     const sortedStudents = studentsToSort.sort((a, b) => a.order > b.order ? 1 : -1);
