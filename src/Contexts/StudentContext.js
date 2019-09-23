@@ -62,7 +62,6 @@ export class StudentProvider extends Component {
   }
 
   processLogin = authToken => {
-    console.log('in process login in context')
     TokenService.saveAuthToken(authToken)
     const jwtPayload = TokenService.parseAuthToken()
     console.log(jwtPayload)
