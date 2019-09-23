@@ -1,22 +1,26 @@
 import React from 'react';
 import StudentApiService from '../../Services/student-auth-api-service';
 import TokenService from '../../Services/token-service';
-import config from '../../config';
 import TeacherContext from '../../Contexts/TeacherContext';
 import TeacherAuthService from '../../Services/teacher-auth-api-service';
 import './SessionRoute.css';
 
 class SessionRoute extends React.Component {
+
   static contextType = TeacherContext;
 
-  state = {
-    error: null,
-    learningTarget: '',
-    updatedSubGoal: '',
-    updatedPriority: null,
-    class_id: null,
-    students: [],
+  constructor(props){
+    super(props)
+    this.state = {
+      error: null,
+      learningTarget: '',
+      updatedSubGoal: '',
+      updatedPriority: null,
+      class_id: null,
+      students: [],
+    }
   }
+  
 
   componentDidMount() {
 
@@ -69,14 +73,18 @@ class SessionRoute extends React.Component {
   handleTimer = (studentUsername, priority) => {
     // High - 5 min/300000, Medium - 10min/600000, Low - 20 min/1200000 
     // Testing - high/5 sec(5000), medium/7 sec(7000), low/10 sec(10000)
-    const time = priority === 'high' ? 5000 : priority === 'medium' ? 7000 : 10000;
+    const time = priority === 'high' ? 50000 : priority === 'medium' ? 70000 : 100000;
+    console.log('setTimeout started')
     setTimeout(this.handleExpire, time, studentUsername);
+    this.props.handleStudentTimers(studentUsername, time)
   }
 
   // Should toggle expired key to true and set order when timer expires
   // Setting the order allows the first timer that ends to remain first in line and
   // subsequent timers to follow in line after
   handleExpire = studentUsername => {
+    console.log('setTimeout end', studentUsername);
+    console.log(Date.now())
     const expiredStudent = this.state.students.find(student => student.user_name === studentUsername);
     const studentOrder = {...expiredStudent, expired: true, order: new Date()};
     this.setState({
