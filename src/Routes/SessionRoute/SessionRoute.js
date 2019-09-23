@@ -19,12 +19,12 @@ class SessionRoute extends React.Component {
 
   componentDidMount() {
     if(TokenService.hasAuthToken()) {
-      const class_id = this.context.teacherClass.teacherClass.id;
+      const class_id = 5//this.context.teacherClass.teacherClass.id;
     this.setState({
       class_id: class_id
     })
 
-      //get students, goals, and subgoals
+      //get students, learning target
       StudentApiService.getAllStudents(class_id)
       .then(res => {
         const setupStudents = this.setupStudents(res.students);
@@ -36,14 +36,32 @@ class SessionRoute extends React.Component {
         })
       })
       .catch(error => this.setState({ error }))
+
     } else {
       this.props.history.push('/login/teacher');
     } 
+
+    
+  }
+
+  getGoal(student_id) {
+    //get student goals
+    return StudentApiService.getStudentGoals(student_id)
+    .then(res => {
+      // console.log('getGoal Response',res.goals.pop());
+      return res.goals.pop();
+    })
+    .catch(error => this.setState({ error }))
   }
 
   setupStudents = (students) => {
     //students should be an array of objects
     return students.map(student => {
+      this.getGoal(student.id).then(goal => {
+      console.log('GOAL',goal);
+      student.mainGoal = goal.goal_title;
+      student.mainGoalId = goal.id;
+      })
       student.expand = false;
       student.expired = false;
       student.order = 0;
@@ -73,27 +91,31 @@ class SessionRoute extends React.Component {
 
   handleUpdateGoal = (e, studentUsername) => {
     e.preventDefault();
-    // const data = {goal_title: this.state.updatedSubGoal};
-    // StudentApiService.updateStudent(studentUsername, data)
-    //   .then(res => {
-    //     const studentToUpdate = this.state.students.find(student => student.user_name === studentUsername);
-    //     const updatedStudent = {
-    //       ...studentToUpdate,
-    //       ...data,
-    //       expand: false,
-    //       order: 0,
-    //     }
-    //     this.handleTimer(updatedStudent.user_name, this.state.updatedPriority);
-    //     this.setState({
-    //       students: this.state.students.map(student => student.user_name !== studentUsername ? student : updatedStudent),
-    //       subgoal: '',
-    //       priority: 'low'
-    //     });
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //     this.setState({ error })
-    //   });
+    const data = {goal_title: this.state.updatedSubGoal};
+    const student = this.state.students.filter(student => student.user_name === studentUsername).pop();
+    
+    const goalId = student.mainGoalId;
+    debugger;
+    StudentApiService.postStudentSubgoal(goalId, data)
+      .then(res => {
+        console.log('POST STUDENT SUBGOAL RES', res)
+        const studentToUpdate = this.state.students.filter(student => student.user_name === studentUsername);
+        console.log('STUDENT TO UPDATE', studentToUpdate, )
+        const updatedStudent = {
+          ...studentToUpdate,
+          subgoal: res.goal_title,
+          expand: false,
+          order: 0,
+        }
+        this.handleTimer(updatedStudent.user_name, this.state.updatedPriority);
+        this.setState({
+          students: this.state.students.map(student => student.user_name !== studentUsername ? student : updatedStudent),
+        });
+      })
+      .catch(error => {
+        console.error(error);
+        this.setState({ error })
+      });
     const studentToUpdate = this.state.students.find(student => student.user_name === studentUsername)
     const updatedStudent = {...studentToUpdate, subGoal: this.state.updatedSubGoal, priority: this.state.updatedPriority, expand: false}
     this.handleTimer(studentUsername, this.state.updatedPriority);

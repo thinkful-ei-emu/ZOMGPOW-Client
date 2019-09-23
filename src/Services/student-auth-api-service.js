@@ -89,6 +89,34 @@ const StudentAuthApiService = {
         ? res.json().then(e => Promise.reject(e))
         : res.json()
     )
+  },
+  getStudentGoals(student_id) {
+    return fetch(`${config.API_ENDPOINT}/goals/student/${student_id}`, {
+      headers: {
+        authorization: `bearer ${TokenService.getAuthToken()}`
+      },
+    })
+    .then(res =>
+      (!res.ok)
+        ? res.json().then(e => Promise.reject(e))
+        : res.json()
+    )
+  },
+  postStudentSubgoal(student_goal_id, data) {
+    return fetch(`${config.API_ENDPOINT}/subgoals/${student_goal_id}`, {
+      method: 'POST',
+      header: {
+        'content-type': 'application/json',
+        'authorization': `Bearer ${TokenService.getAuthToken()}`, 
+      },
+      body: JSON.stringify({
+        ...data
+      })
+    }).then(res => 
+      (!res.ok)
+      ? res.json().then(e => Promise.reject(e))
+      : res.json()
+    )
   }
 }
 
