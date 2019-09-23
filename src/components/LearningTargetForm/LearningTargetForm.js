@@ -2,7 +2,6 @@ import React from 'react';
 import './LearningTargetForm.css';
 import config from '../../config';
 import TokenService from '../../Services/token-service';
-import TeacherContext from '../../Contexts/TeacherContext';
 
 class LearningTargetForm extends React.Component {
   state = {
@@ -10,7 +9,6 @@ class LearningTargetForm extends React.Component {
     learningTarget: '',
   }
   staticDefaultProps={}
-  static contextType = TeacherContext;
 
   // Updates state with every user input change
   handleChange = (e) => {
@@ -25,8 +23,7 @@ class LearningTargetForm extends React.Component {
     const classLearningTarget = {
       goal_title: learningTarget.value,
     }
-    const class_id = this.context.teacherClass.teacherClass.id;
-    fetch(`${config.API_ENDPOINT}/goals/class/${class_id}`, {
+    fetch(`${config.API_ENDPOINT}/goals/class/${this.props.class_id}`, {
       method: 'POST',
       body: JSON.stringify(classLearningTarget),
       headers: {
@@ -65,7 +62,7 @@ class LearningTargetForm extends React.Component {
               required
               />
             <div>
-              <button type='submit'>Start Session</button>
+              <button type='submit' className='button green-button'>Start Session</button>
             </div>
           </form>
     )

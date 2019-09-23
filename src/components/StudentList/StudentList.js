@@ -17,15 +17,12 @@ class StudentList extends React.Component{
       class_id: this.context.teacherClass.teacherClass.id
   }
 
-  componentDidMount() {
+  componentDidMount() { 
     // Fetch students from API -- PSUEDO CODE, need to check with Back End
-    console.log('logging context ins studentLIst', this.context)
     let classid = this.context.teacherClass.teacherClass.id
     this.setState({
       class_id: classid
     })
-   
-    console.log('teacher id from context', classid)
     return fetch(`${config.API_ENDPOINT}/class/${classid}/students`, {
       method: 'GET',
       headers: {
@@ -38,7 +35,6 @@ class StudentList extends React.Component{
         : res.json()
     )
       .then(resStudents => {       
-          (console.log(resStudents.students))
         this.setState({
           students: resStudents.students,
         })
@@ -57,20 +53,15 @@ class StudentList extends React.Component{
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.userInput)
     this.setState({
       newStudent: this.state.userInput,
     })
     // Use Student Api Service to post student - PSUEDO CODE
-    console.log('console newstudent', this.state.newStudent)
     let newStudent = {full_name: this.state.userInput, class_id: this.state.class_id}
-    console.log('newstudent:', newStudent)
     StudentAuthApiService.postStudent(newStudent)
       .then(res => {
-        console.log(res)
         this.setState({
           students: [...this.state.students, res],
-          // newStudent: null,
           userInput: '',
         })
       })
@@ -81,13 +72,10 @@ class StudentList extends React.Component{
           userInput: '',
         })
       })
-    
   }
-
 
   render() {
     const { error } = this.state;
-    console.log('students',this.state.students)
     const studentList = this.state.students.map((student, index) => <li key={index}><span>{student.full_name}</span><span>{student.user_name}</span></li>)
     return(
       <div className='StudentList-container'>
@@ -113,7 +101,7 @@ class StudentList extends React.Component{
             required
             />
           <div>
-            <button type='submit'>Add Student</button>
+            <button type='submit' className='button blue-button'>Add Student</button>
           </div>
         </form>
       </div>
@@ -122,3 +110,4 @@ class StudentList extends React.Component{
 }
 
 export default StudentList;
+

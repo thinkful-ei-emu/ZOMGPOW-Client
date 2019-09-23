@@ -3,6 +3,7 @@ import TokenService from './token-service'
 
 
 const StudentAuthApiService = {
+  // this endpoint requries an authorization header on the backend
   postStudent(student) {
     return fetch(`${config.API_ENDPOINT}/register/student`, {
       method: 'POST',
@@ -19,13 +20,13 @@ const StudentAuthApiService = {
       )
      
   },
-  postLogin({ username }) {
-    return fetch(`${config.API_ENDPOINT}/auth/studnet/login`, {
+  postLogin(user_name) {
+    return fetch(`${config.API_ENDPOINT}/auth/student/login`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify({ username }),
+      body: JSON.stringify({user_name}),
     })
       .then(res =>
         (!res.ok)
@@ -46,8 +47,8 @@ const StudentAuthApiService = {
           : res.json()
       )
   },
-  getAllStudents() {
-    return fetch(`${config.API_ENDPOINT}/class/`, {
+  getAllStudents(classId) {
+    return fetch(`${config.API_ENDPOINT}/class/${classId}/students`, {
       method: 'GET',
       headers: {
         'authorization': `Bearer ${TokenService.getAuthToken()}`,

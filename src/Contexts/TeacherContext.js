@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-// import TeacherAuthApiService from '../Services/teacher-auth-api-service'
 import TokenService from '../Services/token-service'
-// import IdleService from '../Services/idle-service'
 
 const TeacherContext = React.createContext({
   user: {},
@@ -63,7 +61,7 @@ export class TeacherProvider extends Component {
   }
 
   setUser = user => {
-    console.log(user);
+    // console.log(user);
     this.setState({ user })
   }
 
@@ -78,7 +76,11 @@ export class TeacherProvider extends Component {
     const teacherClass = response.class;
 
     console.log('user from context', user)
-    console.log('teacherClass from context', teacherClass)
+    console.log('login', response);
+    this.setState({
+      user: user,
+      teacherClass: teacherClass
+    })
 
     TokenService.saveAuthToken(authToken)
     this.setUser({user})
