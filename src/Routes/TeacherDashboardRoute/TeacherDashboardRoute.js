@@ -39,19 +39,33 @@ class TeacherDashboardRoute extends React.Component{
     }
   }
 
-  render() {
-    const {loaded} = this.state;
+  displayStudents = (resStudents) => {
+    this.setState({
+      students: resStudents.students,
+    })
+  }
 
+  addStudents = (res) => {
+    this.setState({
+      students: [...this.state.students, res],      
+    })
+  }
+
+  render() {
+    const {loaded, students} = this.state;
+    // console.log('students', this.state.students)
     if(!loaded){
       return <div><p>loading...</p></div>
     } else {
       return (
         <section className='TeacherDashboardRoute-section'>
-          <div className='TeacherDashboardRoute-learning-target-submit'>
+        {students.length > 0 ?<div className='TeacherDashboardRoute-learning-target-submit'>
+            
             <LearningTargetForm history={this.props.history} class_id={this.state.class_id}/>
-          </div>
+          </div>: <></>}
+      
           <div className='TeacherDashboardRoute-student-list'>
-            <StudentList class_id={this.state.class_id} students={this.state.students}/>
+            <StudentList addStudents= {this.addStudents} displayStudents= {this.displayStudents} class_id={this.state.class_id} students={this.state.students}/>
           </div>
         </section>
       );
