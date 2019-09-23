@@ -17,6 +17,10 @@
   width: 250px;
 }
 
+.landing-page a:hover {
+  color: white;
+}
+
 .landing-page-link-container {
   display: flex;
   flex-direction: column;
