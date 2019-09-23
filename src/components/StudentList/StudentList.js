@@ -14,12 +14,12 @@ class StudentList extends React.Component{
     students: [],
       userInput: '',
       newStudent: null,
-      class_id: this.context.teacherClass.teacherClass.id
+      class_id: null,
   }
 
   componentDidMount() { 
     // Fetch students from API -- PSUEDO CODE, need to check with Back End
-    let classid = this.context.teacherClass.teacherClass.id
+    let classid = this.context.teacherClass.id
     this.setState({
       class_id: classid
     })
