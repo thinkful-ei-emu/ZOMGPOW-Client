@@ -45,6 +45,19 @@ const TeacherAuthApiService = {
           : res.json()
       )
   },
+  getTeacherClasses() {
+    return fetch(`${config.API_ENDPOINT}/class`, {
+      method: 'GET',
+      headers: {
+        'authorization': `Bearer ${TokenService.getAuthToken()}`,
+      },
+    })
+      .then(res => 
+        (!res.ok)
+        ? res.json().then(e => Promise.reject(e))
+        : res.json()
+      )
+  },
 }
 
 export default TeacherAuthApiService;
