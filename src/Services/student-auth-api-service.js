@@ -64,7 +64,7 @@ const StudentAuthApiService = {
   updateStudent(student_goal_id, data) {
     return fetch(`${config.API_ENDPOINT}/subgoals/${student_goal_id}`, {
       method: 'PATCH',
-      header: {
+      headers: {
         'content-type': 'application/json',
         'authorization': `Bearer ${TokenService.getAuthToken()}`, 
       },
@@ -76,18 +76,6 @@ const StudentAuthApiService = {
       (!res.ok)
       ? res.json().then(e => Promise.reject(e))
       : res.json()
-    )
-  },
-  getStudentGoals(class_id){
-    return fetch(`${config.API_ENDPOINT}/goals/${class_id}`, {
-      headers: {
-        authorization: `bearer ${TokenService.getAuthToken()}`
-      },
-    })
-    .then(res =>
-      (!res.ok)
-        ? res.json().then(e => Promise.reject(e))
-        : res.json()
     )
   },
   getStudentGoals(student_id) {
@@ -105,7 +93,7 @@ const StudentAuthApiService = {
   postStudentSubgoal(student_goal_id, data) {
     return fetch(`${config.API_ENDPOINT}/subgoals/${student_goal_id}`, {
       method: 'POST',
-      header: {
+      headers: {
         'content-type': 'application/json',
         'authorization': `Bearer ${TokenService.getAuthToken()}`, 
       },
