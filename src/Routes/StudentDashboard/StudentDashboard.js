@@ -8,14 +8,12 @@ import './StudentDashboard.css';
 
 class StudentDashboard extends React.Component{
   state = {
-    class_id: 1,
+    student_id: null,
+    goals: [],
+    subgoals: [],
     error: null,
     timer: false,
     show: true,
-    goal: 'Write a 5 paragraph essay',
-    goalComplete: false,
-    currentGoal: 'Construct a thesis statement', 
-    previousGoals: ['Make a brainmap', 'Read short article for inspiration']
   };
   static contextType = StudentContext;
   renderLogInLinks(){
@@ -31,8 +29,19 @@ class StudentDashboard extends React.Component{
     this.context.processLogout();
   }
   componentDidMount() {
-    StudentAuthApiService.getStudentGoals(this.state.class_id)
-      .then(res => console.log(res))
+    this.setState({
+      student_id: this.context.user.id
+    })
+    StudentAuthApiService.getStudentGoals(this.context.user.id)
+      .then(res => {
+        console.log(res)
+        const student_goals = res.goals;
+        const student_subgoals = res.subgoals;
+        this.setState({
+          goals: student_goals,
+          subgoals: student_subgoals
+        })
+      })
       .catch(res => {
         this.setState({ error: res.error })
       })
@@ -58,9 +67,9 @@ toggleTimer = () => {
 }
 
   render() {
-    const prevGoals = this.state.previousGoals.map((goal, index) =>
-      <li key={index}>{goal}</li>
-    );
+    const learningTarget = this.state.goals.map((goal, index) => <li key={index}>{goal.goal_title}</li>)
+    const subGoals = this.state.subgoals.map((sub, index) => <li key={index}>{sub.subgoal_title}</li>)
+
     return(
       <section className="student-dashboard-section">
         <div className="links">
@@ -70,10 +79,18 @@ toggleTimer = () => {
         </div>  
       <div className='goals-container'>
         <h2>Learning Target: </h2>
-        <p>{this.state.goal}</p>
+        {/* grabs the first goal for that student */}
+        <p>{learningTarget.pop()}</p>
+
+        {(subGoals.length > 0) 
+        ?
+        <div> 
         <h2>Current Goal: </h2>
-        <p>{this.state.currentGoal}</p>
+        <p>{subGoals}</p>
+        </div>
+        : <></>}
       </div>
+
       <div className='timer-container'>
         <button 
         className='button blue-button'
@@ -82,8 +99,16 @@ toggleTimer = () => {
           <StudentTimer />
         </div>
       </div>
-      {/* <h3>Previous Goals</h3>
-      <ul>{prevGoals}</ul> */}
+
+      {(subGoals.length > 1) 
+      ?
+      <div> 
+      <h3>Previous Goals</h3>
+      {/* need to display all subgoals but the last one */}
+      <ul>{subGoals}</ul>
+      </div>
+      : <></>}
+
       </section>
     )
   }
