@@ -21,6 +21,7 @@ class StudentDashboard extends React.Component{
     })
     StudentAuthApiService.getStudentGoals(this.context.user.id)
       .then(res => {
+        console.log(res)
         const student_goals = res.goals;
         const student_subgoals = res.subgoals;
         this.setState({
@@ -43,16 +44,24 @@ toggleTimer = () => {
 
   render() {
     const learningTarget = this.state.goals.map((goal, index) => <li key={index}>{goal.goal_title}</li>)
+    const subGoals = this.state.subgoals.map((sub, index) => <li key={index}>{sub.subgoal_title}</li>)
+
     return(
       <section className="student-dashboard-section">
       <div className='goals-container'>
         <h2>Learning Target: </h2>
         {/* grabs the first goal for that student */}
-        <p>{learningTarget.shift()}</p>
-        <h2>Current Goal: </h2>
-        {/* grabs the latest goal for that student */}
         <p>{learningTarget.pop()}</p>
+
+        {(subGoals.length > 0) 
+        ?
+        <div> 
+        <h2>Current Goal: </h2>
+        <p>{subGoals}</p>
+        </div>
+        : <></>}
       </div>
+
       <div className='timer-container'>
         <button 
         className='button blue-button'
@@ -61,9 +70,16 @@ toggleTimer = () => {
           <StudentTimer />
         </div>
       </div>
+
+      {(subGoals.length > 1) 
+      ?
+      <div> 
       <h3>Previous Goals</h3>
-      {/* display all the other goals that student has had */}
-      <ul>{learningTarget}</ul>
+      {/* need to display all subgoals but the last one */}
+      <ul>{subGoals}</ul>
+      </div>
+      : <></>}
+
       </section>
     )
   }
