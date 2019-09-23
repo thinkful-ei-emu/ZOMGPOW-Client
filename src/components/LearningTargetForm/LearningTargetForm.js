@@ -1,4 +1,4 @@
-import React from 'react';
+import React from './node_modules/react';
 import './LearningTargetForm.css';
 import config from '../../config';
 import TokenService from '../../Services/token-service';

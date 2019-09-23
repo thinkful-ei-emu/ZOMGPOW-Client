@@ -1,4 +1,4 @@
-import React from 'react';
+import React from './node_modules/react';
 import StudentAuthApiService from '../../Services/student-auth-api-service';
 import './StudentList.css';
 import TeacherContext from '../../Contexts/TeacherContext'
