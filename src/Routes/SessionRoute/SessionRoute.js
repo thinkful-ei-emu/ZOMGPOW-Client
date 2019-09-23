@@ -3,6 +3,7 @@ import StudentApiService from '../../Services/student-auth-api-service';
 import TokenService from '../../Services/token-service';
 import config from '../../config';
 import TeacherContext from '../../Contexts/TeacherContext';
+import TeacherAuthService from '../../Services/teacher-auth-api-service';
 import './SessionRoute.css';
 
 class SessionRoute extends React.Component {
@@ -18,27 +19,39 @@ class SessionRoute extends React.Component {
   }
 
   componentDidMount() {
-    if(TokenService.hasAuthToken()) {
-      const class_id = this.context.teacherClass.teacherClass.id;
-    this.setState({
-      class_id: class_id
-    })
 
-      //get students, goals, and subgoals
-      StudentApiService.getAllStudents(class_id)
-      .then(res => {
-        const setupStudents = this.setupStudents(res.students);
-        const learningTarget = res.goals[0] ? res.goals.pop() : ''
-        // console.log(setupStudents);
+    if(!this.state.class_id){
+      TeacherAuthService.getTeacherClasses()
+      .then(classes => this.context.setClass(classes[0]))
+      .then(() => this.setState({
+        loaded: true,
+        class_id: this.context.teacherClass.id
+      }))
+      .then(() => {
+        if(TokenService.hasAuthToken()) {
+          const class_id = this.context.teacherClass.id;
         this.setState({
-          students: setupStudents,
-          learningTarget: res.goals[0] ? learningTarget.goal_title : learningTarget
+          class_id: class_id
         })
+    
+          //get students, goals, and subgoals
+          StudentApiService.getAllStudents(class_id)
+          .then(res => {
+            const setupStudents = this.setupStudents(res.students);
+            const learningTarget = res.goals[0] ? res.goals.pop() : ''
+            // console.log(setupStudents);
+            this.setState({
+              students: setupStudents,
+              learningTarget: res.goals[0] ? learningTarget.goal_title : learningTarget
+            })
+          })
+          .catch(error => this.setState({ error }))
+        } else {
+          this.props.history.push('/login/teacher');
+        } 
       })
-      .catch(error => this.setState({ error }))
-    } else {
-      this.props.history.push('/login/teacher');
-    } 
+    }
+    
   }
 
   setupStudents = (students) => {
@@ -205,7 +218,7 @@ class SessionRoute extends React.Component {
     return (
       <section className='SessionRoute-container'>
         <div className='alert' role='alert'>
-        {error && <p>{error}</p>}
+        {error && <p>{error.message}</p>}
         </div>
         <div>
           <h2>Learning Target: </h2>
