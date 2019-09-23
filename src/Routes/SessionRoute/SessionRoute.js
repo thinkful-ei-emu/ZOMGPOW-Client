@@ -13,16 +13,19 @@ class SessionRoute extends React.Component {
     learningTarget: '',
     updatedSubGoal: '',
     updatedPriority: null,
+    class_id: null,
     students: [],
   }
 
   componentDidMount() {
     if(TokenService.hasAuthToken()) {
-      // Set classId to context when it is working ------------**
-      let classId = 5;
+      const class_id = this.context.teacherClass.teacherClass.id;
+    this.setState({
+      class_id: class_id
+    })
 
       //get students, goals, and subgoals
-      StudentApiService.getAllStudents(classId)
+      StudentApiService.getAllStudents(class_id)
       .then(res => {
         const setupStudents = this.setupStudents(res.students);
         const learningTarget = res.goals[0] ? res.goals.pop() : ''
