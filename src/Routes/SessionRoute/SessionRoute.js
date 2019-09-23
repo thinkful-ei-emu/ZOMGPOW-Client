@@ -97,7 +97,7 @@ class SessionRoute extends React.Component {
 
   handleUpdateGoal = (e, studentUsername) => {
     e.preventDefault();
-    console.log('priority1', this.state.updatedPriority)
+    const priority = this.state.updatedPriority;
     const data = { subgoal_title: this.state.updatedSubGoal };
     const student = this.state.students.filter(student => student.user_name === studentUsername).pop();
     const goalId = student.mainGoalId;
@@ -109,7 +109,7 @@ class SessionRoute extends React.Component {
         const updatedStudent = {
           ...studentToUpdate[0],
           subgoal: res.subGoal.subgoal_title,
-          priority: this.state.updatedPriority,
+          priority: priority,
           expand: false,
           expired: false,
           order: 0,
