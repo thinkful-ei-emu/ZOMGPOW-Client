@@ -14,9 +14,9 @@ class Header extends React.Component {
   renderLogInLinks(){
     return (
       <nav className="login-buttons">
-        <Link to='/login/teacher' className='teacher'>Teacher Login</Link>
-        <Link to='/login/student' className='student'>Student Login</Link>
-        <Link to='/register' className='sign-up'>Sign Up</Link>
+        <Link to='/login/teacher' className='purple-button button'>Teacher Login</Link>
+        <Link to='/login/student' className='blue-button button'>Student Login</Link>
+        <Link to='/register' className='green-button button'>Sign Up</Link>
       </nav>
     )
   }
@@ -24,13 +24,14 @@ class Header extends React.Component {
   renderLogOutLinks(){
     return (
       <nav>
-        <Link to='/dashboard/teacher'>Dashboard</Link>
+        <Link to='/dashboard/teacher' className='purple-button button'>Dashboard</Link>
         {' '}
-        <Link to='/session'>Session Goals</Link>
+        <Link to='/session' className='blue-button button'>Session Goals</Link>
         {' '}
         <Link 
           onClick={this.handleLogoutClick}
-          to='/'>
+          to='/'
+          className='green-button button'>
           Logout
         </Link>
       </nav>

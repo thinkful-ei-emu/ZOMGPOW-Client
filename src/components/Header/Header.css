@@ -7,55 +7,18 @@ header{
   border-bottom: solid 1px darkgray;
 }
 
-header h1{
-  font-family: 'Vibes', cursive;
-  font-size: 80px;
-  font-weight: 800;
-  line-height: 1.3;
-  margin: 0 30px;
-}
-
 header h1 a{
   text-decoration: none;
   color: black;
 }
 
 header h1 a:hover {
-  color: #8B00B5;
+  color: var(--purple);
 }
 
 .login-buttons{
   display: flex; 
   flex-direction: row;
-}
-
-.login-buttons a{
-  text-decoration: none;
-  color: white;
-  padding: 5px 15px 8px 15px;
-  border-radius: 15px;
-  margin-right: 10px;
-  margin-top: 5px;
-  font-size: 16px;
-  text-align: center;
-  font-family: 'Lexend Deca', sans-serif;
-  cursor: pointer;
-}
-
-.login-buttons .teacher {
-  background: #8B00B5;
-}
-
-.login-buttons .student {
-  background: #0ABAD4;
-}
-
-.login-buttons .sign-up {
-  background: #81D40A;
-}
-
-.login-buttons a:hover{
-  background: black;
 }
 
 /* MEDIA QUERIES */

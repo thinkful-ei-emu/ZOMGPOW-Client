@@ -126,7 +126,7 @@ class SessionRoute extends React.Component {
           {/* RECONFIGURE ONCE SUBGOALS CAN POST AND WE KNOW WHAT WE'RE GETTING BACK */}
           <p>{student.subGoal ? student.subGoal : this.state.learningTarget}</p>
           <button 
-            className={student.expand ? 'cancel' : 'check-in'}
+            className={student.expand ? ' button blue-button' : 'button purple-button'}
             onClick={e => this.toggleExpand(student.user_name)}>{student.expand ? 'Cancel' : 'Check In'}</button>
           <div className={student.expand ? '' : 'hidden'}>
             <form onSubmit={e => this.handleUpdateGoal(e, student.user_name)}>
@@ -175,7 +175,7 @@ class SessionRoute extends React.Component {
               </div>
               <div>
                 <button 
-                  className='update-goal'
+                  className='button green-button'
                   type='submit'>Update Goal</button>
               </div>
             </form>
