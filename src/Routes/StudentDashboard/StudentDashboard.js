@@ -3,13 +3,10 @@ import StudentAuthApiService from '../../Services/student-auth-api-service';
 import { Link } from 'react-router-dom';
 import StudentTimer from '../../Components/Timer/StudentTimer';
 import StudentContext from '../../Contexts/StudentContext';
-import TokenService from '../../Services/token-service';
 import './StudentDashboard.css';
 
 class StudentDashboard extends React.Component{
-
   static contextType = StudentContext;
-
   state = {
     student_id: null,
     goals: [],
@@ -17,27 +14,15 @@ class StudentDashboard extends React.Component{
     error: null,
     timer: false,
     show: true,
+    evaluations:[],
   };
-  static contextType = StudentContext;
-  renderLogInLinks(){
-    return (
-      <nav className="login-buttons">
-        <Link to='/login/teacher' className='purple-button button'>Teacher Login</Link>
-        <Link to='/login/student' className='blue-button button'>Student Login</Link>
-        <Link to='/register' className='green-button button'>Sign Up</Link>
-      </nav>
-    )
-  }
-  handleLogoutClick = () => {
-    this.context.processLogout();
-  }
+
   componentDidMount() {
     this.setState({
       student_id: this.context.user.id
     })
     StudentAuthApiService.getStudentGoals(this.context.user.id)
       .then(res => {
-        console.log(res)
         const student_goals = res.goals;
         const student_subgoals = res.subgoals;
         this.setState({
@@ -49,54 +34,53 @@ class StudentDashboard extends React.Component{
         this.setState({ error: res.error })
       })
   }
- renderStudentLogout(){
-  return (
-    <nav>
-      <Link 
-        onClick={this.handleLogoutClick}
-        to='/'
-        className='green-button button'>
-        Logout
-      </Link>
-    </nav>
-  )
- }
-toggleTimer = () => {
-  // toggle css hidden attribute
-  // update state
-  this.setState({
-    show: !this.state.show,
-  })
-}
 
-findStudentWithTimer = (studentTimers, currStudent) => {
-  //currStudent is student username
-  let currTimer = studentTimers.find(timer => timer.student === currStudent)
+  handleLogoutClick = () => {
+    this.context.processLogout();
+  }
 
-  return currTimer;
-}
+  renderStudentLogout(){
+    return (
+      <nav>
+        <Link 
+          onClick={this.handleLogoutClick}
+          to='/'
+          className='green-button button'>
+          Logout
+        </Link>
+      </nav>
+    )
+  }
+
+  toggleTimer = () => {
+    this.setState({
+      show: !this.state.show,
+    })
+  }
+
+  findStudentWithTimer = (studentTimers, currStudent) => {
+    //currStudent is student username
+    let currTimer = studentTimers.find(timer => timer.student === currStudent)
+    return currTimer;
+  }
 
   render() {
     let currStudent = this.context.user.username;
     let currTimer = this.findStudentWithTimer(this.props.studentTimers, currStudent);
-    // const prevGoals = this.state.previousGoals.map((goal, index) =>
-    //   <li key={index}>{goal}</li>
-    // );
     const learningTarget = this.state.goals.map((goal, index) => <li key={index}>{goal.goal_title}</li>)
     const subGoals = this.state.subgoals.map((sub, index) => <li key={index}>{sub.subgoal_title}</li>)
 
     return(
       <section className="student-dashboard-section">
         <div className="links">
-          {TokenService.hasAuthToken() 
-          ? this.renderStudentLogout()
-          :this.renderLogInLinks()}
+          {this.renderStudentLogout()}
         </div>  
+
       <div className='goals-container'>
         <h2>Learning Target: </h2>
         {/* grabs the first goal for that student */}
+        <ul>
         <p>{learningTarget.pop()}</p>
-
         {(subGoals.length > 0) 
         ?
         <div> 
@@ -104,6 +88,7 @@ findStudentWithTimer = (studentTimers, currStudent) => {
         <p>{subGoals}</p>
         </div>
         : <></>}
+        </ul>
       </div>
 
       <div className='timer-container'>
@@ -115,15 +100,15 @@ findStudentWithTimer = (studentTimers, currStudent) => {
         </div>
       </div>
 
+      <Link to='/selfEvaluate'>Ready to self-evaluate?</Link>  
+      
       {(subGoals.length > 1) 
-      ?
-      <div> 
+      ? <div> 
       <h3>Previous Goals</h3>
       {/* need to display all subgoals but the last one */}
       <ul>{subGoals}</ul>
       </div>
       : <></>}
-
       </section>
     )
   }

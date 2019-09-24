@@ -62,6 +62,7 @@ class SessionRoute extends React.Component {
     //get student goals
     return StudentApiService.getStudentGoals(student_id)
       .then(res => {
+        console.log('resonse for get goal', res)
         return res.goals.pop();
       })
       .catch(error => this.setState({ error }))
