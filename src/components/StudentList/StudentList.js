@@ -18,13 +18,8 @@ class StudentList extends React.Component {
   }
 
   componentDidMount() {
-<<<<<<< HEAD
     // Fetch students from API -- PSUEDO CODE, need to check with Back End
     let classId = this.context.teacherClass.id
-=======
-    // Fetch students from API
-    let classid = this.context.teacherClass.id
->>>>>>> development
     this.setState({
       classId: classId
     })
