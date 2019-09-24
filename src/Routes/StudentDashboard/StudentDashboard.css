@@ -17,3 +17,9 @@ margin-bottom: 20px;
   max-width: 300px;
   margin: 0 auto;
 }
+
+.student-dashboard-section .purple-button{
+  width: 90%;
+  max-width: 300px;
+  margin: 10px auto;
+}
