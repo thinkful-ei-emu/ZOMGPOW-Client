@@ -158,6 +158,8 @@ class SessionRoute extends React.Component {
     })
   }
 
+  markTargetComplete = (id, data) => StudentApiService.patchStudentGoal(id, data)
+
   // Will make cards for students given
   makeCards = (students) => {
     const allStudents = students.map((student) => {
@@ -167,6 +169,9 @@ class SessionRoute extends React.Component {
           className={student.expired === true ? `expired ${student.priority}` : ''}
         >
           <h3>{student.full_name}</h3>
+          {student.expand && <button 
+            className='button green-button'
+            onClick={() => this.markTargetComplete(student.mainGoalId, student.expired)}>Target Complete</button>}
           <p>{student.subgoal ? student.subgoal : this.state.learningTarget}</p>
           <button
             className={student.expand ? ' button blue-button' : 'button purple-button'}
