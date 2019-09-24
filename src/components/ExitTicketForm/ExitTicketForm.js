@@ -13,6 +13,7 @@ class ExitTicketForm extends React.Component {
 
     return (
       <div className='exit-ticket-form'>
+        <p> -OR- </p>
         <button className='button purple-button'>Create an Exit Ticket for this Learning Target?</button>
         
         <div className=''>
@@ -34,13 +35,13 @@ class ExitTicketForm extends React.Component {
         <input id='option-D' />
         <label htmlFor='exit-ticket-correct-answer'>Correct Answer:</label>
         <input id='exit-ticket-correct-answer' />
-        <button className='button purple-button'>Start Session</button>
+        <button className='button purple-button'>Save Exit Ticket</button>
       </form>
 
       <form className='form short-answer'>
         <label htmlFor='exit-ticket-question'>Exit Ticket Question:</label>
         <input />
-        <button className='button purple-button'>Start Session</button>
+        <button className='button purple-button'>Save Exit Ticket</button>
       </form>
       </div>
       </div>
