@@ -76,16 +76,28 @@ class StudentList extends React.Component{
 
   render() {
     const { error } = this.state;
-    const studentList = this.state.students.map((student, index) => <li key={index}><span>{student.full_name}</span><span>{student.user_name}</span></li>)
+    const fullname = this.state.students.map((student, index) => <li key={index}><span className="fullname">{student.full_name}</span></li>)
+    const username = this.state.students.map((student, index) => <li key={index}><span className="fullname">{student.user_name}</span></li>)
     return(
       <div className='StudentList-container'>
       <h2>Students</h2>
       <div className='alert' role='alert'>
         {error && <p>{error}</p>}
       </div>
-          {studentList.length < 1 
+      {fullname.length < 1 
             ? <p>Add your students!</p> 
-            : <ul>{studentList}</ul>}
+            :
+      <table>
+        <tr>
+          <th>Full Name</th>
+          <th>User Name</th>
+        </tr>
+        <tr>
+          <td><ul>{fullname}</ul></td>
+          <td><ul>{username}</ul></td>
+        </tr>
+      </table>
+      }      
         <form 
           onSubmit={this.handleSubmit}
           className='add-student-form'>
