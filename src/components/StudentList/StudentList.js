@@ -93,7 +93,7 @@ class StudentList extends React.Component {
   render() {
     const { error, classId, isDeleting} = this.state;
     const fullName = this.props.students.map((student, index) => <li key={index}>{student.full_name}</li>)
-    const userName = this.props.students.map((student, index) => <li key={index}>{student.user_name}<span><button onClick={() => this.handleDeleteStudent(student.user_name, classId)}>X</button></span></li>)
+    const username = this.props.students.map((student, index) => <li key={index}>{student.user_name}<span><button onClick={() => this.handleDeleteStudent(student.user_name, classId)}>X</button></span></li>)
     
     if(isDeleting){
       return (<div>loading...</div>)
@@ -114,7 +114,7 @@ class StudentList extends React.Component {
         </tr>
         <tr>
           <td><ul>{fullName}</ul></td>
-          <td><ul>{userName}</ul></td>
+          <td><ul>{username}</ul></td>
         </tr>
       </table>
       }      

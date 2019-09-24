@@ -27,14 +27,12 @@ class StudentLoginRoute extends React.Component {
   
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.context)
-    const {student_username} = e.target
-    console.log(student_username.value);
+    const { studentUsername } = e.target
     this.setState({ error: null })
 
-    StudentAuthApiService.postLogin(student_username.value)
+    StudentAuthApiService.postLogin(studentUsername.value)
       .then(res => {
-        student_username.value = ''       
+        studentUsername.value = ''       
         this.context.processLogin(res.authToken)
         this.onLoginSuccess()
       })
@@ -55,15 +53,14 @@ class StudentLoginRoute extends React.Component {
           </div>
           <h2>Student Login</h2>
           <label>Username:</label>
-          <input className= "student-username" name="student_username" required></input>
+          <input className= "student-username" name="studentUsername" required></input>
           <button type="submit" className='button blue-button'>Submit</button>
           <div className='student-help'>
             <span>Forgot your username?</span>
-            <br />
+            <br/>
             <span>Ask your teacher for help.</span>
           </div>
-        </form>
-   
+        </form>   
       </div>
     );
   }

@@ -9,7 +9,7 @@ import TokenService from '../../Services/token-service';
 class TeacherDashboardRoute extends React.Component{
   state = {
     error: null,
-    class_id: null,
+    classId: null,
     students: [],
     loaded: false,
   }
@@ -18,7 +18,7 @@ class TeacherDashboardRoute extends React.Component{
   componentDidMount = () => {
     let token;
 
-    if(TokenService.getAuthToken() && !this.state.class_id){
+    if(TokenService.getAuthToken() && !this.state.classId){
       token = TokenService.parseAuthToken()
       console.log('token from teacher dashboard', token)
 
@@ -26,15 +26,15 @@ class TeacherDashboardRoute extends React.Component{
       .then(classes => this.context.setClass(classes[0]))
       .then(() => this.setState({
         loaded: true,
-        class_id: this.context.teacherClass.id
-      }, () => console.log(this.state.class_id)))
+        classId: this.context.teacherClass.id
+      }, () => console.log(this.state.classId)))
 
     } else {
-      const class_id = this.context.teacherClass.id;
+      const classId = this.context.teacherClass.id;
 
       this.setState({
         loaded: true,
-        class_id
+        classId
       })
     }
   }
@@ -51,9 +51,9 @@ class TeacherDashboardRoute extends React.Component{
     })
   }
 
-  removeStudent = (user_name) => {
+  removeStudent = (username) => {
     let students = this.state.students
-    let newStudents = students.filter(student => student.user_name !== user_name)
+    let newStudents = students.filter(student => student.username !== username)
     this.setState({
       students: newStudents,
     })
@@ -69,11 +69,11 @@ class TeacherDashboardRoute extends React.Component{
         <section className='TeacherDashboardRoute-section'>
         {students.length > 0 ?<div className='TeacherDashboardRoute-learning-target-submit'>
             
-            <LearningTargetForm history={this.props.history} class_id={this.state.class_id}/>
+            <LearningTargetForm history={this.props.history} class_id={this.state.classId}/>
           </div>: <></>}
       
           <div className='TeacherDashboardRoute-student-list'>
-            <StudentList addStudents= {this.addStudents} removeStudent={this.removeStudent} displayStudents= {this.displayStudents} class_id={this.state.class_id} students={this.state.students}/>
+            <StudentList addStudents= {this.addStudents} removeStudent={this.removeStudent} displayStudents= {this.displayStudents} class_id={this.state.classId} students={this.state.students}/>
           </div>
         </section>
       );
