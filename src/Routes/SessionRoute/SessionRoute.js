@@ -6,18 +6,22 @@ import TeacherAuthService from '../../Services/teacher-auth-api-service';
 import './SessionRoute.css';
 
 class SessionRoute extends React.Component {
+
   static contextType = TeacherContext;
 
-  state = {
-    error: null,
-    learningTarget: '',
-    updatedSubGoal: '',
-    updatedPriority: null,
-    class_id: 5,
-    students: [],
+  constructor(props) {
+    super(props)
+    this.state = {
+      error: null,
+      learningTarget: '',
+      updatedSubGoal: '',
+      updatedPriority: null,
+      class_id: null,
+      students: [],
+    }
   }
-  // CLASS_ID STILL DOESN'T FETCH FROM CONTEXT CORRECTLY, 
-  // HARDCODING IN CLASS_ID IN STATE FOR NOW
+
+
   componentDidMount() {
     if (TokenService.hasAuthToken()) {
       if (!this.state.class_id) {
@@ -33,19 +37,20 @@ class SessionRoute extends React.Component {
               class_id: class_id
             })
           })
-      }
-
-      //get students, goals, and subgoals
-      StudentApiService.getAllStudents(this.state.class_id)
-        .then(res => {
-          const setupStudents = this.setupStudents(res.students);
-          const learningTarget = res.goals[0] ? res.goals.pop() : ''
-          this.setState({
-            students: setupStudents,
-            learningTarget: res.goals[0] ? learningTarget.goal_title : learningTarget
+          .then(() => {
+            //get students, goals, and subgoals
+            StudentApiService.getAllStudents(this.state.class_id)
+              .then(res => {
+                const setupStudents = this.setupStudents(res.students);
+                const learningTarget = res.goals[0] ? res.goals.pop() : ''
+                this.setState({
+                  students: setupStudents,
+                  learningTarget: res.goals[0] ? learningTarget.goal_title : learningTarget
+                })
+              })
+              .catch(error => this.setState({ error }))
           })
-        })
-        .catch(error => this.setState({ error }))
+      }
     } else {
       this.props.history.push('/login/teacher');
     }
@@ -78,16 +83,21 @@ class SessionRoute extends React.Component {
 
   // Should set timer when sub goal is updated
   handleTimer = (studentUsername, priority) => {
+    console.log('handle timer ran')
     // High - 5 min/300000, Medium - 10min/600000, Low - 20 min/1200000 
     // Testing - high/5 sec(5000), medium/7 sec(7000), low/10 sec(10000)
-    const time = priority === 'high' ? 5000 : priority === 'medium' ? 7000 : 10000;
+    const time = priority === 'high' ? 50000 : priority === 'medium' ? 70000 : 100000;
+    console.log('setTimeout started')
     setTimeout(this.handleExpire, time, studentUsername);
+    this.props.handleStudentTimers(studentUsername, time)
   }
 
   // Should toggle expired key to true and set order when timer expires
   // Setting the order allows the first timer that ends to remain first in line and
   // subsequent timers to follow in line after
   handleExpire = studentUsername => {
+    console.log('setTimeout end', studentUsername);
+    console.log(Date.now())
     const expiredStudent = this.state.students.find(student => student.user_name === studentUsername);
     const studentOrder = { ...expiredStudent, expired: true, order: new Date() };
     this.setState({

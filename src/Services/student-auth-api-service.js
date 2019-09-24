@@ -20,6 +20,21 @@ const StudentAuthApiService = {
       )
      
   },
+  deleteStudent(user_name, classId){
+    return fetch(`${config.API_ENDPOINT}/class/${classId}/students`, {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `Bearer ${TokenService.getAuthToken()}`
+      },
+      body: JSON.stringify({user_name}),
+    })
+    .then(res =>
+      (!res.ok)
+      ? res.json().then(e => Promise.reject(e))
+      : res
+      )
+  },
   postLogin(user_name) {
     return fetch(`${config.API_ENDPOINT}/auth/student/login`, {
       method: 'POST',
