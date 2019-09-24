@@ -51,6 +51,14 @@ class TeacherDashboardRoute extends React.Component{
     })
   }
 
+  removeStudent = (user_name) => {
+    let students = this.state.students
+    let newStudents = students.filter(student => student.user_name !== user_name)
+    this.setState({
+      students: newStudents,
+    })
+  }
+
   render() {
     const {loaded, students} = this.state;
     if(!loaded){
@@ -63,7 +71,7 @@ class TeacherDashboardRoute extends React.Component{
           </div>: <></>}
       
           <div className='TeacherDashboardRoute-student-list'>
-            <StudentList addStudents= {this.addStudents} displayStudents= {this.displayStudents} class_id={this.state.class_id} students={this.state.students}/>
+            <StudentList addStudents= {this.addStudents} removeStudent={this.removeStudent} displayStudents= {this.displayStudents} class_id={this.state.class_id} students={this.state.students}/>
           </div>
         </section>
       );
