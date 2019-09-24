@@ -13,6 +13,7 @@ class StudentDashboard extends React.Component{
     error: null,
     timer: false,
     show: true,
+    evaluations: [],
   };
   static contextType = StudentContext;
   handleLogoutClick = () => {
@@ -62,6 +63,7 @@ toggleTimer = () => {
         <div className="links">
           {this.renderStudentLogout()}
         </div>  
+
       <div className='goals-container'>
         <h2>Learning Target: </h2>
         {/* grabs the first goal for that student */}
@@ -76,14 +78,18 @@ toggleTimer = () => {
         : <></>}
         </ul>
       </div>
+
       <div className='timer-container'>
         <button 
         className='button blue-button'
         onClick={this.toggleTimer}>{this.state.show ? 'Hide' : 'Timer'}</button>
         <div className={this.state.show ? '' : 'hidden'}>
-          <StudentTimer />
+          <StudentTimer currentGoal={this.state.subgoals} learningTarget={this.state.goals}/>
         </div>
       </div>
+
+      <Link to='/selfEvaluate'>Ready to self-evaluate?</Link>  
+      
       {(subGoals.length > 1) 
       ? <div> 
       <h3>Previous Goals</h3>
