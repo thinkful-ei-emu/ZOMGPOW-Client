@@ -1,4 +1,4 @@
-.teacher-login-form {
+/* .teacher-login-form {
   display: flex; 
   flex-direction: column;
   padding: 15px;
@@ -8,25 +8,25 @@
   width: 80%;
   max-width: 300px;
   align-items: center;
-}
+} */
 
-.teacher-login-form h2 {
+/* .teacher-login-form h2 {
   font-size: 27px;
-}
+} */
 
-.teacher-login-form label{
+/* .teacher-login-form label{
   font-size: 20px;
-}
+} */
 
- .teacher-login-form input{
+ /* .teacher-login-form input{
   border-radius: 5px;
   font-family: var(--body-font);
   font-size: 15px;
   border: solid 1px darkgray;
   margin: 10px;
-}
+} */
 
-.teacher-login-form button {
+/* .teacher-login-form button {
   color: white;
   background: var(--purple);
   padding: 5px 15px 8px 15px;
@@ -34,15 +34,16 @@
   font-size: 16px;
   text-align: center;
   font-family: var(--heading-font);
-}
+} */
 
-.teacher-login-form button:hover {
+/* .teacher-login-form button:hover {
   background: black;
   cursor: pointer;
-}
+} */
 
 .login-link {
   justify-content: center;
+  margin-top: 10px;
 }
 
 .login-link a{

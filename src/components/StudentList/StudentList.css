@@ -68,7 +68,6 @@
 
 .StudentList .delete-student:hover {
   color: var(--purple);
-  /* background: rgb(231, 231, 231); */
   box-shadow: 2px 2px 2px rgb(202, 202, 202);
 }
 
