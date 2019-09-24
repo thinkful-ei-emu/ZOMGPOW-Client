@@ -14,14 +14,14 @@ class RegistrationForm extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const {full_name, email, password } = e.target;
+    const {fullName, email, password } = e.target;
     TeacherAuthApiService.postUser({
-      full_name: full_name.value,
+      fullName: fullName.value,
       email: email.value,
       password: password.value
     })
     .then(user => {
-      full_name.value = ''
+      fullName.value = ''
       email.value = ''
       password.value = ''
       this.props.onRegistrationSuccess();
@@ -54,7 +54,7 @@ class RegistrationForm extends React.Component {
           <input
             ref={this.firstInput}
             id='registration-full-name-input'
-            name='full_name'
+            name='fullName'
             placeholder='Tammy Teacher'
             aria-label='Registration full name input'
             aria-required='true'

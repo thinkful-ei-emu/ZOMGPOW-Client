@@ -13,17 +13,17 @@ class StudentList extends React.Component {
     error: null,
     userInput: '',
     newStudent: null,
-    class_id: null,
+    classId: null,
     isDeleting: false,
   }
 
   componentDidMount() {
     // Fetch students from API -- PSUEDO CODE, need to check with Back End
-    let classid = this.context.teacherClass.id
+    let classId = this.context.teacherClass.id
     this.setState({
-      class_id: classid
+      classId: classId
     })
-    return fetch(`${config.API_ENDPOINT}/class/${classid}/students`, {
+    return fetch(`${config.API_ENDPOINT}/class/${classId}/students`, {
       method: 'GET',
       headers: {
         'authorization': `Bearer ${TokenService.getAuthToken()}`,
@@ -51,8 +51,6 @@ class StudentList extends React.Component {
 
     StudentAuthApiService.deleteStudent(username, classId)
       .then(res => {
-
-
         if(!res.ok){
           this.setState({error: res.error})
         } else {
@@ -60,8 +58,6 @@ class StudentList extends React.Component {
           this.setState({isDeleting: false})
         }
       })
-
-
   }
   // Updates state with every user input change
   handleChange = (e) => {
@@ -76,7 +72,7 @@ class StudentList extends React.Component {
       newStudent: this.state.userInput,
     })
     // Use Student Api Service to post student - PSUEDO CODE
-    let newStudent = { full_name: this.state.userInput, class_id: this.state.class_id }
+    let newStudent = { fullName: this.state.userInput, classId: this.state.classId }
     StudentAuthApiService.postStudent(newStudent)
       .then(res => {
         this.props.addStudents(res)
@@ -95,9 +91,9 @@ class StudentList extends React.Component {
   }
 
   render() {
-    const { error, class_id, isDeleting} = this.state;
-    const fullname = this.props.students.map((student, index) => <li key={index}>{student.full_name}</li>)
-    const username = this.props.students.map((student, index) => <li key={index}>{student.user_name}<span><button onClick={() => this.handleDeleteStudent(student.user_name, class_id)}>X</button></span></li>)
+    const { error, classId, isDeleting} = this.state;
+    const fullName = this.props.students.map((student, index) => <li key={index}>{student.full_name}</li>)
+    const userName = this.props.students.map((student, index) => <li key={index}>{student.user_name}<span><button onClick={() => this.handleDeleteStudent(student.user_name, classId)}>X</button></span></li>)
     
     if(isDeleting){
       return (<div>loading...</div>)
@@ -108,7 +104,7 @@ class StudentList extends React.Component {
       <div className='alert' role='alert'>
         {error && <p>{error}</p>}
       </div>
-      {fullname.length < 1 
+      {fullName.length < 1 
             ? <p>Add your students!</p> 
             :
       <table className='studentlist'>
@@ -117,8 +113,8 @@ class StudentList extends React.Component {
           <th>User Name</th>
         </tr>
         <tr>
-          <td><ul>{fullname}</ul></td>
-          <td><ul>{username}</ul></td>
+          <td><ul>{fullName}</ul></td>
+          <td><ul>{userName}</ul></td>
         </tr>
       </table>
       }      

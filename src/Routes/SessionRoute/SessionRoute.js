@@ -16,30 +16,29 @@ class SessionRoute extends React.Component {
       learningTarget: '',
       updatedSubGoal: '',
       updatedPriority: null,
-      class_id: null,
+      classId: null,
       students: [],
     }
   }
 
-
   componentDidMount() {
     if (TokenService.hasAuthToken()) {
-      if (!this.state.class_id) {
+      if (!this.state.classId) {
         TeacherAuthService.getTeacherClasses()
           .then(classes => this.context.setClass(classes[0]))
           .then(() => this.setState({
             loaded: true,
-            class_id: this.context.teacherClass.id
+            classId: this.context.teacherClass.id
           }))
           .then(() => {
-            const class_id = this.context.teacherClass.id;
+            const classId = this.context.teacherClass.id;
             this.setState({
-              class_id: class_id
+              classId: classId
             })
           })
           .then(() => {
             //get students, goals, and subgoals
-            StudentApiService.getAllStudents(this.state.class_id)
+            StudentApiService.getAllStudents(this.state.classId)
               .then(res => {
                 const setupStudents = this.setupStudents(res.students);
                 const learningTarget = res.goals[0] ? res.goals.pop() : ''
@@ -57,9 +56,9 @@ class SessionRoute extends React.Component {
   }
 
 
-  getGoal(student_id) {
+  getGoal(studentId) {
     //get student goals
-    return StudentApiService.getStudentGoals(student_id)
+    return StudentApiService.getStudentGoals(studentId)
       .then(res => {
         return res.goals.pop();
       })
