@@ -55,7 +55,7 @@ class StudentLoginRoute extends React.Component {
           </div>
           <h2>Student Login</h2>
           <label>Username:</label>
-          <input className= "student-username" name="student_username" required></input>
+          <input name="student_username" required></input>
           <button type="submit" className='button blue-button'>Submit</button>
           <div className='student-help'>
             <span>Forgot your username?</span>

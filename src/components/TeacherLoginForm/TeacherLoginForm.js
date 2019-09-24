@@ -45,14 +45,14 @@ export default class TeacherLoginForm extends React.Component{
         const { error } = this.state
         return (
           <form
-            className='teacher-login-form'
+            className='form'
             onSubmit={this.handleSubmit}
           >
             <div role='alert' className='alert'>
               {error && <p>{error}</p>}
             </div>
             <h2>Teacher Login</h2>
-              <label htmlFor='login-email-input' className="login-labels">
+              <label htmlFor='login-email-input'>
                 Email:
               </label>
               <input
@@ -62,7 +62,7 @@ export default class TeacherLoginForm extends React.Component{
                 type='email'
                 required
               />
-              <label htmlFor='login-password-input' className="login-labels">
+              <label htmlFor='login-password-input'>
                 Password:
               </label>
               <input
@@ -71,7 +71,9 @@ export default class TeacherLoginForm extends React.Component{
                 type='password'
                 required
               />
-            <button type='submit'>
+            <button type='submit'
+              className='button purple-button'
+            >
               Login
             </button>
             <div className='login-link'>

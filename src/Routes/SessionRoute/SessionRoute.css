@@ -30,6 +30,10 @@ background: var(--green);
   cursor: pointer;
 }
 
+.student-list form {
+  padding-bottom: 10px;
+}
+
 .student-list textarea {
   width: 90%;
   padding: 8px 12px;
