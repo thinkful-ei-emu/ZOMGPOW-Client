@@ -69,9 +69,13 @@ class TeacherDashboardRoute extends React.Component{
         {students.length > 0 ? <div className='TeacherDashboardRoute-learning-target-submit'>
             <LearningTargetForm history={this.props.history} class_id={this.state.class_id}/>
           </div>: <></>}
-      
           <div className='TeacherDashboardRoute-student-list'>
-            <StudentList addStudents= {this.addStudents} removeStudent={this.removeStudent} displayStudents= {this.displayStudents} class_id={this.state.class_id} students={this.state.students}/>
+            <StudentList 
+              addStudents= {this.addStudents} 
+              removeStudent={this.removeStudent} 
+              displayStudents= {this.displayStudents} 
+              class_id={this.state.class_id} 
+              students={this.state.students}/>
           </div>
         </section>
       );

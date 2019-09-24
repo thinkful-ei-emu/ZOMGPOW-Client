@@ -2,6 +2,7 @@ import React from 'react';
 import './LearningTargetForm.css';
 import config from '../../config';
 import TokenService from '../../Services/token-service';
+import ExitTicketForm from '../ExitTicketForm/ExitTicketForm';
 
 class LearningTargetForm extends React.Component {
   state = {
@@ -49,6 +50,7 @@ class LearningTargetForm extends React.Component {
 
   render() {
     return (
+      <div className='learning-target-container'>
       <form className='learning-target-form'
         onSubmit={this.handleSubmit}>
             <label htmlFor='learningTarget'>Learning Target:</label>
@@ -65,6 +67,8 @@ class LearningTargetForm extends React.Component {
               <button type='submit' className='button green-button'>Start Session</button>
             </div>
           </form>
+          <ExitTicketForm />
+          </div>
     )
   }
 }

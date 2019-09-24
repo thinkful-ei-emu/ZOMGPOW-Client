@@ -115,3 +115,8 @@ ul {
   margin: 5px 20px;
 }
 
+/* CHECK WITH PR */
+button {
+  border: none;
+}
+
