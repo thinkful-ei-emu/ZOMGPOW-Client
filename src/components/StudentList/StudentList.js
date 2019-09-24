@@ -74,8 +74,8 @@ class StudentList extends React.Component {
 
   render() {
     const { error } = this.state;
-    const fullname = this.state.students.map((student, index) => <li key={index}><span className="fullname">{student.full_name}</span></li>)
-    const username = this.state.students.map((student, index) => <li key={index}><span className="fullname">{student.user_name}</span></li>)
+    const fullname = this.props.students.map((student, index) => <li key={index}>{student.full_name}</li>)
+    const username = this.props.students.map((student, index) => <li key={index}>{student.user_name}</li>)
     return(
       <div className='StudentList-container'>
       <h2>Students</h2>
@@ -85,7 +85,7 @@ class StudentList extends React.Component {
       {fullname.length < 1 
             ? <p>Add your students!</p> 
             :
-      <table>
+      <table className='studentlist'>
         <tr>
           <th>Full Name</th>
           <th>User Name</th>

@@ -10,16 +10,14 @@
   margin: 0px auto; 
 } */
 
-.StudentList-container li span {
+/* .StudentList-container li span {
   margin: 0 15px;  
-}
+} */
 
 .student-fullname, .student-username {
   font-size: 22px;
   
 }
-
-
 
 .add-student-form {
   display: flex; 
@@ -32,7 +30,7 @@
   align-items: center;
 }
 
-table {
+.studentlist {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 60%;
@@ -40,9 +38,16 @@ table {
   margin-right:auto;
 }
 
-td, th {
+.studentlist td, th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
 }
 
+.studentlist td {
+  margin: 0px;
+}
+
+.studentlist ul{
+  margin:0px;
+}
