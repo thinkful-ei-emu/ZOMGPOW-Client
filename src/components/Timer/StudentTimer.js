@@ -42,17 +42,17 @@ class StudentTimer extends React.Component {
     }
 
     let milliSecs = endTime - now;
-    let secs = milliSecs / 1000;
-    console.log('seconds', secs)
-    let minutes = (secs / 60).toFixed(0)
-    let displaySecs = (secs - (minutes * 60)).toFixed(0)
-    if(displaySecs < 10){
-      displaySecs = `0${displaySecs}`
-    }
+    let minutes = Math.floor(((milliSecs / 1000) / 60))
+    let secs = Math.floor(((milliSecs / 1000) % 60))
+
+   
+    if(secs < 10){
+      secs = `0${secs}`
+    } 
 
     this.setState({
       currMin: minutes,
-      currSec: displaySecs
+      currSec: secs
     })
 
   }
