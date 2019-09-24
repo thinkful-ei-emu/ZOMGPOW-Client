@@ -1,6 +1,7 @@
 
-.registration-form .link-to-login {
+.form .link-to-login {
   justify-content: center;
+  margin-top: 10px;
 }
 
 .login-link {
