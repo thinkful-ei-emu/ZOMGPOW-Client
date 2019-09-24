@@ -3,7 +3,6 @@ import StudentAuthApiService from '../../Services/student-auth-api-service';
 import { Link } from 'react-router-dom';
 import StudentTimer from '../../Components/Timer/StudentTimer';
 import StudentContext from '../../Contexts/StudentContext';
-import TokenService from '../../Services/token-service';
 import './StudentDashboard.css';
 
 class StudentDashboard extends React.Component{
@@ -16,15 +15,6 @@ class StudentDashboard extends React.Component{
     show: true,
   };
   static contextType = StudentContext;
-  renderLogInLinks(){
-    return (
-      <nav className="login-buttons">
-        <Link to='/login/teacher' className='purple-button button'>Teacher Login</Link>
-        <Link to='/login/student' className='blue-button button'>Student Login</Link>
-        <Link to='/register' className='green-button button'>Sign Up</Link>
-      </nav>
-    )
-  }
   handleLogoutClick = () => {
     this.context.processLogout();
   }
@@ -34,7 +24,6 @@ class StudentDashboard extends React.Component{
     })
     StudentAuthApiService.getStudentGoals(this.context.user.id)
       .then(res => {
-        console.log(res)
         const student_goals = res.goals;
         const student_subgoals = res.subgoals;
         this.setState({
@@ -59,8 +48,6 @@ class StudentDashboard extends React.Component{
   )
  }
 toggleTimer = () => {
-  // toggle css hidden attribute
-  // update state
   this.setState({
     show: !this.state.show,
   })
@@ -73,15 +60,13 @@ toggleTimer = () => {
     return(
       <section className="student-dashboard-section">
         <div className="links">
-          {TokenService.hasAuthToken() 
-          ? this.renderStudentLogout()
-          :this.renderLogInLinks()}
+          {this.renderStudentLogout()}
         </div>  
       <div className='goals-container'>
         <h2>Learning Target: </h2>
         {/* grabs the first goal for that student */}
+        <ul>
         <p>{learningTarget.pop()}</p>
-
         {(subGoals.length > 0) 
         ?
         <div> 
@@ -89,8 +74,8 @@ toggleTimer = () => {
         <p>{subGoals}</p>
         </div>
         : <></>}
+        </ul>
       </div>
-
       <div className='timer-container'>
         <button 
         className='button blue-button'
@@ -99,16 +84,13 @@ toggleTimer = () => {
           <StudentTimer />
         </div>
       </div>
-
       {(subGoals.length > 1) 
-      ?
-      <div> 
+      ? <div> 
       <h3>Previous Goals</h3>
       {/* need to display all subgoals but the last one */}
       <ul>{subGoals}</ul>
       </div>
       : <></>}
-
       </section>
     )
   }

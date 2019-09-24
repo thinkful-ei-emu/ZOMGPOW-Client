@@ -53,14 +53,12 @@ class TeacherDashboardRoute extends React.Component{
 
   render() {
     const {loaded, students} = this.state;
-    // console.log('students', this.state.students)
     if(!loaded){
       return <div><p>loading...</p></div>
     } else {
       return (
         <section className='TeacherDashboardRoute-section'>
-        {students.length > 0 ?<div className='TeacherDashboardRoute-learning-target-submit'>
-            
+        {students.length > 0 ? <div className='TeacherDashboardRoute-learning-target-submit'>
             <LearningTargetForm history={this.props.history} class_id={this.state.class_id}/>
           </div>: <></>}
       

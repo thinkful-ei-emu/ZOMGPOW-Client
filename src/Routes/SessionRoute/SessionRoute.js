@@ -10,7 +10,7 @@ class SessionRoute extends React.Component {
 
   state = {
     error: null,
-    learningTarget: '',
+    learningTarget: [],
     updatedSubGoal: '',
     updatedPriority: null,
     class_id: null,
@@ -34,6 +34,7 @@ class SessionRoute extends React.Component {
           //get students, goals, and subgoals
           StudentApiService.getAllStudents(class_id)
           .then(res => {
+            console.log('here is the response', res)
             const setupStudents = this.setupStudents(res.students);
             const learningTarget = res.goals[0] ? res.goals.pop() : ''
             this.setState({
