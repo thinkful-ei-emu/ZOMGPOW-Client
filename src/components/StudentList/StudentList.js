@@ -18,8 +18,13 @@ class StudentList extends React.Component {
   }
 
   componentDidMount() {
+<<<<<<< HEAD
     // Fetch students from API -- PSUEDO CODE, need to check with Back End
     let classId = this.context.teacherClass.id
+=======
+    // Fetch students from API
+    let classid = this.context.teacherClass.id
+>>>>>>> development
     this.setState({
       classId: classId
     })
@@ -93,8 +98,8 @@ class StudentList extends React.Component {
   render() {
     const { error, classId, isDeleting} = this.state;
     const fullName = this.props.students.map((student, index) => <li key={index}>{student.full_name}</li>)
-    const username = this.props.students.map((student, index) => <li key={index}>{student.user_name}<span><button onClick={() => this.handleDeleteStudent(student.user_name, classId)}>X</button></span></li>)
-    
+    const username = this.props.students.map((student, index) => <li key={index}>{student.user_name}<span><button className='delete-student' onClick={() => this.handleDeleteStudent(student.user_name, classId)}>X</button></span></li>)
+
     if(isDeleting){
       return (<div>loading...</div>)
     } 
@@ -107,16 +112,20 @@ class StudentList extends React.Component {
       {fullName.length < 1 
             ? <p>Add your students!</p> 
             :
-      <table className='studentlist'>
-        <tr>
-          <th>Full Name</th>
-          <th>User Name</th>
-        </tr>
-        <tr>
-          <td><ul>{fullName}</ul></td>
-          <td><ul>{username}</ul></td>
-        </tr>
-      </table>
+            <div className='StudentList'>
+              <div className='student-name'>
+                <h3>Student Name</h3>
+                <ul>
+                  {fullname}
+                </ul>
+              </div>
+              <div className='student-username'>
+                <h3>Username</h3>
+                <ul>
+                  {username}
+                </ul>
+              </div>
+            </div>
       }      
         <form 
           onSubmit={this.handleSubmit}

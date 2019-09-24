@@ -1,23 +1,3 @@
-.StudentList-container li {
-  font-size: 18px;  
-
-}
-
-/* .student-list-grid{
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin: 0px auto; 
-} */
-
-/* .StudentList-container li span {
-  margin: 0 15px;  
-} */
-
-.student-fullname, .student-username {
-  font-size: 22px;
-  
-}
 
 .add-student-form {
   display: flex; 
@@ -30,32 +10,74 @@
   align-items: center;
 }
 
-.studentlist {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 300px;
-  margin-left:auto; 
-  margin-right:auto;
-  
-}
-
-.studentlist td, th {
-  border: 1px solid darkgrey;
-  text-align: left;
-  padding: 8px;
+.StudentList {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid darkgray;
   border-radius: 15px;
+  margin: 0px 20px;
+  max-width: 400px;
 }
 
-.studentlist td {
-  margin: 0px;
+.StudentList ul {
+  margin: 5px;
+}
+.student-name {
+  text-align: left;
+  width: 100%;
+
 }
 
-.studentlist ul{
-  margin:0px;
+.student-username {
+  border-left: 1px solid darkgray;
+  text-align: left;
+  width: 100%;
+}
+
+.student-username li {
+  border-bottom: 1px solid darkgray;
+  padding-bottom: 2%;
+}
+
+.student-username ul li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.student-name li {
+  border-bottom: 1px solid darkgray;
+  padding-bottom: 2%;
+}
+
+.StudentList h3 {
+  font-size: 18px;
+  margin: 10px 5px;
+  text-align: left;
+  height: 30px;
+}
+
+.StudentList .delete-student {
+  border: 1px solid darkgray;
+  background: white;
+  color: rgb(241, 46, 79);
+  border-radius: 3px;
+  margin-left: 10px;
+}
+
+.StudentList .delete-student:hover {
+  color: var(--purple);
+  /* background: rgb(231, 231, 231); */
+  box-shadow: 2px 2px 2px rgb(202, 202, 202);
 }
 
 
-@media only screen and (min-width: 600px) {
-  .studentlist {width:500px}
+
+@media only screen and (min-width: 400px) {
   
+  .StudentList {
+    margin: 0px auto;
+
+  }
 }
