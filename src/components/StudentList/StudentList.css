@@ -33,15 +33,17 @@
 .studentlist {
   font-family: arial, sans-serif;
   border-collapse: collapse;
-  width: 60%;
+  width: 300px;
   margin-left:auto; 
   margin-right:auto;
+  
 }
 
 .studentlist td, th {
-  border: 1px solid #dddddd;
+  border: 1px solid darkgrey;
   text-align: left;
   padding: 8px;
+  border-radius: 15px;
 }
 
 .studentlist td {
@@ -50,4 +52,10 @@
 
 .studentlist ul{
   margin:0px;
+}
+
+
+@media only screen and (min-width: 600px) {
+  .studentlist {width:500px}
+  
 }
