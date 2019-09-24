@@ -79,9 +79,9 @@ findStudentWithTimer = (studentTimers, currStudent) => {
   render() {
     let currStudent = this.context.user.username;
     let currTimer = this.findStudentWithTimer(this.props.studentTimers, currStudent);
-    const prevGoals = this.state.previousGoals.map((goal, index) =>
-      <li key={index}>{goal}</li>
-    );
+    // const prevGoals = this.state.previousGoals.map((goal, index) =>
+    //   <li key={index}>{goal}</li>
+    // );
     const learningTarget = this.state.goals.map((goal, index) => <li key={index}>{goal.goal_title}</li>)
     const subGoals = this.state.subgoals.map((sub, index) => <li key={index}>{sub.subgoal_title}</li>)
 

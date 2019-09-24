@@ -61,6 +61,9 @@ class StudentTimer extends React.Component {
   render() {
     
     const {currMin, currSec} = this.state
+    //I set the state to timer: true when the timer is initialized 
+    //so if we want to display something else when there is no timer we could do that - Nick
+    // so that would be if(timer){display timer} else {display an alternative}
     
     return (
       <div className='timer'>{currMin}:{currSec}</div>

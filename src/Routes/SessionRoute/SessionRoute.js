@@ -9,7 +9,7 @@ class SessionRoute extends React.Component {
 
   static contextType = TeacherContext;
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       error: null,
@@ -20,7 +20,7 @@ class SessionRoute extends React.Component {
       students: [],
     }
   }
-  
+
 
   componentDidMount() {
     if (TokenService.hasAuthToken()) {
@@ -37,19 +37,20 @@ class SessionRoute extends React.Component {
               class_id: class_id
             })
           })
-      }
-
-      //get students, goals, and subgoals
-      StudentApiService.getAllStudents(this.state.class_id)
-        .then(res => {
-          const setupStudents = this.setupStudents(res.students);
-          const learningTarget = res.goals[0] ? res.goals.pop() : ''
-          this.setState({
-            students: setupStudents,
-            learningTarget: res.goals[0] ? learningTarget.goal_title : learningTarget
+          .then(() => {
+            //get students, goals, and subgoals
+            StudentApiService.getAllStudents(this.state.class_id)
+              .then(res => {
+                const setupStudents = this.setupStudents(res.students);
+                const learningTarget = res.goals[0] ? res.goals.pop() : ''
+                this.setState({
+                  students: setupStudents,
+                  learningTarget: res.goals[0] ? learningTarget.goal_title : learningTarget
+                })
+              })
+              .catch(error => this.setState({ error }))
           })
-        })
-        .catch(error => this.setState({ error }))
+      }
     } else {
       this.props.history.push('/login/teacher');
     }
@@ -82,6 +83,7 @@ class SessionRoute extends React.Component {
 
   // Should set timer when sub goal is updated
   handleTimer = (studentUsername, priority) => {
+    console.log('handle timer ran')
     // High - 5 min/300000, Medium - 10min/600000, Low - 20 min/1200000 
     // Testing - high/5 sec(5000), medium/7 sec(7000), low/10 sec(10000)
     const time = priority === 'high' ? 50000 : priority === 'medium' ? 70000 : 100000;
