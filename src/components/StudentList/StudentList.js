@@ -111,7 +111,7 @@ class StudentList extends React.Component {
               <div className='student-name'>
                 <h3>Student Name</h3>
                 <ul>
-                  {fullname}
+                  {fullName}
                 </ul>
               </div>
               <div className='student-username'>
