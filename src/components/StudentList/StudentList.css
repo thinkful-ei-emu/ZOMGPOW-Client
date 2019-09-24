@@ -26,13 +26,29 @@
 .student-name {
   text-align: left;
   width: 100%;
+
 }
 
 .student-username {
   border-left: 1px solid darkgray;
-
   text-align: left;
   width: 100%;
+}
+
+.student-username li {
+  border-bottom: 1px solid darkgray;
+  padding-bottom: 2%;
+}
+
+.student-username ul li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.student-name li {
+  border-bottom: 1px solid darkgray;
+  padding-bottom: 2%;
 }
 
 .StudentList h3 {
@@ -44,15 +60,16 @@
 
 .StudentList .delete-student {
   border: 1px solid darkgray;
-  background: var(--purple);
-  color: white;
+  background: white;
+  color: rgb(241, 46, 79);
   border-radius: 3px;
   margin-left: 10px;
 }
 
 .StudentList .delete-student:hover {
-  color: white;
-  background: black;
+  color: var(--purple);
+  /* background: rgb(231, 231, 231); */
+  box-shadow: 2px 2px 2px rgb(202, 202, 202);
 }
 
 

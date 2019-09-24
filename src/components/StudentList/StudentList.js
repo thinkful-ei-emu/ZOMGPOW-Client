@@ -125,20 +125,6 @@ class StudentList extends React.Component {
                 </ul>
               </div>
             </div>
-      // <table className='studentlist'>
-      //   <tbody>
-      //     <th>Full Name</th>
-      //     <th>User Name</th>
-      //   </tbody>
-      //   <tbody>
-      //     <td>
-      //     <ul>{fullname}</ul>
-      //     </td>
-      //     <td>
-      //     <ul>{username}</ul>
-      //     </td>
-      //   </tbody>
-      // </table>
       }      
         <form 
           onSubmit={this.handleSubmit}
