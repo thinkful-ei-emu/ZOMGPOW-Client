@@ -20,6 +20,9 @@
   font-family: var(--heading-font);
   margin-right: 10px;
   margin-top: 5px;
+  box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  border: none;
 }
 /* Button Colors */
 .purple-button {
@@ -62,6 +65,7 @@
 .button:hover {
   background: black;
   cursor: pointer;
+  transform: translateY(-3px);
 }
 
 a:hover:not(.button) {
