@@ -63,6 +63,7 @@ const StudentAuthApiService = {
       )
   },
   getAllStudents(classId) {
+    console.log('get all students ran with', classId)
     return fetch(`${config.API_ENDPOINT}/class/${classId}/students`, {
       method: 'GET',
       headers: {
