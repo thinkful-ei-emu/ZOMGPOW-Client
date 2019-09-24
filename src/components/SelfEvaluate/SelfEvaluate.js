@@ -4,7 +4,6 @@ import './SelfEvaluate.css';
 class SelfEvaluate extends React.Component {
   state = {
     score: null,
-    evaluations: [],
   }
 
   setScore=(e) => {
@@ -15,12 +14,10 @@ class SelfEvaluate extends React.Component {
 
   postEvaluation = (e) => {
     e.preventDefault()
-    const studentScores = this.state.evaluations
-    studentScores.push(this.state.score)
-    this.setState({
-      allEvaluations: studentScores
-    })
-    this.props.history.goBack()
+    const studentScores = this.state.score;
+    console.log(studentScores);
+    //post to database??
+    this.props.history.goBack();
   }
 
   render(){
@@ -29,7 +26,7 @@ class SelfEvaluate extends React.Component {
       <h3>How do you feel you met your current goal?</h3>
       <form className='form' onSubmit={this.postEvaluation}>
         <input
-          onChange={(e) => this.setState({ score: 'low' })}
+          onChange={(e) => this.setState({ score: 1 })}
           className='radio'
           type='radio'
           value='low'
@@ -39,7 +36,7 @@ class SelfEvaluate extends React.Component {
         <label
           htmlFor='low'>Thumbs down</label>
         <input
-         onChange={(e) => this.setState({ score: 'medium' })}
+         onChange={(e) => this.setState({ score: 2 })}
           className='radio'
           type='radio'
           value='medium'
@@ -48,7 +45,7 @@ class SelfEvaluate extends React.Component {
         <label
           htmlFor='medium'>Thumb sideways</label>
         <input
-         onChange={(e) => this.setState({ score: 'high' })}
+         onChange={(e) => this.setState({ score: 3 })}
           className='radio'
           type='radio'
           value='high'

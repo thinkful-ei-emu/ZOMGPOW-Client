@@ -6,9 +6,7 @@ import StudentContext from '../../Contexts/StudentContext';
 import './StudentDashboard.css';
 
 class StudentDashboard extends React.Component{
-
   static contextType = StudentContext;
-
   state = {
     student_id: null,
     goals: [],
@@ -16,12 +14,9 @@ class StudentDashboard extends React.Component{
     error: null,
     timer: false,
     show: true,
-    evaluations: [],
+    evaluations:[],
   };
-  static contextType = StudentContext;
-  handleLogoutClick = () => {
-    this.context.processLogout();
-  }
+
   componentDidMount() {
     this.setState({
       student_id: this.context.user.id
@@ -39,37 +34,39 @@ class StudentDashboard extends React.Component{
         this.setState({ error: res.error })
       })
   }
- renderStudentLogout(){
-  return (
-    <nav>
-      <Link 
-        onClick={this.handleLogoutClick}
-        to='/'
-        className='green-button button'>
-        Logout
-      </Link>
-    </nav>
-  )
- }
-toggleTimer = () => {
-  this.setState({
-    show: !this.state.show,
-  })
-}
 
-findStudentWithTimer = (studentTimers, currStudent) => {
-  //currStudent is student username
-  let currTimer = studentTimers.find(timer => timer.student === currStudent)
+  handleLogoutClick = () => {
+    this.context.processLogout();
+  }
 
-  return currTimer;
-}
+  renderStudentLogout(){
+    return (
+      <nav>
+        <Link 
+          onClick={this.handleLogoutClick}
+          to='/'
+          className='green-button button'>
+          Logout
+        </Link>
+      </nav>
+    )
+  }
+
+  toggleTimer = () => {
+    this.setState({
+      show: !this.state.show,
+    })
+  }
+
+  findStudentWithTimer = (studentTimers, currStudent) => {
+    //currStudent is student username
+    let currTimer = studentTimers.find(timer => timer.student === currStudent)
+    return currTimer;
+  }
 
   render() {
     let currStudent = this.context.user.username;
     let currTimer = this.findStudentWithTimer(this.props.studentTimers, currStudent);
-    // const prevGoals = this.state.previousGoals.map((goal, index) =>
-    //   <li key={index}>{goal}</li>
-    // );
     const learningTarget = this.state.goals.map((goal, index) => <li key={index}>{goal.goal_title}</li>)
     const subGoals = this.state.subgoals.map((sub, index) => <li key={index}>{sub.subgoal_title}</li>)
 
