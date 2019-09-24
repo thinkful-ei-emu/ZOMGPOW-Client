@@ -18,7 +18,7 @@ class StudentList extends React.Component {
   }
 
   componentDidMount() {
-    // Fetch students from API -- PSUEDO CODE, need to check with Back End
+    // Fetch students from API
     let classid = this.context.teacherClass.id
     this.setState({
       class_id: classid
@@ -97,7 +97,7 @@ class StudentList extends React.Component {
   render() {
     const { error, class_id, isDeleting} = this.state;
     const fullname = this.props.students.map((student, index) => <li key={index}>{student.full_name}</li>)
-    const username = this.props.students.map((student, index) => <li key={index}>{student.user_name}<span><button onClick={() => this.handleDeleteStudent(student.user_name, class_id)}>X</button></span></li>)
+    const username = this.props.students.map((student, index) => <li key={index}>{student.user_name}<span><button className='delete-student' onClick={() => this.handleDeleteStudent(student.user_name, class_id)}>X</button></span></li>)
     
     if(isDeleting){
       return (<div>loading...</div>)
@@ -111,16 +111,20 @@ class StudentList extends React.Component {
       {fullname.length < 1 
             ? <p>Add your students!</p> 
             :
-      <table className='studentlist'>
-        <tr>
-          <th>Full Name</th>
-          <th>User Name</th>
-        </tr>
-        <tr>
-          <td><ul>{fullname}</ul></td>
-          <td><ul>{username}</ul></td>
-        </tr>
-      </table>
+            <div className='StudentList'>
+              <div className='student-name'>
+                <h3>Student Name</h3>
+                <ul>
+                  {fullname}
+                </ul>
+              </div>
+              <div className='student-username'>
+                <h3>Username</h3>
+                <ul>
+                  {username}
+                </ul>
+              </div>
+            </div>
       }      
         <form 
           onSubmit={this.handleSubmit}
