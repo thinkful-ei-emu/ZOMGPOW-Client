@@ -10,10 +10,11 @@ class StudentList extends React.Component {
   static contextType = TeacherContext;
 
   state = {
-    error: null,    
+    error: null,
     userInput: '',
     newStudent: null,
     class_id: null,
+    isDeleting: false,
   }
 
   componentDidMount() {
@@ -41,6 +42,27 @@ class StudentList extends React.Component {
       })
   }
 
+  handleDeleteStudent = (username, classId) => {
+
+    this.setState({isDeleting: true})
+
+    console.log(username);
+    console.log('class id', classId);
+
+    StudentAuthApiService.deleteStudent(username, classId)
+      .then(res => {
+
+
+        if(!res.ok){
+          this.setState({error: res.error})
+        } else {
+          this.props.removeStudent(username)
+          this.setState({isDeleting: false})
+        }
+      })
+
+
+  }
   // Updates state with every user input change
   handleChange = (e) => {
     this.setState({
@@ -48,7 +70,7 @@ class StudentList extends React.Component {
     })
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = (e) => { 
     e.preventDefault();
     this.setState({
       newStudent: this.state.userInput,
@@ -58,10 +80,10 @@ class StudentList extends React.Component {
     StudentAuthApiService.postStudent(newStudent)
       .then(res => {
         this.props.addStudents(res)
-        this.setState({         
+        this.setState({
           userInput: '',
         })
-        
+
       })
       .catch(res => {
         this.setState({
@@ -73,27 +95,34 @@ class StudentList extends React.Component {
   }
 
   render() {
-    const { error } = this.state;
-    const studentList = this.props.students.map((student, index) => <li className="student-user-container" key={index}> <span>{student.full_name}</span><span>{student.user_name}</span></li>)
-    return (
+    const { error, class_id, isDeleting} = this.state;
+    const fullname = this.props.students.map((student, index) => <li key={index}>{student.full_name}</li>)
+    const username = this.props.students.map((student, index) => <li key={index}>{student.user_name}<span><button onClick={() => this.handleDeleteStudent(student.user_name, class_id)}>X</button></span></li>)
+    
+    if(isDeleting){
+      return (<div>loading...</div>)
+    } 
+    return(
       <div className='StudentList-container'>
-        <h2>Students</h2>
-        <div className='alert' role='alert'>
-          {error && <p>{error}</p>}
-        </div>
-        <div>
-        {studentList.length < 1
-          ? <p>Add your students!</p>
-          : <>
-            <ul className='student-list-grid'>            
-              <li className="student-user-container">
-                <span className='student-fullname'>Full Name:</span>
-                <span className='student-username'>Username:</span>
-              </li>{studentList}           
-            </ul>
-          </>}
-          </div>
-        <form
+      <h2>Students</h2>
+      <div className='alert' role='alert'>
+        {error && <p>{error}</p>}
+      </div>
+      {fullname.length < 1 
+            ? <p>Add your students!</p> 
+            :
+      <table className='studentlist'>
+        <tr>
+          <th>Full Name</th>
+          <th>User Name</th>
+        </tr>
+        <tr>
+          <td><ul>{fullname}</ul></td>
+          <td><ul>{username}</ul></td>
+        </tr>
+      </table>
+      }      
+        <form 
           onSubmit={this.handleSubmit}
           className='add-student-form'>
           <label

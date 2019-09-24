@@ -6,6 +6,9 @@ import StudentContext from '../../Contexts/StudentContext';
 import './StudentDashboard.css';
 
 class StudentDashboard extends React.Component{
+
+  static contextType = StudentContext;
+
   state = {
     student_id: null,
     goals: [],
@@ -54,7 +57,19 @@ toggleTimer = () => {
   })
 }
 
+findStudentWithTimer = (studentTimers, currStudent) => {
+  //currStudent is student username
+  let currTimer = studentTimers.find(timer => timer.student === currStudent)
+
+  return currTimer;
+}
+
   render() {
+    let currStudent = this.context.user.username;
+    let currTimer = this.findStudentWithTimer(this.props.studentTimers, currStudent);
+    // const prevGoals = this.state.previousGoals.map((goal, index) =>
+    //   <li key={index}>{goal}</li>
+    // );
     const learningTarget = this.state.goals.map((goal, index) => <li key={index}>{goal.goal_title}</li>)
     const subGoals = this.state.subgoals.map((sub, index) => <li key={index}>{sub.subgoal_title}</li>)
 
@@ -84,7 +99,7 @@ toggleTimer = () => {
         className='button blue-button'
         onClick={this.toggleTimer}>{this.state.show ? 'Hide' : 'Timer'}</button>
         <div className={this.state.show ? '' : 'hidden'}>
-          <StudentTimer currentGoal={this.state.subgoals} learningTarget={this.state.goals}/>
+          <StudentTimer currTimer={currTimer}/>
         </div>
       </div>
 

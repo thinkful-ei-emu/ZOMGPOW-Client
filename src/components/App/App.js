@@ -13,6 +13,30 @@ import SelfEvaluate from '../SelfEvaluate/SelfEvaluate';
 import './App.css';
 
 export default class App extends React.Component {
+
+  state = {
+    studentTimers: [],
+  }
+
+
+  handleStudentTimers = (studentUsername, time) => {
+    let start = Date.now();
+    let end = start + time;
+    const timerObj = {
+      student: studentUsername,
+      start,
+      end
+    }
+
+    let newTimers = this.state.studentTimers
+    newTimers.push(timerObj)
+
+    this.setState({
+      studentTimers: newTimers
+    })    
+  }
+
+
   render(){
     return (
       <div className="App">
@@ -40,11 +64,19 @@ export default class App extends React.Component {
           />
           <Route 
             path='/session'
-            component={SessionRoute}
+            render={() => {
+              return (
+                <SessionRoute handleStudentTimers={this.handleStudentTimers}/>
+              )
+            }}
            />
           <Route
             path='/dashboard/student'
-            component={StudentDashboard}
+            render={() => {
+              return (
+                <StudentDashboard studentTimers={this.state.studentTimers}/>
+              );
+            }}
           />
           <Route
             path='/selfEvaluate'
