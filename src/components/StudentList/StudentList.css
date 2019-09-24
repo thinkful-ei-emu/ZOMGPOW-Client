@@ -1,10 +1,25 @@
 .StudentList-container li {
-  font-size: 18px;
+  font-size: 18px;  
+
 }
 
+/* .student-list-grid{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0px auto; 
+} */
+
 .StudentList-container li span {
-  margin: 0 15px;
+  margin: 0 15px;  
 }
+
+.student-fullname, .student-username {
+  font-size: 22px;
+  
+}
+
+
 
 .add-student-form {
   display: flex; 
