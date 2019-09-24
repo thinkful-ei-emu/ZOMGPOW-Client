@@ -10,16 +10,14 @@
   margin: 0px auto; 
 } */
 
-.StudentList-container li span {
+/* .StudentList-container li span {
   margin: 0 15px;  
-}
+} */
 
 .student-fullname, .student-username {
   font-size: 22px;
   
 }
-
-
 
 .add-student-form {
   display: flex; 
@@ -32,3 +30,32 @@
   align-items: center;
 }
 
+.studentlist {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 300px;
+  margin-left:auto; 
+  margin-right:auto;
+  
+}
+
+.studentlist td, th {
+  border: 1px solid darkgrey;
+  text-align: left;
+  padding: 8px;
+  border-radius: 15px;
+}
+
+.studentlist td {
+  margin: 0px;
+}
+
+.studentlist ul{
+  margin:0px;
+}
+
+
+@media only screen and (min-width: 600px) {
+  .studentlist {width:500px}
+  
+}
