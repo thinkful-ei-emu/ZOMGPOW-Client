@@ -23,7 +23,6 @@ class SessionRoute extends React.Component {
   
 
   componentDidMount() {
-
     if(!this.state.class_id){
       TeacherAuthService.getTeacherClasses()
       .then(classes => this.context.setClass(classes[0]))
@@ -37,13 +36,11 @@ class SessionRoute extends React.Component {
         this.setState({
           class_id: class_id
         })
-    
           //get students, goals, and subgoals
           StudentApiService.getAllStudents(class_id)
           .then(res => {
             const setupStudents = this.setupStudents(res.students);
             const learningTarget = res.goals[0] ? res.goals.pop() : ''
-            // console.log(setupStudents);
             this.setState({
               students: setupStudents,
               learningTarget: res.goals[0] ? learningTarget.goal_title : learningTarget
