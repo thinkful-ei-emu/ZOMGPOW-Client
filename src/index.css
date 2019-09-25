@@ -74,6 +74,7 @@ a:hover:not(.button) {
 }
 
 body {
+  font-family: var(--body-font);
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -116,6 +117,7 @@ h2 {
 
 h3 {
   font-size: 25px;
+  font-family: var(--heading-font);
 } 
 
 p {
