@@ -8,6 +8,7 @@ class LearningTargetForm extends React.Component {
   state = {
     error: null,
     learningTarget: '',
+    exitTicketData: {},
   }
   staticDefaultProps={}
 
@@ -18,15 +19,22 @@ class LearningTargetForm extends React.Component {
     })
   }
 
+  updateExitTicket = (data) => {
+    this.setState({
+      exitTicketData: data,
+    })
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     const { learningTarget } = e.target;
     const classLearningTarget = {
       goal_title: learningTarget.value,
     }
+    const data = this.state.exitTicketData;
     fetch(`${config.API_ENDPOINT}/goals/class/${this.props.class_id}`, {
       method: 'POST',
-      body: JSON.stringify(classLearningTarget),
+      body: JSON.stringify(classLearningTarget, data),
       headers: {
         'content-type': 'application/json',
         authorization: `bearer ${TokenService.getAuthToken()}`
@@ -67,7 +75,7 @@ class LearningTargetForm extends React.Component {
               <button type='submit' className='button green-button'>Start Session</button>
             </div>
           </form>
-          <ExitTicketForm />
+          <ExitTicketForm updateExitTicket={this.updateExitTicket}/>
           </div>
     )
   }

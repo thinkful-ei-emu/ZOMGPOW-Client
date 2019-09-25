@@ -4,46 +4,241 @@ import './ExitTicketForm.css';
 class ExitTicketForm extends React.Component {
 
   state = {
-    exitTicketQuestion: null,
-    multipleChoiceOptions: {},
-    multipleChoiceCorrectAnswers:[]
+    exitTicketQuestion: '',
+    multipleChoiceA: '',
+    multipleChoiceB: '',
+    multipleChoiceC: '',
+    multipleChoiceD: '',
+    multipleChoiceCorrect: '',
+    error: null,
+    createPromptVisible: true,
+    exitTicketChoiceVisible: false,
+    multipleChoiceVisible: false,
+    shortAnswerVisible: false,
+    exitTicketFormVisible: true,
+  }
+
+  updateCorrectOption = (e) => {
+    this.setState({
+      multipleChoiceCorrect: e.target.value,
+    })
+  }
+  updateMultipleChoiceSubmit = (e) => {
+    if (e.target.id === 'option-A') {
+      this.setState({
+        multipleChoiceA: e.target.value,
+      })
+    }
+    if (e.target.id === 'option-B') {
+      this.setState({
+        multipleChoiceB: e.target.value,
+      })
+    }
+    if (e.target.id === 'option-C') {
+      this.setState({
+        multipleChoiceC: e.target.value,
+      })
+    }
+    if (e.target.id === 'option-D') {
+      this.setState({
+        multipleChoiceD: e.target.value,
+      })
+    }
+    console.log(this.state)
+  }
+
+  updateQuestion = (e) => {
+    this.setState({
+      exitTicketQuestion: e.target.value,
+    })
+
+  }
+
+  submitExitTicket = (e, type) => {
+    e.preventDefault();
+    this.setState({ error: null})
+    // prepare exit ticket data
+    let data = {};
+    
+      if (type === 'multipleChoice') {
+        if (this.state.multipleChoiceCorrect !== '') {
+          data = {
+            exit_ticket_type: 'multiple choice',
+            exit_ticket_question: this.state.exitTicketQuestion,
+            exit_ticket_options: [
+              this.state.multipleChoiceA, 
+              this.state.multipleChoiceB, 
+              this.state.multipleChoiceC, 
+              this.state.multipleChoiceD
+            ],
+            exit_ticket_correct_answer: this.state.multipleChoiceCorrect,
+          }
+          console.log('DATA', data);
+        } else {
+          this.setState({
+            error: 'Choose a correct answer option'
+          })
+          return;
+        }
+      }
+      if (type === 'shortAnswer') {
+        data = {
+          exit_ticket_type: 'short answer',
+          exit_ticket_question: this.state.exitTicketQuestion,
+        }
+      }
+      
+      // GIVE TO LT FORM to post to server in relation to LT ID
+      this.props.updateExitTicket(data);
+      // reset form and state
+      this.setState({
+        exitTicketQuestion: '',
+        multipleChoiceA: '',
+        multipleChoiceB: '',
+        multipleChoiceC: '',
+        multipleChoiceD: '',
+        multipleChoiceCorrect: '',
+        error: null,
+        exitTicketFormVisible: false,
+      })    
   }
 
   render() {
 
     return (
-      <div className='exit-ticket-form'>
+      <div className={this.state.exitTicketFormVisible ? 'exit-ticket-form' : 'hidden'}>
         <p> -OR- </p>
-        <button className='button purple-button'>Create an Exit Ticket for this Learning Target?</button>
+        <button 
+          className={this.state.createPromptVisible ? 'button purple-button' : 'hidden'}
+          onClick={() => this.setState({exitTicketChoiceVisible: true, createPromptVisible: false})}
+          >
+        Create an Exit Ticket for this Learning Target?
+        </button>
         
-        <div className=''>
-          <button className='button blue-button'>Multiple Choice</button>
-          <button className='button green-button'>Short Answer</button>
+        <div className={this.state.exitTicketChoiceVisible ? '' : 'hidden'}>
+          <button 
+            className='button blue-button'
+            onClick={() => this.setState({multipleChoiceVisible: true, shortAnswerVisible: false})}
+          >Multiple Choice
+          </button>
+          <button 
+            className='button green-button'
+            onClick={() => this.setState({multipleChoiceVisible: false, shortAnswerVisible: true})}
+          >Short Answer
+          </button>
         </div>
 
-        <div className=''>
-      <form className='form multiple-choice'>
-        <label htmlFor='exit-ticket-question'>Exit Ticket Question:</label>
-        <input id='exit-ticket-question' />
-        <label htmlFor='option-A'>Option A:</label>
-        <input id='option-A' />
-        <label htmlFor='option-B'>Option B:</label>
-        <input id='option-B' />
-        <label htmlFor='option-C'>Option C:</label>
-        <input id='option-C' />
-        <label htmlFor='option-D'>Option D:</label>
-        <input id='option-D' />
-        <label htmlFor='exit-ticket-correct-answer'>Correct Answer:</label>
-        <input id='exit-ticket-correct-answer' />
-        <button className='button purple-button'>Save Exit Ticket</button>
-      </form>
+        <div className={this.state.multipleChoiceVisible ? '' : 'hidden'}>
+          <form 
+            className='form multiple-choice'
+            onSubmit={(e) => this.submitExitTicket(e, 'multipleChoice')}
+            >
+            <label htmlFor='exit-ticket-question-mc'>Exit Ticket Question:</label>
+            <textarea 
+              id='exit-ticket-question-mc' 
+              onChange={(e) => this.updateQuestion(e)}
+              value={this.state.exitTicketQuestion}
+              required
+              />
+            <label htmlFor='option-A'>Option A:</label>
+            <input 
+              id='option-A' 
+              onChange={(e) => this.updateMultipleChoiceSubmit(e)}
+              value={this.state.multipleChoiceA}
+              required
+            />
+            <label htmlFor='option-B'>Option B:</label>
+            <input 
+              id='option-B'
+              onChange={(e) => this.updateMultipleChoiceSubmit(e)}
+              value={this.state.multipleChoiceB} 
+              required
+            />
+            <label htmlFor='option-C'>Option C:</label>
+            <input 
+              id='option-C' 
+              onChange={(e) => this.updateMultipleChoiceSubmit(e)}
+              value={this.state.multipleChoiceC}
+              required
+            />
+            <label htmlFor='option-D'>Option D:</label>
+            <input 
+              id='option-D' 
+              onChange={(e) => this.updateMultipleChoiceSubmit(e)}
+              value={this.state.multipleChoiceD}
+              required
+            />
+            <label htmlFor='exit-ticket-correct-answer'>Correct Option:</label>
+            <div>
+              <input 
+                type='radio' 
+                name='radio'
+                id='correct-option-A'
+                value='A'
+                onChange={(e) => this.setState({ multipleChoiceCorrect: 'A' })}
+                />
+              <label 
+                htmlFor='correct-option-A'
+              >A</label>
 
-      <form className='form short-answer'>
-        <label htmlFor='exit-ticket-question'>Exit Ticket Question:</label>
-        <input />
-        <button className='button purple-button'>Save Exit Ticket</button>
-      </form>
-      </div>
+              <input 
+                type='radio' 
+                name='radio'
+                id='option-B'
+                value='B'
+                onChange={(e) => this.setState({ multipleChoiceCorrect: 'B' })}
+              />
+              <label 
+                htmlFor='option-B'
+              >B</label>
+
+              <input 
+                type='radio'
+                name='radio' 
+                id='option-C'
+                value='C'
+                onChange={(e) => this.setState({ multipleChoiceCorrect: 'C' })}
+              />
+              <label 
+                htmlFor='option-C'
+              >C</label>
+
+              <input 
+                type='radio' 
+                name='radio'
+                id='option-D'
+                value='D'
+                onChange={(e) => this.setState({ multipleChoiceCorrect: 'D' })}
+              />
+              <label 
+                htmlFor='option-D'
+              >D</label>
+            </div>
+              {this.state.error && <p className='alert'>{this.state.error}</p>}
+            <button 
+              type='submit'
+              className='button purple-button'
+            >Save Exit Ticket</button>
+          </form>
+        </div>
+        <div className={this.state.shortAnswerVisible ? '' : 'hidden'}>
+          <form 
+            className='form short-answer'
+            onSubmit={(e) => this.submitExitTicket(e, 'shortAnswer')}
+            >
+            <label htmlFor='exit-ticket-question'>Exit Ticket Question:</label>
+            <textarea 
+              id='exit-ticket-question-sa' 
+              onChange={(e) => this.updateQuestion(e)}
+              value={this.state.exitTicketQuestion}
+              required
+            />
+            <button 
+              type='submit'
+              className='button purple-button'
+            >Save Exit Ticket</button>
+          </form>
+        </div>
       </div>
     )
   }
