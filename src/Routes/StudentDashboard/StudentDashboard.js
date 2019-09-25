@@ -48,6 +48,10 @@ class StudentDashboard extends React.Component{
           className='green-button button'>
           Logout
         </Link>
+        <Link
+        to='/student/exitTicket'
+        className='button blue-button'
+        >Exit Ticket</Link>
       </nav>
     )
   }
@@ -78,7 +82,6 @@ class StudentDashboard extends React.Component{
 
       <div className='goals-container'>
         <h2>Learning Target: </h2>
-        {/* grabs the first goal for that student */}
         <ul>
         <p>{learningTarget.pop()}</p>
         {(subGoals.length > 0) 
@@ -109,6 +112,7 @@ class StudentDashboard extends React.Component{
       <ul>{subGoals}</ul>
       </div>
       : <></>}
+
       </section>
     )
   }
