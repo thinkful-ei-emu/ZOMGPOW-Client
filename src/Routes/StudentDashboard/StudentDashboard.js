@@ -110,8 +110,6 @@ class StudentDashboard extends React.Component{
         </div>
       </div>
 
-      {/* if current target then pass that id, if not pass learning target id */}
-      
        <Link to={{
         pathname: '/selfEvaluate', 
         state: {
@@ -120,7 +118,6 @@ class StudentDashboard extends React.Component{
         }
         }}>Ready to self-evaluate?</Link> 
       
-
       {(previousGoals.length > 1) 
       ? <div> 
       <h3>Previous Goals</h3>
