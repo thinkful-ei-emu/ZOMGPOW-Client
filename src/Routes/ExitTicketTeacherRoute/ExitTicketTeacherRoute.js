@@ -32,9 +32,12 @@ class ExitTicketTeacherRoute extends React.Component {
       return res.json();
     }).then(res => {
       console.log(res);
-      // this.setState({
-      //   //
-      // })
+      let goal = res.goals.pop();
+      this.setState({
+        exitTicketQuestion: goal.exit_ticket_question,
+        exitTicketOptions: goal.exit_ticket_options,
+        exitTicketCorrectAnswer: goal.exit_ticket_correct_answer,
+      })
     })
     .catch(error => {
       console.error({ error })
@@ -72,10 +75,11 @@ class ExitTicketTeacherRoute extends React.Component {
       this.state.exitTicketOptions.map((option, index) => <li key={index}>{option}</li>)
       : ''
     return (
-      <div>Exit Ticket Teacher Route
+      <div>
         <h2>{this.state.exitTicketQuestion ? 'Exit Ticket Prompt:' : `You didn't create an exit ticket this time!`}</h2>
         <h3>{this.state.exitTicketQuestion? this.state.exitTicketQuestion : ''}</h3>
         <ul>{options}</ul>
+        <h3>{this.state.exitTicketCorrectAnswer ? `Correct Answer: ${this.state.exitTicketCorrectAnswer}` : ''}</h3>
         {/* <div className='student-answers'>
           <h2>Student Responses</h2>
         </div> */}
