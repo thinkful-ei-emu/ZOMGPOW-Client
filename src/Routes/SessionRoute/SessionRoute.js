@@ -62,7 +62,6 @@ class SessionRoute extends React.Component {
     //get student goals
     return StudentApiService.getStudentGoals(student_id)
       .then(res => {
-        console.log('resonse for get goal', res)
         return res.goals.pop();
       })
       .catch(error => this.setState({ error }))
@@ -74,8 +73,8 @@ class SessionRoute extends React.Component {
       this.getGoal(student.id).then(goal => {
         student.mainGoal = goal.goal_title;
         student.mainGoalId = goal.id;
+        student.studentGoalId = goal.sg_id;
         student.iscomplete = goal.iscomplete;
-        console.log('student: ', student)
       })
       student.expand = false;
       student.expired = false;
@@ -87,11 +86,9 @@ class SessionRoute extends React.Component {
 
   // Should set timer when sub goal is updated
   handleTimer = (studentUsername, priority) => {
-    console.log('handle timer ran')
     // High - 5 min/300000, Medium - 10min/600000, Low - 20 min/1200000 
     // Testing - high/5 sec(5000), medium/7 sec(7000), low/10 sec(10000)
     const time = priority === 'high' ? 50000 : priority === 'medium' ? 70000 : 100000;
-    console.log('setTimeout started')
     setTimeout(this.handleExpire, time, studentUsername);
     this.props.handleStudentTimers(studentUsername, time)
   }
@@ -100,8 +97,6 @@ class SessionRoute extends React.Component {
   // Setting the order allows the first timer that ends to remain first in line and
   // subsequent timers to follow in line after
   handleExpire = studentUsername => {
-    console.log('setTimeout end', studentUsername);
-    console.log(Date.now())
     const expiredStudent = this.state.students.find(student => student.user_name === studentUsername);
     const studentOrder = { ...expiredStudent, expired: true, order: new Date() };
     this.setState({
@@ -114,12 +109,11 @@ class SessionRoute extends React.Component {
     const priority = this.state.updatedPriority;
     const data = { subgoal_title: this.state.updatedSubGoal };
     const student = this.state.students.filter(student => student.user_name === studentUsername).pop();
-    const goalId = student.mainGoalId;
+    const goalId = student.studentGoalId;
 
     StudentApiService.postStudentSubgoal(goalId, data)
       .then(res => {
         const studentToUpdate = this.state.students.filter(student => student.user_name === studentUsername);
-        console.log('priority2', this.state.updatedPriority)
         const updatedStudent = {
           ...studentToUpdate[0],
           subgoal: res.subGoal.subgoal_title,
@@ -128,12 +122,10 @@ class SessionRoute extends React.Component {
           expired: false,
           order: 0,
         }
-        console.log('priority3', this.state.updatedPriority)
         this.handleTimer(updatedStudent.user_name, this.state.updatedPriority);
         this.setState({
           students: this.state.students.map(student => student.user_name !== studentUsername ? student : updatedStudent),
         })
-        console.log('priority4', this.state.updatedPriority)
       })
       .then(() => {
         this.handleTimer(studentUsername, this.state.updatedPriority)
@@ -146,7 +138,6 @@ class SessionRoute extends React.Component {
         console.error(error);
         this.setState({ error })
       });
-    console.log('priority5', this.state.updatedPriority)
   }
 
   // Should toggle when clicking to expand and hide extra student information
@@ -162,86 +153,98 @@ class SessionRoute extends React.Component {
     })
   }
 
-  markTargetComplete = (id, data) => {
+  toggleTargetComplete = (id, data) => {
     StudentApiService.patchStudentGoal(id, {iscomplete: !data})
   }
 
   // Will make cards for students given
   makeCards = (students) => {
     const allStudents = students.map((student) => {
+      console.log('student ', student)
+      console.log('iscomplete ', student.iscomplete)
+      console.log('full_name ', student.full_name)
       return (
         <li
           key={student.user_name}
           className={student.expired === true ? `expired ${student.priority}` : ''}
         >
           <h3>{student.full_name}</h3>
-          {student.expand && <button 
-            className='button green-button'
-            onClick={() => {
-              console.log(student)
-              this.markTargetComplete(student.mainGoalId, student.iscomplete)
-              console.log('done')
-              }}>Target Complete</button>}
-          <p>{student.subgoal ? student.subgoal : this.state.learningTarget}</p>
-          <button
-            className={student.expand ? ' button blue-button' : 'button purple-button'}
-            onClick={e => this.toggleExpand(student.user_name)}>{student.expand ? 'Cancel' : 'Check In'}</button>
-          <div className={student.expand ? '' : 'hidden'}>
-            <form onSubmit={e => this.handleUpdateGoal(e, student.user_name)}>
-              <label
-                htmlFor='new-subgoal' />
-              <textarea
-                id='new-subgoal'
-                type='text'
-                name='new-subgoal'
-                placeholder='New Sub-Goal'
-                onChange={(e) => this.setState({ updatedSubGoal: e.target.value })}
-                value={this.state.updatedSubGoal}
-                aria-label='create new subgoal'
-                aria-required='true'
-                required
-              />
-              <div>
-                <h4>Priority:</h4>
-                <input
-                  className='radio'
-                  type='radio'
-                  value='high'
-                  id='high'
-                  name='priority'
-                  onChange={(e) => this.setState({ updatedPriority: 'high' })} />
+          {student.iscomplete ? 
+            <div>
+              <p>Learning Target Complete!</p>
+              <button 
+                className='button green-button'
+                onClick={() => this.toggleTargetComplete(student.studentGoalId, student.iscomplete)
+                }>Undo Complete</button>
+            </div> 
+            : 
+            <div>
+            {student.expand && <button 
+              className='button green-button'
+              onClick={() => this.toggleTargetComplete(student.studentGoalId, student.iscomplete)
+                }>Target Complete</button>}
+            <p>{student.subgoal ? student.subgoal : this.state.learningTarget}</p>
+            <button
+              className={student.expand ? ' button blue-button' : 'button purple-button'}
+              onClick={e => this.toggleExpand(student.user_name)}>{student.expand ? 'Cancel' : 'Check In'}</button>
+            <div className={student.expand ? '' : 'hidden'}>
+              <form onSubmit={e => this.handleUpdateGoal(e, student.user_name)}>
                 <label
-                  htmlFor='high'>High</label>
-                <input
-                  className='radio'
-                  type='radio'
-                  value='medium'
-                  id='medium'
-                  name='priority'
-                  onChange={(e) => this.setState({ updatedPriority: 'medium' })} />
-                <label
-                  htmlFor='medium'>Medium</label>
-                <input
-                  className='radio'
-                  type='radio'
-                  value='low'
-                  id='low'
-                  name='priority'
-                  onChange={(e) => this.setState({ updatedPriority: 'low' })} />
-                <label
-                  htmlFor='low'>Low</label>
-              </div>
-              <div>
-                <button
-                  className='button green-button'
-                  type='submit'>Update Goal</button>
-              </div>
-            </form>
-            {/* {student.subgoal ? <h4>Previous Goals:</h4> : ''}
-            <ul>
-            {student.subgoal ? student.subgoal.map((subgoal, index) => <li key={index}>subgoal</li>) : ''}
-            </ul> */}
+                  htmlFor='new-subgoal' />
+                <textarea
+                  id='new-subgoal'
+                  type='text'
+                  name='new-subgoal'
+                  placeholder='New Sub-Goal'
+                  onChange={(e) => this.setState({ updatedSubGoal: e.target.value })}
+                  value={this.state.updatedSubGoal}
+                  aria-label='create new subgoal'
+                  aria-required='true'
+                  required
+                />
+                <div>
+                  <h4>Priority:</h4>
+                  <input
+                    className='radio'
+                    type='radio'
+                    value='high'
+                    id='high'
+                    name='priority'
+                    onChange={(e) => this.setState({ updatedPriority: 'high' })} />
+                  <label
+                    htmlFor='high'>High</label>
+                  <input
+                    className='radio'
+                    type='radio'
+                    value='medium'
+                    id='medium'
+                    name='priority'
+                    onChange={(e) => this.setState({ updatedPriority: 'medium' })} />
+                  <label
+                    htmlFor='medium'>Medium</label>
+                  <input
+                    className='radio'
+                    type='radio'
+                    value='low'
+                    id='low'
+                    name='priority'
+                    onChange={(e) => this.setState({ updatedPriority: 'low' })} />
+                  <label
+                    htmlFor='low'>Low</label>
+                </div>
+                <div>
+                  <button
+                    className='button green-button'
+                    type='submit'>Update Goal</button>
+                </div>
+              </form>
+              {/* {student.subgoal ? <h4>Previous Goals:</h4> : ''}
+              <ul>
+              {student.subgoal ? student.subgoal.map((subgoal, index) => <li key={index}>subgoal</li>) : ''}
+              </ul> */}
+            </div>
           </div>
+          }
         </li>
       )
     })
