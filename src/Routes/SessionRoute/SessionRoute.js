@@ -162,6 +162,10 @@ class SessionRoute extends React.Component {
 
   markTargetComplete = (id, data) => StudentApiService.patchStudentGoal(id, data)
 
+  handleEndSession = (e) => {
+    this.props.history.push('/exitTicket')
+  }
+
   // Will make cards for students given
   makeCards = (students) => {
     const allStudents = students.map((student) => {
@@ -257,6 +261,10 @@ class SessionRoute extends React.Component {
         <div>
           <h2>Learning Target: </h2>
           <p className='learning-target'>{learningTarget}</p>
+          <button 
+            className='button blue-button'
+            onClick={(e) => {this.handleEndSession(e)}}
+          >End Session</button>
         </div>
         <ul className='student-list'>
           {students}
