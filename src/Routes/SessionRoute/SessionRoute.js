@@ -22,41 +22,38 @@ class SessionRoute extends React.Component {
   }
 
 
-  componentDidMount() {
-    if (TokenService.hasAuthToken()) {
-      if (!this.state.classId) {
-        TeacherAuthService.getTeacherClasses()
-          .then(classes => this.context.setClass(classes[0]))
-          .then(() => this.setState({
-            loaded: true,
-            classId: this.context.teacherClass.id
-          }))
-          .then(() => {
-            const classId = this.context.teacherClass.id;
-            this.setState({
-              classId: classId
-            })
-          })
-          .then(() => {
-            //get students, goals, and subgoals
-            StudentApiService.getAllStudents(this.state.classId)
-              .then(res => {              
-                const setupStudents = this.setupStudents(res.students);
-                let goals = [...res.goals]
-                const learningTarget = goals[0] ? goals.pop() : {}               
-                this.setState({
-                  students: setupStudents,
-                  learningTarget: learningTarget.goal_title ? learningTarget.goal_title : ''
-                })
+componentDidMount() {
+  let classId;
+  if (TokenService.hasAuthToken()) {
+    if (!this.state.classId) {
+      TeacherAuthService.getTeacherClasses()
+        .then(classes => {
+          this.context.setClass(classes[0]);
+          classId = this.context.teacherClass.id;
+          //get students, goals, and subgoals
+          return StudentApiService.getAllStudents(classId)
+        })
+        .then(res => {              
+          this.setupStudents(res.students)
+            .then(setupStudents => {
+              let goals = [...res.goals]
+              const learningTarget = goals[0] ? goals.pop() : {}
+              console.log(setupStudents)  
+              this.setState({
+                classId,
+                loaded: true,
+                students: setupStudents,
+                learningTarget: learningTarget.goal_title ? learningTarget.goal_title : ''
               })
-              .catch(error => this.setState({ error }))
-          })
+            })
+          
+        })
+        .catch(error => this.setState({ error }))
       }
     } else {
       this.props.history.push('/login/teacher');
     }
   }
-
 
   getGoal(student_id) {
     //get student goals
@@ -69,19 +66,19 @@ class SessionRoute extends React.Component {
 
   setupStudents = (students) => {
     //students should be an array of objects
-    return students.map(student => {
-      this.getGoal(student.id).then(goal => {
+    return Promise.all(students.map(student => {
+      return this.getGoal(student.id).then(goal => {
         student.mainGoal = goal.goal_title;
         student.mainGoalId = goal.id;
         student.studentGoalId = goal.sg_id;
         student.iscomplete = goal.iscomplete;
+        student.expand = false;
+        student.expired = false;
+        student.order = 0;
+        student.priority = 'low';
+        return student;
       })
-      student.expand = false;
-      student.expired = false;
-      student.order = 0;
-      student.priority = 'low';
-      return student;
-    })
+    }))
   }
 
   // Should set timer when sub goal is updated
@@ -155,14 +152,17 @@ class SessionRoute extends React.Component {
 
   toggleTargetComplete = (id, data) => {
     StudentApiService.patchStudentGoal(id, {iscomplete: !data})
+    .then(res => {
+      const studentsToSort = this.state.students.map(student => student.studentGoalId === id ? {...student, iscomplete: !data} : student)
+      this.setState({
+        students: studentsToSort
+      })
+    })
   }
 
   // Will make cards for students given
   makeCards = (students) => {
     const allStudents = students.map((student) => {
-      console.log('student ', student)
-      console.log('iscomplete ', student.iscomplete)
-      console.log('full_name ', student.full_name)
       return (
         <li
           key={student.user_name}
