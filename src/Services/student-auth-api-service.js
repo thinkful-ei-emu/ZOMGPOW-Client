@@ -169,7 +169,39 @@ const StudentAuthApiService = {
       ? res.json().then(e => Promise.reject(e))
       : res.json()
     )
-  }
+  },
+  patchEvalGoal(class_id, student_id, goal_id, studentScore){
+    return fetch(`${config.API_ENDPOINT}/studentgoals/learning_target/${class_id}/${student_id}/${goal_id}`, {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `Bearer ${TokenService.getAuthToken()}`, 
+      },
+      body: JSON.stringify({
+        evaluation: studentScore
+      })
+    }).then(res => 
+      (!res.ok)
+      ? res.json().then(e => Promise.reject(e))
+      : res.json()
+    )
+  },
+  patchEvalSubGoal(subgoal_id, studentScore){
+    return fetch(`${config.API_ENDPOINT}/studentgoals/subgoal/${subgoal_id}`, {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `Bearer ${TokenService.getAuthToken()}`, 
+      },
+      body: JSON.stringify({
+        evaluation: studentScore
+      })
+    }).then(res => 
+      (!res.ok)
+      ? res.json().then(e => Promise.reject(e))
+      : res.json()
+    )
+  },
 }
 
 export default StudentAuthApiService

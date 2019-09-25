@@ -1,5 +1,6 @@
 import React from 'react';
 import './SelfEvaluate.css';
+import StudentAuthApiService from '../../Services/student-auth-api-service';
 
 class SelfEvaluate extends React.Component {
   state = {
@@ -14,15 +15,24 @@ class SelfEvaluate extends React.Component {
 
   postEvaluation = (e) => {
     e.preventDefault()
-    const studentScores = this.state.score;
-    console.log(studentScores);
-    //post to database??
-    
-    this.props.history.goBack();
+    const studentScore = this.state.score;
+    const classId = this.props.location.state.learningTarget.class_id;
+    const studentId = this.props.location.state.learningTarget.student_id;
+    const goalId = this.props.location.state.learningTarget.id;
+    if(this.props.location.state.currentGoal === undefined){
+      StudentAuthApiService.patchEvalGoal(classId, studentId, goalId, studentScore)
+      .then(res => console.log(res))
+      // .then(() => this.props.history.goBack())
+    }
+    else{
+    const subGoalId = this.props.location.state.currentGoal.goal_id;
+      StudentAuthApiService.patchEvalSubGoal(subGoalId, studentScore)
+      .then(res => console.log(res))
+      // .then(() => this.props.history.goBack())
+    }
   }
 
   render(){
-    console.log(this.props.location)
     return (
       <div className='self-evaluate-form'>
       <h3>How do you feel you met your current goal?</h3>
