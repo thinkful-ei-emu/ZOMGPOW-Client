@@ -23,7 +23,8 @@ class LearningTargetForm extends React.Component {
     const classLearningTarget = {
       goal_title: learningTarget.value,
     }
-    fetch(`${config.API_ENDPOINT}/goals/class/${this.props.class_id}`, {
+    
+    fetch(`${config.API_ENDPOINT}/goals/class/${this.props.classId}`, {
       method: 'POST',
       body: JSON.stringify(classLearningTarget),
       headers: {
