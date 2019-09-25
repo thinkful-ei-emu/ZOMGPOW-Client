@@ -16,7 +16,7 @@ class SessionRoute extends React.Component {
       learningTarget: '',
       updatedSubGoal: '',
       updatedPriority: null,
-      class_id: null,
+      classid: null,
       students: [],
     }
   }
@@ -24,22 +24,22 @@ class SessionRoute extends React.Component {
 
   componentDidMount() {
     if (TokenService.hasAuthToken()) {
-      if (!this.state.class_id) {
+      if (!this.state.classid) {
         TeacherAuthService.getTeacherClasses()
           .then(classes => this.context.setClass(classes[0]))
           .then(() => this.setState({
             loaded: true,
-            class_id: this.context.teacherClass.id
+            classid: this.context.teacherClass.id
           }))
           .then(() => {
-            const class_id = this.context.teacherClass.id;
+            const classid = this.context.teacherClass.id;
             this.setState({
-              class_id: class_id
+              classid: classid
             })
           })
           .then(() => {
             //get students, goals, and subgoals
-            StudentApiService.getAllStudents(this.state.class_id)
+            StudentApiService.getAllStudents(this.state.classid)
               .then(res => {              
                 const setupStudents = this.setupStudents(res.students);
                 let goals = [...res.goals]
@@ -74,6 +74,8 @@ class SessionRoute extends React.Component {
       this.getGoal(student.id).then(goal => {
         student.mainGoal = goal.goal_title;
         student.mainGoalId = goal.id;
+        student.iscomplete = goal.iscomplete;
+        console.log('student: ', student)
       })
       student.expand = false;
       student.expired = false;
@@ -160,7 +162,9 @@ class SessionRoute extends React.Component {
     })
   }
 
-  markTargetComplete = (id, data) => StudentApiService.patchStudentGoal(id, data)
+  markTargetComplete = (id, data) => {
+    StudentApiService.patchStudentGoal(id, {iscomplete: !data})
+  }
 
   // Will make cards for students given
   makeCards = (students) => {
@@ -173,7 +177,11 @@ class SessionRoute extends React.Component {
           <h3>{student.full_name}</h3>
           {student.expand && <button 
             className='button green-button'
-            onClick={() => this.markTargetComplete(student.mainGoalId, student.expired)}>Target Complete</button>}
+            onClick={() => {
+              console.log(student)
+              this.markTargetComplete(student.mainGoalId, student.iscomplete)
+              console.log('done')
+              }}>Target Complete</button>}
           <p>{student.subgoal ? student.subgoal : this.state.learningTarget}</p>
           <button
             className={student.expand ? ' button blue-button' : 'button purple-button'}
