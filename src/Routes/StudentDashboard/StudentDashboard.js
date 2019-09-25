@@ -8,7 +8,7 @@ import './StudentDashboard.css';
 class StudentDashboard extends React.Component{
   static contextType = StudentContext;
   state = {
-    student_id: null,
+    studentId: null,
     goals: [],
     subgoals: [],
     error: null,
@@ -19,7 +19,7 @@ class StudentDashboard extends React.Component{
 
   componentDidMount() {
     this.setState({
-      student_id: this.context.user.id
+      studentId: this.context.user.id
     })
     StudentAuthApiService.getStudentGoals(this.context.user.id)
       .then(res => {
