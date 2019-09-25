@@ -75,7 +75,7 @@ class TeacherDashboardRoute extends React.Component{
               addStudents= {this.addStudents} 
               removeStudent={this.removeStudent} 
               displayStudents= {this.displayStudents} 
-              class_id={this.state.classId} 
+              classId={this.state.classId} 
               students={this.state.students}/>
           </div>
         </section>
