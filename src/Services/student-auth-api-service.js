@@ -139,7 +139,7 @@ const StudentAuthApiService = {
     )
   },
   patchStudentGoal(student_goal_id, data){
-    return fetch(`${config.API_ENDPOINT}/goals/goal/${student_goal_id}`, {
+    return fetch(`${config.API_ENDPOINT}/goals/student/goal/${student_goal_id}`, {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
@@ -151,7 +151,7 @@ const StudentAuthApiService = {
     }).then(res => 
       (!res.ok)
       ? res.json().then(e => Promise.reject(e))
-      : res.json()
+      : res
     )
   },
   patchStudentSubgoal(subgoal_id, data){

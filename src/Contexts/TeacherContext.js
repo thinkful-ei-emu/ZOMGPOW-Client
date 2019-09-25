@@ -66,6 +66,7 @@ export class TeacherProvider extends Component {
   }
 
   setClass = teacherClass => {
+    console.log(teacherClass)
     this.setState({teacherClass})
   }
 
