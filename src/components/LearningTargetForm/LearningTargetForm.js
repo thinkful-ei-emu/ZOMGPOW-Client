@@ -28,13 +28,14 @@ class LearningTargetForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { learningTarget } = e.target;
-    const classLearningTarget = {
+    const data = {
       goal_title: learningTarget.value,
+      ...this.state.exitTicketData,
     }
-    const data = this.state.exitTicketData;
+    console.log('DATA', data)
     fetch(`${config.API_ENDPOINT}/goals/class/${this.props.classId}`, {
       method: 'POST',
-      body: JSON.stringify(classLearningTarget, data),
+      body: JSON.stringify(data),
       headers: {
         'content-type': 'application/json',
         authorization: `bearer ${TokenService.getAuthToken()}`
@@ -60,7 +61,7 @@ class LearningTargetForm extends React.Component {
     return (
       <div className='learning-target-container'>
       <form className='learning-target-form'
-        onSubmit={this.handleSubmit}>
+        onSubmit={(e) => this.handleSubmit(e)}>
             <label htmlFor='learningTarget'>Learning Target:</label>
             <textarea 
               id='learning-target'
