@@ -32,7 +32,6 @@ class LearningTargetForm extends React.Component {
       goal_title: learningTarget.value,
       ...this.state.exitTicketData,
     }
-    console.log('DATA', data)
     fetch(`${config.API_ENDPOINT}/goals/class/${this.props.classId}`, {
       method: 'POST',
       body: JSON.stringify(data),

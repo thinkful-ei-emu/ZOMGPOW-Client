@@ -10,6 +10,8 @@ import TeacherDashboardRoute from '../../Routes/TeacherDashboardRoute/TeacherDas
 import SessionRoute from '../../Routes/SessionRoute/SessionRoute';
 import NotFoundRoute from '../../Routes/NotFoundRoute/NotFoundRoute';
 import SelfEvaluate from '../SelfEvaluate/SelfEvaluate';
+import ExitTicketStudentRoute from '../../Routes/ExitTicketStudentRoute/ExitTicketStudentRoute';
+import ExitTicketTeacherRoute from '../../Routes/ExitTicketTeacherRoute/ExitTicketTeacherRoute';
 import './App.css';
 
 export default class App extends React.Component {
@@ -64,9 +66,9 @@ export default class App extends React.Component {
           />
           <Route 
             path='/session'
-            render={() => {
+            render={(props) => {
               return (
-                <SessionRoute handleStudentTimers={this.handleStudentTimers}/>
+                <SessionRoute {...props} handleStudentTimers={this.handleStudentTimers}/>
               )
             }}
            />
@@ -81,6 +83,14 @@ export default class App extends React.Component {
           <Route
             path='/selfEvaluate'
             component={SelfEvaluate}
+          />
+          <Route 
+            path='/exitTicket'
+            component={ExitTicketTeacherRoute}
+          />
+          <Route 
+            path='/student/exitTicket'
+            component={ExitTicketStudentRoute}
           />
           <Route
             component={NotFoundRoute}
