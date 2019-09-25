@@ -17,10 +17,12 @@ class SelfEvaluate extends React.Component {
     const studentScores = this.state.score;
     console.log(studentScores);
     //post to database??
+    
     this.props.history.goBack();
   }
 
   render(){
+    console.log(this.props.location)
     return (
       <div className='self-evaluate-form'>
       <h3>How do you feel you met your current goal?</h3>
