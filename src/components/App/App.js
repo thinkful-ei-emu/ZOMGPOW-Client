@@ -10,6 +10,7 @@ import TeacherDashboardRoute from '../../Routes/TeacherDashboardRoute/TeacherDas
 import SessionRoute from '../../Routes/SessionRoute/SessionRoute';
 import NotFoundRoute from '../../Routes/NotFoundRoute/NotFoundRoute';
 import SelfEvaluate from '../SelfEvaluate/SelfEvaluate';
+import DataDisplay from '../../Routes/DataDisplayRoute/DataDisplayRoute';
 import './App.css';
 
 export default class App extends React.Component {
@@ -81,6 +82,10 @@ export default class App extends React.Component {
           <Route
             path='/selfEvaluate'
             component={SelfEvaluate}
+          />
+          <Route 
+            path='/data'
+            component={DataDisplay}
           />
           <Route
             component={NotFoundRoute}
