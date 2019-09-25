@@ -13,7 +13,7 @@ class StudentList extends React.Component {
     error: null,
     userInput: '',
     newStudent: null,
-    class_id: null,
+    classId: null,
     isDeleting: false,
   }
 
@@ -21,7 +21,7 @@ class StudentList extends React.Component {
     // Fetch students from API
     let classid = this.context.teacherClass.id
     this.setState({
-      class_id: classid
+      classId: classid
     })
     return fetch(`${config.API_ENDPOINT}/class/${classid}/students`, {
       method: 'GET',
