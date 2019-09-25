@@ -8,70 +8,67 @@ class ExitTicketTeacherRoute extends React.Component {
 
   state = {
     error: null,
-    exitTicketQuestion: null, //'Test prompt question?'
-    exitTicketOptions: [], //['option #1', 'option #2', 'option #3', 'option #4']
-    exitTicketCorrectAnswer: null, //'A'
+    exitTicketQuestion: null, 
+    exitTicketOptions: null, 
+    exitTicketCorrectAnswer: null, 
     studentAnswers: [], 
-    classId: 1,
+    classId: null,
   }
 
   static contextType = TeacherContext;
 
   componentDidMount() {
+    let token;
+    let classId = this.state.classId;
+    console.log(classId)
+    if(TokenService.getAuthToken() && !classId){
+      token = TokenService.parseAuthToken()
 
-    fetch(`${config.API_ENDPOINT}/goals/class/${this.state.classId}`, {
-      method: 'GET',
-      headers: {
-        'content-type': 'application/json',
-        authorization: `bearer ${TokenService.getAuthToken()}`
-      }
-    }).then((res) => {
-      if(!res){
-        return res.json().then(e => Promise.reject(e));
-      }
-      return res.json();
-    }).then(res => {
-      console.log(res);
-      let goal = res.goals.pop();
-      this.setState({
-        exitTicketQuestion: goal.exit_ticket_question,
-        exitTicketOptions: goal.exit_ticket_options,
-        exitTicketCorrectAnswer: goal.exit_ticket_correct_answer,
+    TeacherAuthApiService.getTeacherClasses()
+      .then(classes => this.context.setClass(classes[0]))
+      .then(() => this.setState({
+        loaded: true,
+        classId: this.context.teacherClass.id
+      }))
+      .then(() => {
+        return fetch(`${config.API_ENDPOINT}/goals/class/${this.state.classId}`, {
+          method: 'GET',
+          headers: {
+            'content-type': 'application/json',
+            authorization: `bearer ${TokenService.getAuthToken()}`
+          }
+        }).then((res) => {
+          if(!res){
+            return res.json().then(e => Promise.reject(e));
+          }
+          return res.json();
+        }).then(res => {
+          console.log(res);
+          let goal = res.goals.pop();
+          this.setState({
+            exitTicketQuestion: goal.exit_ticket_question,
+            exitTicketOptions: goal.exit_ticket_options,
+            exitTicketCorrectAnswer: goal.exit_ticket_correct_answer,
+          })
+        })
+        .catch(error => {
+          console.error({ error })
+        })
       })
-    })
-    .catch(error => {
-      console.error({ error })
-    })
 
-
-
-    // let classId;
-
-    // if (TokenService.hasAuthToken()){
-    //   if (!this.state.classId) {
-    //     TeacherAuthApiService.getTeacherClasses()
-    //     .then(classes => {
-    //       this.context.setClass(classes[0]);
-    //       classId = this.context.teacherClass.id;
-    //     })
-    //     .then(
-    //       console.log(this.state.classId)
-    //     //   () => this.setState({
-    //     //   classId: classId
-    //     // })
-    //   )
-    //     .then(
-    //       console.log(this.state.classId, 'ID??'),
-    //       console.log(`${config.API_ENDPOINT}/goals/class/${this.state.classId}`),
-          
-    //           )
-    //         } 
-  //}
+    } else {
+      const classId = this.context.teacherClass.id;
+      console.log(classId)
+      this.setState({
+        loaded: true,
+        classId
+      })
+    }
 }
 
 
   render() {
-    let options = this.state.exitTicketOptions.length > 1 ?
+    let options = this.state.exitTicketOptions ?
       this.state.exitTicketOptions.map((option, index) => <li key={index}>{option}</li>)
       : ''
     return (
@@ -83,6 +80,7 @@ class ExitTicketTeacherRoute extends React.Component {
         {/* <div className='student-answers'>
           <h2>Student Responses</h2>
         </div> */}
+        {/* Link to dashboard or data view? */}
       </div>
     )
   }
