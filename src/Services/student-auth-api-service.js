@@ -165,6 +165,22 @@ const StudentAuthApiService = {
       ? res.json().then(e => Promise.reject(e))
       : res
     )
+  },
+  patchStudentResponse(student_goal_id, data){
+    return fetch(`${config.API_ENDPOINT}/studentgoals/learning_target/${student_goal_id}`, {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `Bearer ${TokenService.getAuthToken()}`, 
+      },
+      body: JSON.stringify({
+        ...data
+      })
+    }).then(res => 
+      (!res.ok)
+      ? res.json().then(e => Promise.reject(e))
+      : res
+    )
   }
 }
 
