@@ -2,6 +2,8 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import RegistrationRoute from '../../Routes/RegistrationRoute/RegistrationRoute';
 import Header from '../Header/Header';
+import PrivateRoute from '../../Utils/PrivateRoute';
+import PublicOnlyRoute from '../../Utils/PublicOnlyRoute';
 import LandingPage from '../LandingPage/LandingPage';
 import TeacherLoginRoute from '../../Routes/TeacherLoginRoute/TeacherLoginRoute';
 import StudentDashboard from '../../Routes/StudentDashboard/StudentDashboard';
