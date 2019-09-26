@@ -5,15 +5,33 @@ import StudentContext from '../../Contexts/StudentContext';
 class ExitTicketStudentRoute extends React.Component {
   state = {
     error: null,
-    exitTicketQuestion: 'How much wood can a woodchuck chuck',
-    exitTicketOptions: ['one', 'two', 'three', 'four'], 
-    exitTicketType: 'multipleChoice',
+    exitTicketQuestion: null,
+    exitTicketOptions: null, 
+    exitTicketType: null,
     studentResponse: '',
     motivationalMessage: false,
     studentGoal: null,
+    studentId: null,
   }
 
   static contextType = StudentContext;
+
+  componentDidMount() {
+    this.setState({
+      studentId: this.context.user.id
+    })
+    StudentApiService.getStudentGoals(this.context.user.id)
+      .then(res => {
+        const studentGoal = res.goals.pop();
+        console.log(studentGoal)
+        // this.setState({
+        //   goals: student_goals,
+        // })
+      })
+      .catch(res => {
+        this.setState({ error: res.error })
+      })
+  }
 
   updateStudentResponse = (e) => {
     this.setState({
