@@ -41,13 +41,13 @@ class ExitTicketStudentRoute extends React.Component {
         let data = {
           student_answer: this.state.studentResponse
         }
-        StudentApiService.patchStudentGoal(this.state.studentGoal.id, data)
+        StudentApiService.patchStudentResponse(this.state.studentGoal.id, data)
         .then(res => {
           console.log(res)
         })
-        .catch(error => this.setState({ error}))
+        .catch(error => this.setState({ error: error.message}))
       })
-      .catch(error => this.setState({ error }))
+      .catch(error => this.setState({ error: error.message }))
       
 
       //toggle to motivational message
