@@ -26,6 +26,7 @@ class Header extends React.Component {
       <nav className='logout-buttons'>
         <Link to='/dashboard/teacher' className='purple-button button'>Dashboard</Link>
         <Link to='/session' className='blue-button button'>Session Goals</Link>
+        <Link to='/data' className='blue-button button'>Data</Link>
         <Link 
           onClick={this.handleLogoutClick}
           to='/'
