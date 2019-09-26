@@ -15,10 +15,7 @@ class DataDisplay extends React.Component {
   }
 
   componentDidMount() {
-    console.log('component data display')
-
     let token;
-
     if (TokenService.getAuthToken() && !this.state.classId) {
       token = TokenService.parseAuthToken()
       console.log('token from teacher dashboard', token)

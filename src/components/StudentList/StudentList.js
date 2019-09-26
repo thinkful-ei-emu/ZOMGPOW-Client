@@ -43,12 +43,7 @@ class StudentList extends React.Component {
   }
 
   handleDeleteStudent = (username, classId) => {
-
     this.setState({isDeleting: true})
-
-    console.log(username);
-    console.log('class id', classId);
-
     StudentAuthApiService.deleteStudent(username, classId)
       .then(res => {
         if(!res.ok){
@@ -58,9 +53,8 @@ class StudentList extends React.Component {
           this.setState({isDeleting: false})
         }
       })
-
-
   }
+
   // Updates state with every user input change
   handleChange = (e) => {
     this.setState({
@@ -75,7 +69,6 @@ class StudentList extends React.Component {
     })
     // Use Student Api Service to post student - PSUEDO CODE
     let newStudent = { full_name: this.state.userInput, class_id: this.state.classId }
-    console.log(newStudent)
     StudentAuthApiService.postStudent(newStudent)
       .then(res => {
         this.props.addStudents(res)
