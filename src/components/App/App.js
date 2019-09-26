@@ -11,6 +11,8 @@ import SessionRoute from '../../Routes/SessionRoute/SessionRoute';
 import NotFoundRoute from '../../Routes/NotFoundRoute/NotFoundRoute';
 import SelfEvaluate from '../SelfEvaluate/SelfEvaluate';
 import DataDisplay from '../../Routes/DataDisplayRoute/DataDisplayRoute';
+import ExitTicketStudentRoute from '../../Routes/ExitTicketStudentRoute/ExitTicketStudentRoute';
+import ExitTicketTeacherRoute from '../../Routes/ExitTicketTeacherRoute/ExitTicketTeacherRoute';
 import './App.css';
 
 export default class App extends React.Component {
@@ -34,19 +36,19 @@ export default class App extends React.Component {
 
     this.setState({
       studentTimers: newTimers
-    })    
+    })
   }
 
 
-  render(){
+  render() {
     return (
       <div className="App">
         <Header />
         <Switch>
-          <Route 
+          <Route
             path='/login/teacher'
             component={TeacherLoginRoute}
-          />  
+          />
           <Route
             path='/register'
             component={RegistrationRoute}
@@ -63,19 +65,19 @@ export default class App extends React.Component {
             path='/dashboard/teacher'
             component={TeacherDashboardRoute}
           />
-          <Route 
+          <Route
             path='/session'
-            render={() => {
+            render={(props) => {
               return (
-                <SessionRoute handleStudentTimers={this.handleStudentTimers}/>
+                <SessionRoute {...props} handleStudentTimers={this.handleStudentTimers} />
               )
             }}
-           />
+          />
           <Route
             path='/dashboard/student'
             render={() => {
               return (
-                <StudentDashboard studentTimers={this.state.studentTimers}/>
+                <StudentDashboard studentTimers={this.state.studentTimers} />
               );
             }}
           />
@@ -83,9 +85,17 @@ export default class App extends React.Component {
             path='/selfEvaluate'
             component={SelfEvaluate}
           />
-          <Route 
+          <Route
             path='/data'
             component={DataDisplay}
+          />
+          <Route
+            path='/exitTicket'
+            component={ExitTicketTeacherRoute}
+            />
+          <Route
+            path='/student/exitTicket'
+            component={ExitTicketStudentRoute}
           />
           <Route
             component={NotFoundRoute}

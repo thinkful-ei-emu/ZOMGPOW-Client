@@ -74,6 +74,7 @@ a:hover:not(.button) {
 }
 
 body {
+  font-family: var(--body-font);
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -91,6 +92,16 @@ input {
   margin: 10px;
 }
 
+textarea {
+  border-radius: 5px;
+  font-family: var(--body-font);
+  font-size: 15px;
+  width: 300px;
+  height: 50px;
+  border: solid 1px darkgray;
+  margin: 10px;
+ }
+
 h1 {
   font-family: var(--title-font);
   font-size: 80px;
@@ -106,6 +117,7 @@ h2 {
 
 h3 {
   font-size: 25px;
+  font-family: var(--heading-font);
 } 
 
 p {
@@ -117,5 +129,10 @@ ul {
   list-style-type: none;
   padding: 0;
   margin: 5px 20px;
+}
+
+/* CHECK WITH PR */
+button {
+  border: none;
 }
 

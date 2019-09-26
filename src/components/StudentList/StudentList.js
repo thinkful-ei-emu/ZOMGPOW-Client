@@ -13,17 +13,17 @@ class StudentList extends React.Component {
     error: null,
     userInput: '',
     newStudent: null,
-    class_id: null,
+    classId: null,
     isDeleting: false,
   }
 
   componentDidMount() {
     // Fetch students from API
-    let classid = this.context.teacherClass.id
+    let classId = this.context.teacherClass.id
     this.setState({
-      class_id: classid
+      classId: classId
     })
-    return fetch(`${config.API_ENDPOINT}/class/${classid}/students`, {
+    return fetch(`${config.API_ENDPOINT}/class/${classId}/students`, {
       method: 'GET',
       headers: {
         'authorization': `Bearer ${TokenService.getAuthToken()}`,
@@ -51,8 +51,6 @@ class StudentList extends React.Component {
 
     StudentAuthApiService.deleteStudent(username, classId)
       .then(res => {
-
-
         if(!res.ok){
           this.setState({error: res.error})
         } else {
@@ -76,7 +74,8 @@ class StudentList extends React.Component {
       newStudent: this.state.userInput,
     })
     // Use Student Api Service to post student - PSUEDO CODE
-    let newStudent = { full_name: this.state.userInput, class_id: this.state.class_id }
+    let newStudent = { full_name: this.state.userInput, class_id: this.state.classId }
+    console.log(newStudent)
     StudentAuthApiService.postStudent(newStudent)
       .then(res => {
         this.props.addStudents(res)
@@ -95,9 +94,9 @@ class StudentList extends React.Component {
   }
 
   render() {
-    const { error, class_id, isDeleting} = this.state;
+    const { error, classId, isDeleting} = this.state;
     const fullname = this.props.students.map((student, index) => <li key={index}>{student.full_name}</li>)
-    const username = this.props.students.map((student, index) => <li key={index}>{student.user_name}<span><button className='delete-student' onClick={() => this.handleDeleteStudent(student.user_name, class_id)}>X</button></span></li>)
+    const username = this.props.students.map((student, index) => <li key={index}>{student.user_name}<span><button className='delete-student' onClick={() => this.handleDeleteStudent(student.user_name, classId)}>X</button></span></li>)
     
     if(isDeleting){
       return (<div>loading...</div>)

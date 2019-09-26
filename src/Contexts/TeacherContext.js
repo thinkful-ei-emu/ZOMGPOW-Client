@@ -66,6 +66,7 @@ export class TeacherProvider extends Component {
   }
 
   setClass = teacherClass => {
+    console.log(teacherClass)
     this.setState({teacherClass})
   }
 
@@ -77,7 +78,6 @@ export class TeacherProvider extends Component {
 
     console.log('user from context', user)
     console.log('login', response);
-  
 
     TokenService.saveAuthToken(authToken)
     this.setUser({user})

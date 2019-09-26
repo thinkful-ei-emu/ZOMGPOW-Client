@@ -8,13 +8,3 @@
   max-width: 300px;
   align-items: center;
  }
-
- .learning-target-form textarea {
-  border-radius: 5px;
-  font-family: var(--body-font);
-  font-size: 15px;
-  width: 300px;
-  height: 50px;
-  border: solid 1px darkgray;
-  margin: 10px;
- }
