@@ -1,5 +1,6 @@
 import React from 'react';
 import config from '../../config';
+import { Link } from 'react-router-dom';
 import TokenService from '../../Services/token-service';
 import TeacherContext from '../../Contexts/TeacherContext'
 import TeacherAuthApiService from '../../Services/teacher-auth-api-service'
@@ -72,24 +73,30 @@ class DataDisplay extends React.Component {
     }
   }
   makeGoalsTable = goals => {
-    return goals.map(goal => 
-      <tr>
-          <td>
-            {goal.goal_title}
-          </td>
-          <td>
-            {goal.total_completed}
-          </td>
-          <td>
-            {goal.total_students}
-          </td>
-          <td>
-            {goal.avg_completed}
-          </td>
-          <td>
-            {goal.time}
-          </td>
-        </tr>)
+    return goals.map((goal, i) =>
+      <tr key={i}>
+        <td>
+          <Link to={`/data/${goal.id}`}>{goal.goal_title}</Link>
+        </td>
+        <td>
+          {goal.total_completed}
+        </td>
+        <td>
+          {goal.total_students}
+        </td>
+        <td>
+          {goal.avg_completed}
+        </td>
+        <td>
+          {goal.time}
+        </td>
+        <td>
+          {goal.eval_percentage}
+        </td>
+        <td>
+          {goal.eval_avg}
+        </td>
+      </tr>)
   }
 
   render() {
@@ -100,40 +107,38 @@ class DataDisplay extends React.Component {
     }
     else {
       let goals = this.makeGoalsTable(dataArr);
-      return (
-        <div>
-          <h3>Goals Data</h3>
-  <div className='data-table-container'>
-   
-   <table className='data-table'>
-<thead>
-<tr>
-  <th>
-    Title
-  </th>
-  <th>
-    Total Completed
-  </th>
-  <th>
-    Total Students
-  </th>
-  <th>
-    Completion Rate
-  </th>
-  <th>
-    Completion Time
-  </th>
-</tr>
-</thead>
-<tbody>
-{goals}
-</tbody>
-</table>
-</div>
-        </div>
+      console.log(dataArr)
+
+      if(goals.length){
+        return (
+          <div>
+            <h3>Goals Data</h3>
+            <div className='data-table-container'>
+              <table className='data-table'>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Total Completed</th>
+                    <th>Total Students</th>
+                    <th>Completion Rate</th>
+                    <th>Completion Time</th>
+                    <th>Confidence Rate</th>
+                    <th>Confidence Avg Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {goals}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )
+      } else {
+        return <p>No data to display</p>
+      }
+       
       
 
-      )
     }
 
   }

@@ -13,6 +13,7 @@ import SelfEvaluate from '../SelfEvaluate/SelfEvaluate';
 import DataDisplay from '../../Routes/DataDisplayRoute/DataDisplayRoute';
 import ExitTicketStudentRoute from '../../Routes/ExitTicketStudentRoute/ExitTicketStudentRoute';
 import ExitTicketTeacherRoute from '../../Routes/ExitTicketTeacherRoute/ExitTicketTeacherRoute';
+import GoalDataDisplay from '../../Components/GoalDataDisplay/GoalDataDisplay';
 import './App.css';
 
 export default class App extends React.Component {
@@ -86,8 +87,13 @@ export default class App extends React.Component {
             component={SelfEvaluate}
           />
           <Route
+            exact
             path='/data'
             component={DataDisplay}
+          />
+          <Route
+            path='/data/:goalId'
+            component={GoalDataDisplay}
           />
           <Route
             path='/exitTicket'

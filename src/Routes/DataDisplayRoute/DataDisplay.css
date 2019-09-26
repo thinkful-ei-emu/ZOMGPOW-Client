@@ -20,3 +20,12 @@
   border-radius: 5px;
   padding: .3% 1%;
 }
+
+.data-table > thead > tr > th   {
+  border-right: 1px solid lightgray;
+}
+
+.data-table > thead > tr > th:last-child  {
+  border-right: none;
+}
+

@@ -8,12 +8,14 @@ import TokenService from '../../Services/token-service';
 import { Link } from 'react-router-dom';
 
 class TeacherDashboardRoute extends React.Component{
+
   state = {
     error: null,
     classId: null,
     students: [],
     loaded: false,
   }
+  
   static contextType = TeacherContext;
 
   componentDidMount = () => {
