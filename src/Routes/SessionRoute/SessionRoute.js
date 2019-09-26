@@ -21,7 +21,6 @@ class SessionRoute extends React.Component {
     }
   }
 
-
 componentDidMount() {
   let classId;
   if (TokenService.hasAuthToken()) {
@@ -68,6 +67,7 @@ componentDidMount() {
     //students should be an array of objects
     return Promise.all(students.map(student => {
       return this.getGoal(student.id).then(goal => {
+        console.log(goal);
         student.mainGoal = goal.goal_title;
         student.mainGoalId = goal.id;
         student.studentGoalId = goal.sg_id;
