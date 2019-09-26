@@ -1,7 +1,5 @@
 import React from 'react';
 import './SelfEvaluate.css';
-// import config from '../../config'
-// import TokenService from '../../Services/token-service'
 import StudentAuthApiService from '../../Services/student-auth-api-service';
 
 class SelfEvaluate extends React.Component {
@@ -29,8 +27,8 @@ class SelfEvaluate extends React.Component {
       });
     }
     else{
-    const subgoal_id = this.props.location.state.currentGoal.goal_id;
-      StudentAuthApiService.patchEvalSubGoal(subgoal_id, {evaluation: studentScore})
+    const id = this.props.location.state.currentGoal.id;
+      StudentAuthApiService.patchSubGoal(id, {evaluation: studentScore})
       .then(() => this.props.history.goBack())
       .catch(error => {
         console.error(error);
