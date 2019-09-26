@@ -1,10 +1,13 @@
 import React from 'react';
 import './SelfEvaluate.css';
+// import config from '../../config'
+// import TokenService from '../../Services/token-service'
 import StudentAuthApiService from '../../Services/student-auth-api-service';
 
 class SelfEvaluate extends React.Component {
   state = {
     score: null,
+    error: null,
   }
 
   setScore=(e) => {
@@ -16,26 +19,33 @@ class SelfEvaluate extends React.Component {
   postEvaluation = (e) => {
     e.preventDefault()
     const studentScore = this.state.score;
-    const classId = this.props.location.state.learningTarget.class_id;
-    const studentId = this.props.location.state.learningTarget.student_id;
-    const goalId = this.props.location.state.learningTarget.id;
+    const student_goal_id = this.props.location.state.learningTarget.sg_id;
     if(this.props.location.state.currentGoal === undefined){
-      StudentAuthApiService.patchEvalGoal(classId, studentId, goalId, studentScore)
-      .then(res => console.log(res))
-      // .then(() => this.props.history.goBack())
+      StudentAuthApiService.patchStudentGoal(student_goal_id, {evaluation: studentScore})
+      .then(() => this.props.history.goBack())
+      .catch(error => {
+        console.error(error);
+        this.setState({ error })
+      });
     }
     else{
-    const subGoalId = this.props.location.state.currentGoal.goal_id;
-      StudentAuthApiService.patchEvalSubGoal(subGoalId, studentScore)
-      .then(res => console.log(res))
-      // .then(() => this.props.history.goBack())
+    const subgoal_id = this.props.location.state.currentGoal.goal_id;
+      StudentAuthApiService.patchEvalSubGoal(subgoal_id, {evaluation: studentScore})
+      .then(() => this.props.history.goBack())
+      .catch(error => {
+        console.error(error);
+        this.setState({ error })
+      });
     }
   }
-
+  
   render(){
     return (
       <div className='self-evaluate-form'>
       <h3>How do you feel you met your current goal?</h3>
+      {(this.props.location.state.currentGoal === undefined) ?
+      this.props.location.state.learningTarget.goal_title 
+      : this.props.location.state.currentGoal.goal_title}
       <form className='form' onSubmit={this.postEvaluation}>
         <input
           onChange={(e) => this.setState({ score: 1 })}
