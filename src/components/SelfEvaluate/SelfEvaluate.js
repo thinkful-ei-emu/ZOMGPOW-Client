@@ -1,5 +1,6 @@
 import React from 'react';
 import './SelfEvaluate.css';
+import BluePin from '../../Images/BluePin.svg';
 // import config from '../../config'
 // import TokenService from '../../Services/token-service'
 import StudentAuthApiService from '../../Services/student-auth-api-service';

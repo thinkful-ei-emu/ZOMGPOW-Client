@@ -90,14 +90,16 @@ class StudentDashboard extends React.Component{
         <h2>Learning Target: </h2>
         {learningTarget === undefined 
         ? <p>Loading..</p>
-        : <p className='student-goal'>{learningTarget.goal_title}</p>}
+        : <div className='student-goal'><p>{learningTarget.goal_title}</p></div>}
 
         {/* current goal */}
         {currentGoal === undefined
         ? <> </>
         :<div>
         <h2>Current Goal:</h2> 
+        <div className='student-subgoal'>
         <p>{currentGoal.subgoal_title}</p>
+        </div>
         </div>}
       </div>
 
