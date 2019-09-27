@@ -6,4 +6,8 @@
  .TeacherDashboardRoute-learning-target-submit {
   border-bottom: solid 1px darkgray;
  }
+
+ .TeacherDashboardRoute-section .data {
+   background: lightgray;
+ }
  
