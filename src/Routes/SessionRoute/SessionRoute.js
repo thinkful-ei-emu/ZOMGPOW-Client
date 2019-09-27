@@ -207,34 +207,40 @@ componentDidMount() {
                 />
                 <div>
                   <h4>Priority:</h4>
-                  <button
-                    className='priority-button'
+                  <input
+                    className='radio'
+                    type='radio'
                     value='high'
                     id='high'
                     name='priority'
-                    onClick={(e) => this.setState({ updatedPriority: 'high' })} >
-                    <FontAwesomeIcon className='high-priority' size='2x' icon={['fas', 'search']} />High
-                  </button>
-                  <button
-                    className='priority-button'
+                    onChange={(e) => this.setState({ updatedPriority: 'high' })} />
+                  <label
+                    className='radio-label'
+                    htmlFor='high'><FontAwesomeIcon className='high-priority' icon={['fas', 'search']} />High</label>
+                  <input
+                    className='radio'
+                    type='radio'
                     value='medium'
                     id='medium'
                     name='priority'
-                    onClick={(e) => this.setState({ updatedPriority: 'medium' })} >
-                    <FontAwesomeIcon className='medium-priority' size='2x' icon={['fas', 'search']} />Medium
-                  </button>
-                  <button
-                    className='priority-button'
+                    onChange={(e) => this.setState({ updatedPriority: 'medium' })} />
+                  <label
+                    className='radio-label'
+                    htmlFor='medium'><FontAwesomeIcon className='medium-priority' icon={['fas', 'search']} />Medium</label>
+                  <input
+                    className='radio'
+                    type='radio'
                     value='low'
                     id='low'
                     name='priority'
-                    onClick={(e) => this.setState({ updatedPriority: 'low' })} >
-                    <FontAwesomeIcon className='low-priority' size='2x' icon={['fas', 'search']} />Low
-                  </button>
+                    onChange={(e) => this.setState({ updatedPriority: 'low' })} />
+                  <label
+                    className='radio-label'
+                    htmlFor='low'><FontAwesomeIcon className='low-priority' icon={['fas', 'search']} />Low</label>
                 </div>
                 <div>
                   <button
-                    className='button green-button'
+                    className='update button green-button'
                     type='submit'>Update Goal</button>
                 </div>
               </form>
