@@ -66,9 +66,9 @@ export default class App extends React.Component {
           />
           <PrivateRoute
             path='/dashboard/teacher'
-            render={() => {
+            render={(props) => {
               return (
-                <TeacherDashboardRoute />
+                <TeacherDashboardRoute {...props}/>
               )
             }}
           />
@@ -82,41 +82,41 @@ export default class App extends React.Component {
           />
           <PrivateRoute
             path='/dashboard/student'
-            render={() => {
+            render={(props) => {
               return (
-                <StudentDashboard studentTimers={this.state.studentTimers} />
+                <StudentDashboard {...props} studentTimers={this.state.studentTimers} />
               );
             }}
           />
           <PrivateRoute
             path='/selfEvaluate'
-            render={()=> {
+            render={(props)=> {
               return (
-                <SelfEvaluate />
+                <SelfEvaluate {...props}/>
               )
             }}
           />
           <PrivateRoute
             path='/data'
-            render={()=> {
+            render={(props)=> {
               return (
-                <DataDisplay />
+                <DataDisplay {...props}/>
               )
             }}
           />
           <PrivateRoute
             path='/exitTicket'
-            render={()=> {
+            render={(props)=> {
               return (
-                <ExitTicketTeacherRoute />
+                <ExitTicketTeacherRoute {...props}/>
               )
             }}
             />
           <PrivateRoute
             path='/student/exitTicket'
-            render={()=> {
+            render={(props)=> {
               return (
-                <ExitTicketStudentRoute />
+                <ExitTicketStudentRoute {...props}/>
               )
             }}
           />

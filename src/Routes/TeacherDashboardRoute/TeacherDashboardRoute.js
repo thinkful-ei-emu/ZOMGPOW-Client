@@ -59,6 +59,7 @@ class TeacherDashboardRoute extends React.Component{
   }
 
   render() {
+    console.log(this.props, 'DASH PROPS')
     const {loaded, students} = this.state;
     if(!loaded){
       return <div><p>loading...</p></div>
