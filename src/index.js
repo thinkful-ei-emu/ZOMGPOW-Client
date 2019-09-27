@@ -6,7 +6,11 @@ import App from './Components/App/App';
 import * as serviceWorker from './serviceWorker';
 import { TeacherProvider } from './Contexts/TeacherContext';
 import { StudentProvider } from './Contexts/StudentContext';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
+library.add(far, fas)
 
 ReactDOM.render(
   <BrowserRouter>
