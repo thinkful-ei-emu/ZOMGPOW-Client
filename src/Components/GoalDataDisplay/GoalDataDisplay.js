@@ -88,7 +88,7 @@ class GoalDataDisplay extends React.Component {
         
       // }
       console.log(goalData)
-      console.log(exitTicketInfo)
+   
 
 
 
