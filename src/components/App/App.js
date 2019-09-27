@@ -3,6 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 import RegistrationRoute from '../../Routes/RegistrationRoute/RegistrationRoute';
 import Header from '../Header/Header';
 import PrivateRoute from '../../Utils/PrivateRoute';
+import PublicOnlyTeacherRoute from '../../Utils/PublicOnlyTeacherRoute';
+import PublicOnlyStudentRoute from '../../Utils/PublicOnlyStudentRoute';
 import LandingPage from '../LandingPage/LandingPage';
 import TeacherLoginRoute from '../../Routes/TeacherLoginRoute/TeacherLoginRoute';
 import StudentDashboard from '../../Routes/StudentDashboard/StudentDashboard';
@@ -46,11 +48,11 @@ export default class App extends React.Component {
       <div className="App">
         <Header />
         <Switch>
-          <Route
+          <PublicOnlyTeacherRoute
             path='/login/teacher'
             component={TeacherLoginRoute}
           />
-          <Route
+          <PublicOnlyTeacherRoute
             path='/register'
             component={RegistrationRoute}
           />
@@ -58,15 +60,19 @@ export default class App extends React.Component {
             exact path='/'
             component={LandingPage}
           />
-          <Route
+          <PublicOnlyStudentRoute
             path='/login/student'
             component={StudentLoginRoute}
           />
           <PrivateRoute
             path='/dashboard/teacher'
-            component={TeacherDashboardRoute}
+            render={() => {
+              return (
+                <TeacherDashboardRoute />
+              )
+            }}
           />
-          <Route
+          <PrivateRoute
             path='/session'
             render={(props) => {
               return (
@@ -74,7 +80,7 @@ export default class App extends React.Component {
               )
             }}
           />
-          <Route
+          <PrivateRoute
             path='/dashboard/student'
             render={() => {
               return (
@@ -84,19 +90,35 @@ export default class App extends React.Component {
           />
           <PrivateRoute
             path='/selfEvaluate'
-            component={SelfEvaluate}
+            render={()=> {
+              return (
+                <SelfEvaluate />
+              )
+            }}
           />
           <PrivateRoute
             path='/data'
-            component={DataDisplay}
+            render={()=> {
+              return (
+                <DataDisplay />
+              )
+            }}
           />
           <PrivateRoute
             path='/exitTicket'
-            component={ExitTicketTeacherRoute}
+            render={()=> {
+              return (
+                <ExitTicketTeacherRoute />
+              )
+            }}
             />
           <PrivateRoute
             path='/student/exitTicket'
-            component={ExitTicketStudentRoute}
+            render={()=> {
+              return (
+                <ExitTicketStudentRoute />
+              )
+            }}
           />
           <Route
             component={NotFoundRoute}
