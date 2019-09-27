@@ -66,6 +66,27 @@ class GoalDataDisplay extends React.Component {
     })
   }
 
+  makeStudentResponseRows = (studentResponses, correct) => {
+    return studentResponses.map((student, i) => {
+      let resA, resB, resC, resD;
+
+      if(student.response === 'A'){
+        resA = student.full_name
+      } else if (student.response === 'B'){
+        resB = student.full_name
+      } else if (student.response === 'C'){
+        resC = student.full_name
+      } else {
+        resD = student.full_name
+      }
+      return (<tr key={i}>
+        <td>{resA}</td>
+        <td>{resB}</td>
+        <td>{resC}</td>
+        <td>{resD}</td>
+      </tr>)
+    })
+  }
   makeGoalsTable = goals => {
     let x = '';
     return goals.map((goal, i) => {
@@ -93,11 +114,13 @@ class GoalDataDisplay extends React.Component {
     }
     else {
       let goals = this.makeGoalsTable(goalData);
+      
       let exitTicketElements;
 
       if (exitTicketInfo.length > 0 && exitTicketInfo[0].question_type !== null) {
         if(exitTicketInfo[0].question_type.toLowerCase() === 'multiple choice'){
           let correctAnswer = exitTicketInfo[0].answer
+          let studentResponseRows = this.makeStudentResponseRows(goalData, correctAnswer);
           let correctIndex = 0;
           if(correctAnswer === 'B'){
             correctIndex = 1
@@ -107,19 +130,10 @@ class GoalDataDisplay extends React.Component {
             correctIndex = 3
           }
           let optionClass = 'incorrect-option';
+          let prefix = 'A: ';
 
           exitTicketElements = <div>
           <h3>{exitTicketInfo[0].question}</h3> 
-          <ul>
-            {exitTicketInfo[0].options.map((option, i) => {
-              if(i === correctIndex){
-                optionClass = 'correct-option'
-              }
-              return (
-                <li key={i} className={optionClass}>{option}</li>
-              )
-            })}
-            </ul>   
           <div className='exit-ticket-data-container'>
             <table className='data-table goal-data'>
               <thead>
@@ -138,6 +152,34 @@ class GoalDataDisplay extends React.Component {
               </tbody>
             </table>
           </div>
+            <div className='exit-ticket-data-container'>
+            <table className='goal-data'>
+              <caption>Student Responses</caption>
+              <thead>
+                <tr>
+              {exitTicketInfo[0].options.map((option, i) => {
+              if(i === correctIndex){
+                optionClass = 'correct-option'
+              } 
+              if(i === 1){
+                prefix = 'B: '
+              } else if (i === 2){
+                prefix = 'C: '
+              } else if (i === 3){
+                prefix = 'D: '
+              }
+              return (
+                <th key={i} className={optionClass}>{prefix}{option}</th>
+              )
+            })}
+                </tr>
+              </thead>
+              <tbody>
+            {studentResponseRows}
+              </tbody>
+            </table>
+          </div>  
+          
         </div>
         } else if (exitTicketInfo[0].question_type.toLowerCase() === 'short answer'){
           exitTicketElements = (<div className='short-answer-container'>
