@@ -1,26 +1,27 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import LearningTargetForm from '../../Components/LearningTargetForm/LearningTargetForm';
 import StudentList from '../../Components/StudentList/StudentList';
 import './TeacherDashboardRoute.css';
 import TeacherContext from '../../Contexts/TeacherContext';
 import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
 import TokenService from '../../Services/token-service';
-import { Link } from 'react-router-dom';
 
 class TeacherDashboardRoute extends React.Component{
+
   state = {
     error: null,
     classId: null,
     students: [],
     loaded: false,
   }
+  
   static contextType = TeacherContext;
 
   componentDidMount = () => {
-    let token;
     let classId = this.state.classId;
     if(TokenService.getAuthToken() && !classId){
-      token = TokenService.parseAuthToken()
+
 
     TeacherAuthApiService.getTeacherClasses()
       .then(classes => this.context.setClass(classes[0]))

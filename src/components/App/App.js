@@ -16,6 +16,8 @@ import SelfEvaluate from '../SelfEvaluate/SelfEvaluate';
 import DataDisplay from '../../Routes/DataDisplayRoute/DataDisplayRoute';
 import ExitTicketStudentRoute from '../../Routes/ExitTicketStudentRoute/ExitTicketStudentRoute';
 import ExitTicketTeacherRoute from '../../Routes/ExitTicketTeacherRoute/ExitTicketTeacherRoute';
+import GoalDataDisplay from '../../Components/GoalDataDisplay/GoalDataDisplay';
+import SubGoalDataDisplay from '../../Components/SubGoalDataDisplay/SubGoalDataDisplay';
 import './App.css';
 
 export default class App extends React.Component {
@@ -96,7 +98,8 @@ export default class App extends React.Component {
               )
             }}
           />
-          <PrivateRoute
+          <Route
+            exact
             path='/data'
             render={(props)=> {
               return (
@@ -104,7 +107,17 @@ export default class App extends React.Component {
               )
             }}
           />
-          <PrivateRoute
+          <Route
+            exact
+            path='/data/:goalId'
+            component={GoalDataDisplay}
+          />
+          <Route
+            exact
+            path='/data/:goalId/:studentGoalId'
+            component={SubGoalDataDisplay}
+          />
+          <Route
             path='/exitTicket'
             render={(props)=> {
               return (
