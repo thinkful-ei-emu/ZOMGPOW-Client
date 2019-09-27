@@ -52,7 +52,6 @@ export class TeacherProvider extends Component {
   // }
 
   setError = error => {
-    console.error(error)
     this.setState({ error })
   }
 
@@ -61,24 +60,18 @@ export class TeacherProvider extends Component {
   }
 
   setUser = user => {
-    // console.log(user);
     this.setState({ user })
   }
 
   setClass = teacherClass => {
-    console.log(teacherClass)
     this.setState({teacherClass})
   }
 
   processLogin = response => {
-
+    console.log(response);
     const authToken = response.authToken;
     const user = response.user;
     const teacherClass = response.class;
-
-    console.log('user from context', user)
-    console.log('login', response);
-
     TokenService.saveAuthToken(authToken)
     this.setUser({user})
     this.setClass({teacherClass})

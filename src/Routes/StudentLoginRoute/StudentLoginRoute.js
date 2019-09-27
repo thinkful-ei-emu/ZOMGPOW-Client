@@ -23,13 +23,9 @@ class StudentLoginRoute extends React.Component {
     history.push(destination)
   }
   
-  
-  
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.context)
-    const {student_username} = e.target
-    console.log(student_username.value);
+    const {student_username} = e.target;
     this.setState({ error: null })
 
     StudentAuthApiService.postLogin(student_username.value)
@@ -43,10 +39,8 @@ class StudentLoginRoute extends React.Component {
       })
   }
 
-
   render() {
     const {error} = this.state;
-
     return (
       <div className="student-login">
         <form className="form" onSubmit={this.handleSubmit}>
@@ -63,11 +57,9 @@ class StudentLoginRoute extends React.Component {
             <span>Ask your teacher for help.</span>
           </div>
         </form>
-   
       </div>
     );
   }
-  
 }
 
 export default StudentLoginRoute;

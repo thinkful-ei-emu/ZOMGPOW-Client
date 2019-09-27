@@ -54,6 +54,10 @@ class StudentDashboard extends React.Component{
           className='green-button button'>
           Logout
         </Link>
+        <Link
+        to='/student/exitTicket'
+        className='button blue-button'
+        >Exit Ticket</Link>
       </nav>
     )
   }

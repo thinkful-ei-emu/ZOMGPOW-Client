@@ -57,6 +57,9 @@ class LearningTargetForm extends React.Component {
   }
 
   render() {
+    console.log(
+      'PROPS', this.props
+    )
     return (
       <div className='learning-target-container'>
       <form className='learning-target-form'
