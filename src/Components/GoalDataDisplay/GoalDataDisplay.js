@@ -56,8 +56,8 @@ class GoalDataDisplay extends React.Component {
   makeGoalsTable = goals => {
     let x = '';
     return goals.map((goal, i) => {
-      if((i + 1) % 2 === 0 ? x = '-blue' : x = '-green')
-      if((i + 1) % 3 === 0) x = '-purple';
+      if ((i + 1) % 2 === 0 ? x = '-blue' : x = '-green')
+        if ((i + 1) % 3 === 0) x = '-purple';
       return (
         <tr key={i}>
           <td className={`data-link-datum${x} datum`}>
@@ -66,7 +66,8 @@ class GoalDataDisplay extends React.Component {
           <td>{goal.complete ? 'Complete' : 'Incomplete'}</td>
           <td>{goal.eval_score}</td>
         </tr>
-        )}
+      )
+    }
     )
   }
 
@@ -85,10 +86,36 @@ class GoalDataDisplay extends React.Component {
       //   exitTicketElement = <div>
       //     <h4>{exitTicketInfo[0]['question']}</h4>
       //   </div>
-        
+
       // }
+   
+
+      if (exitTicketInfo.length > 0) {
+        exitTicketElement =<div>
+          <h3>{exitTicketInfo[0].title}</h3>    
+          <div className='data-table-container'>
+            <table className='data-table goal-data'>
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Status</th>
+                  <th>Eval</th>
+                </tr>
+              </thead>
+              <tbody>
+           <tr>
+             <td></td>
+           </tr>
+              </tbody>
+            </table>
+          </div>
+          {/* <Link to={'/data'} className='button green-button data-button'>Go back</Link> */}
+        </div>
+      }
+
+
       console.log(goalData)
-      console.log(exitTicketInfo)
+
 
 
 
@@ -96,7 +123,7 @@ class GoalDataDisplay extends React.Component {
         return (
           <div>
             <h3>{goalData[0].title}</h3>
-          
+            {exitTicketElement}
             <div className='data-table-container'>
               <table className='data-table goal-data'>
                 <thead>
