@@ -44,7 +44,6 @@ class ExitTicketForm extends React.Component {
         multipleChoiceD: e.target.value,
       })
     }
-    console.log(this.state)
   }
 
   updateQuestion = (e) => {
@@ -73,7 +72,6 @@ class ExitTicketForm extends React.Component {
             ],
             exit_ticket_correct_answer: this.state.multipleChoiceCorrect,
           }
-          console.log('DATA', data);
         } else {
           this.setState({
             error: 'Choose a correct answer option'

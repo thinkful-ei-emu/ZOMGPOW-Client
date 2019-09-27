@@ -27,9 +27,7 @@ class StudentLoginRoute extends React.Component {
   
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.context)
-    const {student_username} = e.target
-    console.log(student_username.value);
+    const {student_username} = e.target;
     this.setState({ error: null })
 
     StudentAuthApiService.postLogin(student_username.value)

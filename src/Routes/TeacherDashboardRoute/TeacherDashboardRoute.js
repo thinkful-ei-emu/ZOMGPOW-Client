@@ -19,21 +19,18 @@ class TeacherDashboardRoute extends React.Component{
   componentDidMount = () => {
     let token;
     let classId = this.state.classId;
-    console.log(classId)
     if(TokenService.getAuthToken() && !classId){
       token = TokenService.parseAuthToken()
-      console.log('token from teacher dashboard', token)
 
     TeacherAuthApiService.getTeacherClasses()
       .then(classes => this.context.setClass(classes[0]))
       .then(() => this.setState({
         loaded: true,
         classId: this.context.teacherClass.id
-      }, () => console.log(classId)))
-
+      })
+      )
     } else {
       const classId = this.context.teacherClass.id;
-      console.log(classId)
       this.setState({
         loaded: true,
         classId
