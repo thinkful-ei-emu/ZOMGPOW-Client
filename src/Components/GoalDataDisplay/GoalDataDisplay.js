@@ -15,6 +15,7 @@ class GoalDataDisplay extends React.Component {
     goalId: this.props.match.params.goalId,
     classId: null,
     loaded: false,
+    exitTicketHidden: false,
   }
 
   static contextType = TeacherContext;
@@ -53,6 +54,18 @@ class GoalDataDisplay extends React.Component {
     }
   }
 
+  handleShortAnswerResponses = studentArr => {
+    return studentArr.map((student, i) => {
+      return <p key={i} className='student-answer-response'><strong>{student.full_name}: </strong>{student.response}</p>
+    })
+  }
+
+  toggleExitTicketHidden = () => {
+    this.setState({
+      exitTicketHidden: !this.state.exitTicketHidden
+    })
+  }
+
   makeGoalsTable = goals => {
     let x = '';
     return goals.map((goal, i) => {
@@ -72,7 +85,7 @@ class GoalDataDisplay extends React.Component {
   }
 
   render() {
-    const { loaded, goalData, exitTicketInfo } = this.state;
+    const { loaded, goalData, exitTicketInfo, exitTicketHidden } = this.state;
     console.log(exitTicketInfo[0])
 
     if (!loaded) {
@@ -127,11 +140,17 @@ class GoalDataDisplay extends React.Component {
           </div>
         </div>
         } else if (exitTicketInfo[0].question_type.toLowerCase() === 'short answer'){
-
+          exitTicketElements = (<div className='short-answer-container'>
+          <h3>{exitTicketInfo[0].question}</h3> 
+            <div className='contain-student-res'>
+            {this.handleShortAnswerResponses(goalData)}
+            </div>
+          </div>)
         }
         
       } else {
-        exitTicketElements = <p>No exit ticket submitted for this goal</p>
+         exitTicketElements = <p>No exit ticket submitted for this goal</p>
+         
       }
 
 
@@ -157,8 +176,9 @@ class GoalDataDisplay extends React.Component {
                 </tbody>
               </table>
             </div>
-            {exitTicketElements}
+            <button onClick={this.toggleExitTicketHidden} className='button purple-button'>{(exitTicketHidden) ? 'Hide Exit Ticket Info' : 'View exit ticket'}</button>
             <Link to={'/data'} className='button green-button data-button'>Go back</Link>
+            {(exitTicketHidden) ? exitTicketElements: ''}
           </div>
         )
       } else {

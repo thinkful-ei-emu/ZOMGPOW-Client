@@ -5,6 +5,22 @@
   margin-top: 3%;
 }
 
+.contain-student-res {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+.student-answer-response {
+  border-bottom: 1px solid lightGrey;
+  padding: 1%;
+  text-align: left;
+
+
+}
+
 .exit-ticket-data-container {
   width: 100%;
   display: flex;  
@@ -31,6 +47,10 @@
 
 .goal-data{
   margin-bottom: 1%;
+}
+
+.data-button {
+  margin-bottom: 3%;
 }
 
 .data-table > tbody > tr > td   {
@@ -73,3 +93,12 @@
   border-right: none;
 }
 
+@media only screen and (max-width: 800px){
+  .contain-student-res {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    align-items: flex-start;
+  }
+}
