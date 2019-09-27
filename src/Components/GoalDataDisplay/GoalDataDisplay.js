@@ -94,10 +94,6 @@ class GoalDataDisplay extends React.Component {
     return { arrA, arrB, arrC, arrD }
 
   }
-  makeOptionRows = (studentResponses, correct) => {
-
-  }
-
 
   makeGoalsTable = goals => {
     let x = '';
