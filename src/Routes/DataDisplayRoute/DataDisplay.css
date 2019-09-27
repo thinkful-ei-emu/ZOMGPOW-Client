@@ -21,9 +21,30 @@
 
 .exit-ticket-data-container {
   width: 100%;
-  display: flex;  
+  display: flex; 
   justify-content: center;
   margin-top: 1%;
+}
+
+.exit-ticket-response-container {  
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 4%;
+}
+
+.exit-ticket-responses {
+  display: flex;
+  justify-content: center;
+
+}
+
+/* .option-title {
+  border-bottom: 1px solid gray;
+} */
+
+.a-column, .b-column, .c-column, .d-column {
+  margin: 0 1%;
 }
 
 .correct-option {
@@ -38,6 +59,7 @@
   border-radius: 5px; */
   padding: .3% 1%;
 }
+
 
 .data-table {
   border-collapse: separate;
