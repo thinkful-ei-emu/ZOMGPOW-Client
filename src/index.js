@@ -8,9 +8,9 @@ import { TeacherProvider } from './Contexts/TeacherContext';
 import { StudentProvider } from './Contexts/StudentContext';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { far } from '@fortawesome/free-regular-svg-icons';
-import { faAngry, faSmile, faMeh, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
-library.add(far, faAngry, faMeh, faSmile, faTrashAlt)
+library.add(far, fas)
 
 ReactDOM.render(
   <BrowserRouter>
