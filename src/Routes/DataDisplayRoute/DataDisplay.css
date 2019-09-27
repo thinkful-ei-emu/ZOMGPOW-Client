@@ -2,7 +2,22 @@
   width: 100%;
   display: flex;  
   justify-content: center;
-  margin-top: 5%;
+  margin-top: 3%;
+}
+
+.exit-ticket-data-container {
+  width: 100%;
+  display: flex;  
+  justify-content: center;
+  margin-top: 1%;
+}
+
+.correct-option {
+  color: green;
+}
+
+.incorrect-option {
+  color: red;
 }
 
 .data-table {

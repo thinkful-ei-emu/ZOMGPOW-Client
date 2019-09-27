@@ -56,8 +56,8 @@ class GoalDataDisplay extends React.Component {
   makeGoalsTable = goals => {
     let x = '';
     return goals.map((goal, i) => {
-      if((i + 1) % 2 === 0 ? x = '-blue' : x = '-green')
-      if((i + 1) % 3 === 0) x = '-purple';
+      if ((i + 1) % 2 === 0 ? x = '-blue' : x = '-green')
+        if ((i + 1) % 3 === 0) x = '-purple';
       return (
         <tr key={i}>
           <td className={`data-link-datum${x} datum`}>
@@ -66,7 +66,8 @@ class GoalDataDisplay extends React.Component {
           <td>{goal.complete ? 'Complete' : 'Incomplete'}</td>
           <td>{goal.eval_score}</td>
         </tr>
-        )}
+      )
+    }
     )
   }
 
@@ -79,16 +80,62 @@ class GoalDataDisplay extends React.Component {
     }
     else {
       let goals = this.makeGoalsTable(goalData);
-      let exitTicketElement;
+      let exitTicketElements;
 
-      // if(exitTicketInfo[0] !== null){
-      //   exitTicketElement = <div>
-      //     <h4>{exitTicketInfo[0]['question']}</h4>
-      //   </div>
+      if (exitTicketInfo.length > 0 && exitTicketInfo[0].question_type !== null) {
+        if(exitTicketInfo[0].question_type.toLowerCase() === 'multiple choice'){
+          let correctAnswer = exitTicketInfo[0].answer
+          let correctIndex = 0;
+          if(correctAnswer === 'B'){
+            correctIndex = 1
+          } else if (correctAnswer === 'C'){
+            correctIndex = 2
+          } else if (correctAnswer === 'D'){
+            correctIndex = 3
+          }
+          let optionClass = 'incorrect-option';
+
+          exitTicketElements = <div>
+          <h3>{exitTicketInfo[0].question}</h3> 
+          <ul>
+            {exitTicketInfo[0].options.map((option, i) => {
+              if(i === correctIndex){
+                optionClass = 'correct-option'
+              }
+              return (
+                <li key={i} className={optionClass}>{option}</li>
+              )
+            })}
+            </ul>   
+          <div className='exit-ticket-data-container'>
+            <table className='data-table goal-data'>
+              <thead>
+                <tr>
+              <th>Total Correct</th>
+              <th>Total Participants</th>
+              <th>Avg Correct</th>
+                </tr>
+              </thead>
+              <tbody>
+           <tr>
+             <td>{exitTicketInfo[0].correct_res_total}</td>
+             <td>{exitTicketInfo[0].res_total}</td>
+             <td>{exitTicketInfo[0].correct_res_avg}</td>
+           </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        } else if (exitTicketInfo[0].question_type.toLowerCase() === 'short answer'){
+
+        }
         
-      // }
+      } else {
+        exitTicketElements = <p>No exit ticket submitted for this goal</p>
+      }
+
+
       console.log(goalData)
-   
 
 
 
@@ -96,7 +143,6 @@ class GoalDataDisplay extends React.Component {
         return (
           <div>
             <h3>{goalData[0].title}</h3>
-          
             <div className='data-table-container'>
               <table className='data-table goal-data'>
                 <thead>
@@ -111,6 +157,7 @@ class GoalDataDisplay extends React.Component {
                 </tbody>
               </table>
             </div>
+            {exitTicketElements}
             <Link to={'/data'} className='button green-button data-button'>Go back</Link>
           </div>
         )
