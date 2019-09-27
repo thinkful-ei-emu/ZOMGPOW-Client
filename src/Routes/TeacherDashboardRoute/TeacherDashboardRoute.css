@@ -1,9 +1,17 @@
  .TeacherDashboardRoute-section {
-   margin-top: 40px;
    font-family: var(--heading-font);
  }
 
  .TeacherDashboardRoute-learning-target-submit {
   border-bottom: solid 1px darkgray;
+  padding-bottom: 20px;
  }
+
+ .TeacherDashboardRoute-section .data {
+   background: var(--gray);
+   padding-top: 30px;
+   padding-bottom: 30px;
+ }
+
+
  

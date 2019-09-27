@@ -6,6 +6,8 @@
   --purple: #8B00B5;
   --blue: #0ABAD4;
   --green: #81D40A;
+  --red: rgb(241, 46, 79);
+  --gray: rgb(226, 226, 226);
 }
 
 /* BUTTONS NEED TWO CLASSES, MAIN BUTTON CLASS AND COLOR */
@@ -40,10 +42,13 @@ button:focus {
 .blue-button {
   background:var(--blue);
 }
+.red-button {
+  background:var(--red);
+}
 
 /* FOR ERROR DIVS */
 .alert {
-  color: red;
+  color: var(--red);
   font-family: var(--body-font);
   font-size: 12px;
 }

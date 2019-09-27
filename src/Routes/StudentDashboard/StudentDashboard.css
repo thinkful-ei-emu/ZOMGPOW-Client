@@ -10,6 +10,10 @@
 margin-bottom: 20px;
 }
 
+.student-dashboard-section .goals-container h2{
+  margin-bottom: 0;
+}
+
 .student-dashboard-section .timer-container {
   border: solid 1px darkgray;
   border-radius: 15px;
@@ -22,4 +26,25 @@ margin-bottom: 20px;
   width: 90%;
   max-width: 300px;
   margin: 10px auto;
+}
+
+.student-goal, .student-subgoal {
+  background-image: url('../../Images/BluePaper.svg');
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+  width: 100%;
+  min-height: 100px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.student-goal p, .student-subgoal p {
+  font-weight: 800;
+  max-width: 400px;
+  margin: 50px auto;
+}
+
+.student-subgoal {
+  background-image: url('../../Images/SalmonGridPaper.svg');
 }

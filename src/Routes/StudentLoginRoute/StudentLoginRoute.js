@@ -23,8 +23,6 @@ class StudentLoginRoute extends React.Component {
     history.push(destination)
   }
   
-  
-  
   handleSubmit = e => {
     e.preventDefault();
     const {student_username} = e.target;
@@ -41,10 +39,8 @@ class StudentLoginRoute extends React.Component {
       })
   }
 
-
   render() {
     const {error} = this.state;
-
     return (
       <div className="student-login">
         <form className="form" onSubmit={this.handleSubmit}>
@@ -61,11 +57,9 @@ class StudentLoginRoute extends React.Component {
             <span>Ask your teacher for help.</span>
           </div>
         </form>
-   
       </div>
     );
   }
-  
 }
 
 export default StudentLoginRoute;

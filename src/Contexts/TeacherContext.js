@@ -68,7 +68,7 @@ export class TeacherProvider extends Component {
   }
 
   processLogin = response => {
-
+    console.log(response);
     const authToken = response.authToken;
     const user = response.user;
     const teacherClass = response.class;

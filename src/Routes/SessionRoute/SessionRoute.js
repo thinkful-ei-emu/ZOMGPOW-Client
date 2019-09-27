@@ -3,6 +3,7 @@ import StudentApiService from '../../Services/student-auth-api-service';
 import TokenService from '../../Services/token-service';
 import TeacherContext from '../../Contexts/TeacherContext';
 import TeacherAuthService from '../../Services/teacher-auth-api-service';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './SessionRoute.css';
 
 class SessionRoute extends React.Component {
@@ -206,33 +207,30 @@ componentDidMount() {
                 />
                 <div>
                   <h4>Priority:</h4>
-                  <input
-                    className='radio'
-                    type='radio'
+                  <button
+                    className='priority-button'
                     value='high'
                     id='high'
                     name='priority'
-                    onChange={(e) => this.setState({ updatedPriority: 'high' })} />
-                  <label
-                    htmlFor='high'>High</label>
-                  <input
-                    className='radio'
-                    type='radio'
+                    onClick={(e) => this.setState({ updatedPriority: 'high' })} >
+                    <FontAwesomeIcon className='high-priority' size='2x' icon={['fas', 'search']} />High
+                  </button>
+                  <button
+                    className='priority-button'
                     value='medium'
                     id='medium'
                     name='priority'
-                    onChange={(e) => this.setState({ updatedPriority: 'medium' })} />
-                  <label
-                    htmlFor='medium'>Medium</label>
-                  <input
-                    className='radio'
-                    type='radio'
+                    onClick={(e) => this.setState({ updatedPriority: 'medium' })} >
+                    <FontAwesomeIcon className='medium-priority' size='2x' icon={['fas', 'search']} />Medium
+                  </button>
+                  <button
+                    className='priority-button'
                     value='low'
                     id='low'
                     name='priority'
-                    onChange={(e) => this.setState({ updatedPriority: 'low' })} />
-                  <label
-                    htmlFor='low'>Low</label>
+                    onClick={(e) => this.setState({ updatedPriority: 'low' })} >
+                    <FontAwesomeIcon className='low-priority' size='2x' icon={['fas', 'search']} />Low
+                  </button>
                 </div>
                 <div>
                   <button

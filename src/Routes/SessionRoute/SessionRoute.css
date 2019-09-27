@@ -9,15 +9,20 @@
 }
 
 .high {
-background: var(--purple);
+  background: var(--purple);
 }
 
 .medium {
-background: var(--blue);
+  background: var(--blue);
 }
 
 .low {
-background: var(--green);
+  background: var(--green);
+}
+
+.priority-button:hover{
+  color: var(--purple);
+  cursor: pointer;
 }
 
 .student-list .expired button {
@@ -59,6 +64,28 @@ background: var(--green);
   padding: 3px 8px;
   margin-bottom: 30px;
 }
+
+.high-priority {
+  background: white;
+  color: var(--purple);
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.medium-priority {
+  background: white;
+  color: var(--blue);
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.low-priority {
+  background: white;
+  color: var(--green);
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
 
 /* MEDIA QUERIES */
 
