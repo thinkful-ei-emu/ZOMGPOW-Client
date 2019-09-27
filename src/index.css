@@ -11,6 +11,12 @@
 
 /* BUTTONS NEED TWO CLASSES, MAIN BUTTON CLASS AND COLOR */
 /* Main Button Class */
+
+/* added this style to get rid of that blue outline when you click a button - Nick */
+button:focus {
+  outline: none;
+}
+
 .button {
   color: white;
   text-decoration: none;

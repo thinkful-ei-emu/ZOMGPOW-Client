@@ -3,6 +3,7 @@ import StudentApiService from '../../Services/student-auth-api-service';
 import TokenService from '../../Services/token-service';
 import TeacherContext from '../../Contexts/TeacherContext';
 import TeacherAuthService from '../../Services/teacher-auth-api-service';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './SessionRoute.css';
 
 class SessionRoute extends React.Component {
@@ -214,7 +215,9 @@ componentDidMount() {
                     name='priority'
                     onChange={(e) => this.setState({ updatedPriority: 'high' })} />
                   <label
-                    htmlFor='high'>High</label>
+                    htmlFor='high'>
+                    <FontAwesomeIcon icon={['fas', 'search']} />High
+                  </label>
                   <input
                     className='radio'
                     type='radio'
@@ -223,7 +226,9 @@ componentDidMount() {
                     name='priority'
                     onChange={(e) => this.setState({ updatedPriority: 'medium' })} />
                   <label
-                    htmlFor='medium'>Medium</label>
+                    htmlFor='medium'>
+                    <FontAwesomeIcon icon={['fas', 'clipboard-check']} />Medium
+                  </label>
                   <input
                     className='radio'
                     type='radio'
@@ -232,7 +237,9 @@ componentDidMount() {
                     name='priority'
                     onChange={(e) => this.setState({ updatedPriority: 'low' })} />
                   <label
-                    htmlFor='low'>Low</label>
+                    htmlFor='low'>
+                    <FontAwesomeIcon icon={['fas', 'star']} />Low
+                  </label>
                 </div>
                 <div>
                   <button

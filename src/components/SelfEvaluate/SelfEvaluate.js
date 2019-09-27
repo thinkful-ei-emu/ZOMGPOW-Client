@@ -1,5 +1,6 @@
 import React from 'react';
 import './SelfEvaluate.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import StudentAuthApiService from '../../Services/student-auth-api-service';
 
 class SelfEvaluate extends React.Component {
@@ -42,6 +43,33 @@ class SelfEvaluate extends React.Component {
       <div className='self-evaluate-form'>
       <form className='form' onSubmit={this.postEvaluation}>
       <h3>Rate your level of understanding:</h3>
+      <div className='option'>
+        <input
+         onChange={(e) => this.setState({ score: 3 })}
+          className='radio'
+          type='radio'
+          value='high'
+          id='high'
+          name='priority'/>
+        <label
+          htmlFor='high'>
+          <FontAwesomeIcon className='high' size="2x" icon={['far', 'smile']} />
+          </label>
+      </div>
+      <div className='option'>
+        <input
+         onChange={(e) => this.setState({ score: 2 })}
+          className='radio'
+          type='radio'
+          value='medium'
+          id='medium'
+          name='priority'/>
+        <label
+          htmlFor='medium'>
+          <FontAwesomeIcon className='medium' size="2x" icon={['far', 'meh']} />
+        </label>
+      </div>
+      <div className='option'>
         <input
           onChange={(e) => this.setState({ score: 1 })}
           className='radio'
@@ -51,26 +79,11 @@ class SelfEvaluate extends React.Component {
           name='priority'
           required/>
         <label
-          htmlFor='low'>Thumbs down</label>
-        <input
-         onChange={(e) => this.setState({ score: 2 })}
-          className='radio'
-          type='radio'
-          value='medium'
-          id='medium'
-          name='priority'/>
-        <label
-          htmlFor='medium'>Thumb sideways</label>
-        <input
-         onChange={(e) => this.setState({ score: 3 })}
-          className='radio'
-          type='radio'
-          value='high'
-          id='high'
-          name='priority'/>
-        <label
-          htmlFor='high'>Thumbs up</label>
-        <button className='button purple-button'>Submit Evaluation</button>
+          htmlFor='low'>
+          <FontAwesomeIcon className='low' size="2x" icon={['far', 'angry']} />
+          </label>
+      </div>
+      <button className='button purple-button'>Submit Evaluation</button>
       </form>
       </div>
     )

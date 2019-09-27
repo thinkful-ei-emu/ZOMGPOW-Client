@@ -4,6 +4,7 @@ import './StudentList.css';
 import TeacherContext from '../../Contexts/TeacherContext'
 import config from '../../config'
 import TokenService from '../../Services/token-service'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class StudentList extends React.Component {
 
@@ -89,7 +90,7 @@ class StudentList extends React.Component {
   render() {
     const { error, classId, isDeleting} = this.state;
     const fullname = this.props.students.map((student, index) => <li key={index}>{student.full_name}</li>)
-    const username = this.props.students.map((student, index) => <li key={index}>{student.user_name}<span><button className='delete-student' onClick={() => this.handleDeleteStudent(student.user_name, classId)}>X</button></span></li>)
+    const username = this.props.students.map((student, index) => <li key={index}>{student.user_name}<span><button className='delete-student' onClick={() => this.handleDeleteStudent(student.user_name, classId)}> <FontAwesomeIcon icon={['far', 'trash-alt']} /></button></span></li>)
     
     if(isDeleting){
       return (<div>loading...</div>)
