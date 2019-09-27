@@ -5,14 +5,17 @@
   margin-top: 5%;
 }
 
-.data-table{
+.data-table {
   border-collapse: separate;
   border: 1px solid lightgray;
   text-align: center;
   border-radius: 15px;
   padding: 1%;
   box-shadow: 3px 3px 10px 3px rgb(168, 164, 164);
+}
 
+.goal-data{
+  margin-bottom: 1%;
 }
 
 .data-table > tbody > tr > td   {
@@ -20,6 +23,32 @@
   border-radius: 5px;
   padding: .3% 1%;
 }
+
+.data-link {
+  color: black;
+  text-decoration: none;
+}
+
+.data-link:visited {
+  color: black;
+}
+
+.data-link-datum-green:hover{
+  background-color: var(--green);
+}
+
+.data-link-datum-blue:hover{
+  background-color: var(--blue);
+}
+
+.data-link-datum-purple:hover{
+  background-color: var(--purple);
+}
+
+.datum a:hover{
+  color: white;
+}
+
 
 .data-table > thead > tr > th   {
   border-right: 1px solid lightgray;

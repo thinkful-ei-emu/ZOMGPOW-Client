@@ -12,7 +12,6 @@ class StudentTimer extends React.Component {
     }
   }
 
-
   componentDidMount(){
     if(this.props.currTimer){
       this.handleDisplayTimer(this.props.currTimer.end)
@@ -24,14 +23,10 @@ class StudentTimer extends React.Component {
       timer: true,
       interval: setInterval(this.displayTimer, 1000, endTime)
     })
-    
   }
 
   displayTimer = (endTime) => {
-    console.log('display timer ran')
-    
     let now = Date.now()
-
     if(now > endTime){
       clearInterval(this.state.interval)
       this.setState({
@@ -45,26 +40,20 @@ class StudentTimer extends React.Component {
     let minutes = Math.floor(((milliSecs / 1000) / 60))
     let secs = Math.floor(((milliSecs / 1000) % 60))
 
-   
     if(secs < 10){
       secs = `0${secs}`
     } 
-
     this.setState({
       currMin: minutes,
       currSec: secs
     })
-
   }
 
-
-  render() {
-    
+  render() {    
     const {currMin, currSec} = this.state
     //I set the state to timer: true when the timer is initialized 
     //so if we want to display something else when there is no timer we could do that - Nick
     // so that would be if(timer){display timer} else {display an alternative}
-    
     return (
       <div className='timer'>{currMin}:{currSec}</div>
     )

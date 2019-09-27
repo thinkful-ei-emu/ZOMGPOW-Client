@@ -1,7 +1,5 @@
 import React from 'react';
 import './SelfEvaluate.css';
-// import config from '../../config'
-// import TokenService from '../../Services/token-service'
 import StudentAuthApiService from '../../Services/student-auth-api-service';
 
 class SelfEvaluate extends React.Component {
@@ -29,8 +27,8 @@ class SelfEvaluate extends React.Component {
       });
     }
     else{
-    const subgoal_id = this.props.location.state.currentGoal.goal_id;
-      StudentAuthApiService.patchEvalSubGoal(subgoal_id, {evaluation: studentScore})
+    const id = this.props.location.state.currentGoal.id;
+      StudentAuthApiService.patchSubGoal(id, {evaluation: studentScore})
       .then(() => this.props.history.goBack())
       .catch(error => {
         console.error(error);
@@ -42,11 +40,8 @@ class SelfEvaluate extends React.Component {
   render(){
     return (
       <div className='self-evaluate-form'>
-      <h3>How do you feel you met your current goal?</h3>
-      {(this.props.location.state.currentGoal === undefined) ?
-      this.props.location.state.learningTarget.goal_title 
-      : this.props.location.state.currentGoal.goal_title}
       <form className='form' onSubmit={this.postEvaluation}>
+      <h3>Rate your level of understanding:</h3>
         <input
           onChange={(e) => this.setState({ score: 1 })}
           className='radio'

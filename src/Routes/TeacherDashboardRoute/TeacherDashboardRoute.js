@@ -5,7 +5,6 @@ import './TeacherDashboardRoute.css';
 import TeacherContext from '../../Contexts/TeacherContext';
 import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
 import TokenService from '../../Services/token-service';
-import { Link } from 'react-router-dom';
 
 class TeacherDashboardRoute extends React.Component{
 
@@ -19,23 +18,19 @@ class TeacherDashboardRoute extends React.Component{
   static contextType = TeacherContext;
 
   componentDidMount = () => {
-    let token;
     let classId = this.state.classId;
-    console.log(classId)
     if(TokenService.getAuthToken() && !classId){
-      token = TokenService.parseAuthToken()
-      console.log('token from teacher dashboard', token)
+
 
     TeacherAuthApiService.getTeacherClasses()
       .then(classes => this.context.setClass(classes[0]))
       .then(() => this.setState({
         loaded: true,
         classId: this.context.teacherClass.id
-      }, () => console.log(classId)))
-
+      })
+      )
     } else {
       const classId = this.context.teacherClass.id;
-      console.log(classId)
       this.setState({
         loaded: true,
         classId
@@ -70,7 +65,6 @@ class TeacherDashboardRoute extends React.Component{
     } else {
       return (
         <section className='TeacherDashboardRoute-section'>
-          <Link to={'/data'}>Data display</Link>
         {students.length > 0 ? <div className='TeacherDashboardRoute-learning-target-submit'>
             <LearningTargetForm history={this.props.history} classId={this.state.classId}/>
           </div>: <></>}

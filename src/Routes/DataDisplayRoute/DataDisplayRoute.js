@@ -16,10 +16,7 @@ class DataDisplay extends React.Component {
   }
 
   componentDidMount() {
-    console.log('component data display')
-
     let token;
-
     if (TokenService.getAuthToken() && !this.state.classId) {
       token = TokenService.parseAuthToken()
       console.log('token from teacher dashboard', token)
@@ -73,10 +70,15 @@ class DataDisplay extends React.Component {
     }
   }
   makeGoalsTable = goals => {
-    return goals.map((goal, i) =>
+    let x = '';
+    
+    return goals.map((goal, i) => {
+      if((i + 1) % 2 === 0 ? x = '-blue' : x = '-green')
+      if((i + 1) % 3 === 0) x = '-purple';
+      return (
       <tr key={i}>
-        <td>
-          <Link to={`/data/${goal.id}`}>{goal.goal_title}</Link>
+        <td className={`data-link-datum${x} datum`}>
+          <Link to={`/data/${goal.id}`} className='data-link'>{goal.goal_title}</Link>
         </td>
         <td>
           {goal.total_completed}
@@ -96,7 +98,10 @@ class DataDisplay extends React.Component {
         <td>
           {goal.eval_avg}
         </td>
-      </tr>)
+      </tr>
+      )
+    }
+      )
   }
 
   render() {

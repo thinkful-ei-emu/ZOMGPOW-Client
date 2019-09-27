@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import RegistrationRoute from '../../Routes/RegistrationRoute/RegistrationRoute';
 import Header from '../Header/Header';
+import PrivateRoute from '../../Utils/PrivateRoute';
 import LandingPage from '../LandingPage/LandingPage';
 import TeacherLoginRoute from '../../Routes/TeacherLoginRoute/TeacherLoginRoute';
 import StudentDashboard from '../../Routes/StudentDashboard/StudentDashboard';
@@ -14,6 +15,7 @@ import DataDisplay from '../../Routes/DataDisplayRoute/DataDisplayRoute';
 import ExitTicketStudentRoute from '../../Routes/ExitTicketStudentRoute/ExitTicketStudentRoute';
 import ExitTicketTeacherRoute from '../../Routes/ExitTicketTeacherRoute/ExitTicketTeacherRoute';
 import GoalDataDisplay from '../../Components/GoalDataDisplay/GoalDataDisplay';
+import SubGoalDataDisplay from '../../Components/SubGoalDataDisplay/SubGoalDataDisplay';
 import './App.css';
 
 export default class App extends React.Component {
@@ -62,7 +64,7 @@ export default class App extends React.Component {
             path='/login/student'
             component={StudentLoginRoute}
           />
-          <Route
+          <PrivateRoute
             path='/dashboard/teacher'
             component={TeacherDashboardRoute}
           />
@@ -82,7 +84,7 @@ export default class App extends React.Component {
               );
             }}
           />
-          <Route
+          <PrivateRoute
             path='/selfEvaluate'
             component={SelfEvaluate}
           />
@@ -92,14 +94,20 @@ export default class App extends React.Component {
             component={DataDisplay}
           />
           <Route
+            exact
             path='/data/:goalId'
             component={GoalDataDisplay}
+          />
+          <Route
+            exact
+            path='/data/:goalId/:studentGoalId'
+            component={SubGoalDataDisplay}
           />
           <Route
             path='/exitTicket'
             component={ExitTicketTeacherRoute}
             />
-          <Route
+          <PrivateRoute
             path='/student/exitTicket'
             component={ExitTicketStudentRoute}
           />
