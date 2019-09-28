@@ -83,7 +83,7 @@ class RegistrationForm extends React.Component {
           <button type='submit' className='button purple-button'>
             Sign Up!
           </button>
-          {' '}
+          
           <div className='link-to-login'>
             <Link to='/login/teacher' className='login-link'>Already have an account?</Link>
           </div>

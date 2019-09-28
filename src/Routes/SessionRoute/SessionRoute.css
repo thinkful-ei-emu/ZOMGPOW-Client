@@ -9,15 +9,20 @@
 }
 
 .high {
-background: var(--purple);
+  background: var(--purple);
 }
 
 .medium {
-background: var(--blue);
+  background: var(--blue);
 }
 
 .low {
-background: var(--green);
+  background: var(--green);
+}
+
+.priority-button:hover{
+  color: var(--purple);
+  cursor: pointer;
 }
 
 .student-list .expired button {
@@ -28,6 +33,10 @@ background: var(--green);
 .student-list .expired button:hover {
   background: lightgray;
   cursor: pointer;
+}
+
+.student-list form {
+  padding-bottom: 10px;
 }
 
 .student-list textarea {
@@ -45,9 +54,15 @@ background: var(--green);
   margin: 5px 20px;
 }
 
-.radio {
+input[type="radio"]{
   margin: 0px 5px;
+  display: none;
 }
+
+.radio-label{
+  padding: 5px;
+}
+
 
 .SessionRoute-container li {
   border: solid 1px darkgray;
@@ -55,6 +70,32 @@ background: var(--green);
   padding: 3px 8px;
   margin-bottom: 30px;
 }
+
+.high-priority {
+  background: white;
+  color: var(--purple);
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.medium-priority {
+  background: white;
+  color: var(--blue);
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.low-priority {
+  background: white;
+  color: var(--green);
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.update{
+  margin-top: 20px;
+}
+
 
 /* MEDIA QUERIES */
 

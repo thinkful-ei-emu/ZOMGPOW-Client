@@ -4,7 +4,7 @@
   align-items: center;
   font-family: var(--heading-font);
   font-size: 30px;
-  color: rgb(241, 46, 79);
+  color: var(--red);
   margin-right: 20px;
   margin-left: 20px;
 }

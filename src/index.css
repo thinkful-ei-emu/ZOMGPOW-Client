@@ -6,10 +6,18 @@
   --purple: #8B00B5;
   --blue: #0ABAD4;
   --green: #81D40A;
+  --red: rgb(241, 46, 79);
+  --gray: rgb(226, 226, 226);
 }
 
 /* BUTTONS NEED TWO CLASSES, MAIN BUTTON CLASS AND COLOR */
 /* Main Button Class */
+
+/* added this style to get rid of that blue outline when you click a button - Nick */
+button:focus {
+  outline: none;
+}
+
 .button {
   color: white;
   text-decoration: none;
@@ -20,6 +28,9 @@
   font-family: var(--heading-font);
   margin-right: 10px;
   margin-top: 5px;
+  box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  border: none;
 }
 /* Button Colors */
 .purple-button {
@@ -31,10 +42,13 @@
 .blue-button {
   background:var(--blue);
 }
+.red-button {
+  background:var(--red);
+}
 
 /* FOR ERROR DIVS */
 .alert {
-  color: red;
+  color: var(--red);
   font-family: var(--body-font);
   font-size: 12px;
 }
@@ -62,6 +76,7 @@
 .button:hover {
   background: black;
   cursor: pointer;
+  transform: translateY(-3px);
 }
 
 a:hover:not(.button) {
@@ -70,6 +85,7 @@ a:hover:not(.button) {
 }
 
 body {
+  font-family: var(--body-font);
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -87,6 +103,16 @@ input {
   margin: 10px;
 }
 
+textarea {
+  border-radius: 5px;
+  font-family: var(--body-font);
+  font-size: 15px;
+  width: 300px;
+  height: 50px;
+  border: solid 1px darkgray;
+  margin: 10px;
+ }
+
 h1 {
   font-family: var(--title-font);
   font-size: 80px;
@@ -102,6 +128,7 @@ h2 {
 
 h3 {
   font-size: 25px;
+  font-family: var(--heading-font);
 } 
 
 p {
@@ -113,5 +140,10 @@ ul {
   list-style-type: none;
   padding: 0;
   margin: 5px 20px;
+}
+
+/* CHECK WITH PR */
+button {
+  border: none;
 }
 

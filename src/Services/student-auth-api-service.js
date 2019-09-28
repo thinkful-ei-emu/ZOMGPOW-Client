@@ -20,6 +20,21 @@ const StudentAuthApiService = {
       )
      
   },
+  deleteStudent(user_name, classId){
+    return fetch(`${config.API_ENDPOINT}/class/${classId}/students`, {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `Bearer ${TokenService.getAuthToken()}`
+      },
+      body: JSON.stringify({user_name}),
+    })
+    .then(res =>
+      (!res.ok)
+      ? res.json().then(e => Promise.reject(e))
+      : res
+      )
+  },
   postLogin(user_name) {
     return fetch(`${config.API_ENDPOINT}/auth/student/login`, {
       method: 'POST',
@@ -60,26 +75,8 @@ const StudentAuthApiService = {
         : res.json()
     )
   },
-  //Can be done if PATCH is implemented
-  updateStudent(student_goal_id, data) {
-    return fetch(`${config.API_ENDPOINT}/subgoals/${student_goal_id}`, {
-      method: 'PATCH',
-      header: {
-        'content-type': 'application/json',
-        'authorization': `Bearer ${TokenService.getAuthToken()}`, 
-      },
-      body: JSON.stringify({
-        student_goal_id,
-        ...data
-      })
-    }).then(res => 
-      (!res.ok)
-      ? res.json().then(e => Promise.reject(e))
-      : res.json()
-    )
-  },
-  getStudentGoals(class_id){
-    return fetch(`${config.API_ENDPOINT}/goals/${class_id}`, {
+  getStudentGoals(student_id) {
+    return fetch(`${config.API_ENDPOINT}/goals/student/${student_id}`, {
       headers: {
         authorization: `bearer ${TokenService.getAuthToken()}`
       },
@@ -88,6 +85,82 @@ const StudentAuthApiService = {
       (!res.ok)
         ? res.json().then(e => Promise.reject(e))
         : res.json()
+    )
+  },
+  postStudentSubgoal(student_goal_id, data) {
+    return fetch(`${config.API_ENDPOINT}/subgoals/${student_goal_id}`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `Bearer ${TokenService.getAuthToken()}`, 
+      },
+      body: JSON.stringify({
+        ...data
+      })
+    }).then(res => 
+      (!res.ok)
+      ? res.json().then(e => Promise.reject(e))
+      : res.json()
+    )
+  },
+  patchGoal(goal_id, data){
+    return fetch(`${config.API_ENDPOINT}/goals/goal/${goal_id}`, {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `Bearer ${TokenService.getAuthToken()}`, 
+      },
+      body: JSON.stringify({
+        ...data
+      })
+    }).then(res => 
+      (!res.ok)
+      ? res.json().then(e => Promise.reject(e))
+      : res.json()
+    )
+  },
+  patchStudentGoal(student_goal_id, data){
+    return fetch(`${config.API_ENDPOINT}/studentgoals/learning_target/${student_goal_id}`, {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `Bearer ${TokenService.getAuthToken()}`, 
+      },
+      body: JSON.stringify(data)
+    }).then(res => 
+      (!res.ok)
+      ? res.json().then(e => Promise.reject(e))
+      : res
+    )
+  },
+  patchSubGoal(id, data){
+    return fetch(`${config.API_ENDPOINT}/studentgoals/subgoal/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `Bearer ${TokenService.getAuthToken()}`, 
+      },
+      body: JSON.stringify(data)
+    }).then(res => 
+      (!res.ok)
+      ? res.json().then(e => Promise.reject(e))
+      : res
+    )
+  },
+  patchStudentResponse(student_goal_id, data){
+    return fetch(`${config.API_ENDPOINT}/studentgoals/learning_target/${student_goal_id}`, {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `Bearer ${TokenService.getAuthToken()}`, 
+      },
+      body: JSON.stringify({
+        ...data
+      })
+    }).then(res => 
+      (!res.ok)
+      ? res.json().then(e => Promise.reject(e))
+      : res
     )
   }
 }

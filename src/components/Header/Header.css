@@ -21,14 +21,29 @@ header h1 a:hover {
   flex-direction: row;
 }
 
+.logout-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout-buttons .button {
+  margin: 5px;
+}
+
 /* MEDIA QUERIES */
 
-@media only screen and (min-width: 600px) {
+@media only screen and (max-width: 600px) {
   header {
     flex-direction: row;
   }
 
   .login-buttons{
     flex-direction: column;
+  }
+
+  .logout-buttons{
+    flex-direction: column
   }
 }

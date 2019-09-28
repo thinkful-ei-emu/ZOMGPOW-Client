@@ -57,15 +57,12 @@ export class StudentProvider extends Component {
   }
 
   setUser = user => {
-    console.log(user);
     this.setState({ user })
   }
 
   processLogin = authToken => {
-    console.log('in process login in context')
     TokenService.saveAuthToken(authToken)
     const jwtPayload = TokenService.parseAuthToken()
-    console.log(jwtPayload)
     this.setUser({
       id: jwtPayload.id,
       username: jwtPayload.user_name,
