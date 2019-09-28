@@ -54,9 +54,15 @@
   margin: 5px 20px;
 }
 
-.radio {
+input[type="radio"]{
   margin: 0px 5px;
+  display: none;
 }
+
+.radio-label{
+  padding: 5px;
+}
+
 
 .SessionRoute-container li {
   border: solid 1px darkgray;
@@ -84,6 +90,10 @@
   color: var(--green);
   border-radius: 3px;
   vertical-align: middle;
+}
+
+.update{
+  margin-top: 20px;
 }
 
 
