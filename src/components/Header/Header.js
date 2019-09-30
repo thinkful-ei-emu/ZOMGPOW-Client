@@ -22,11 +22,32 @@ class Header extends React.Component {
   }
 
   renderLogOutLinks(){
+    if(this.context.teacherClass){
+      return this.renderTeacherLogOutLinks()
+    } else {
+      return this.renderStudentLogOutLinks()
+    }
+  }
+
+  renderTeacherLogOutLinks(){
     return (
       <nav className='logout-buttons'>
         <Link to='/dashboard/teacher' className='purple-button button'>Dashboard</Link>
         <Link to='/session' className='blue-button button'>Session Goals</Link>
         <Link to='/data' className='red-button button'>Data</Link>
+        <Link 
+          onClick={this.handleLogoutClick}
+          to='/'
+          className='green-button button'>
+          Logout
+        </Link>
+      </nav>
+    )
+  }
+
+  renderStudentLogOutLinks(){
+    return (
+      <nav className='logout-buttons'>
         <Link 
           onClick={this.handleLogoutClick}
           to='/'
