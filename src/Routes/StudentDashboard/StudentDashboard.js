@@ -3,10 +3,13 @@ import StudentAuthApiService from '../../Services/student-auth-api-service';
 import { Link } from 'react-router-dom';
 import StudentTimer from '../../Components/Timer/StudentTimer';
 import StudentContext from '../../Contexts/StudentContext';
+import openSocket from 'socket.io-client';
 import './StudentDashboard.css';
 
 class StudentDashboard extends React.Component{
   static contextType = StudentContext;
+  socket = openSocket('http://localhost:8000');
+  
   state = {
     studentId: null,
     goals: [],
@@ -35,10 +38,12 @@ class StudentDashboard extends React.Component{
           learningTarget: learningTarget,
           currentGoal: currentGoal
         })
+        console.log(this.state.goals)
       })
       .catch(res => {
         this.setState({ error: res.error })
       })
+      this.socket.on('new goal', this.realTimeGoal);
   }
 
   handleLogoutClick = () => {
@@ -72,6 +77,13 @@ class StudentDashboard extends React.Component{
     //currStudent is student username
     let currTimer = studentTimers.find(timer => timer.student === currStudent)
     return currTimer;
+  }
+  
+  realTimeGoal = async (data) => {
+    const { goals, studentId } = this.state;
+    let { student } = await StudentAuthApiService.getStudent(studentId)
+    if(data.class_id === student.class_id)
+      this.setState({ goals: [...goals, data] })
   }
 
   render() {
