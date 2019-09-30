@@ -2,6 +2,9 @@ import React from 'react';
 import './LearningTargetForm.css';
 
 class LearningTargetForm extends React.Component {
+
+  static contextType = TeacherContext;
+
   state = {
     error: null,
   }
