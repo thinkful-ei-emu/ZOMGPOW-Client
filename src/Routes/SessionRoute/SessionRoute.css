@@ -60,6 +60,12 @@ background: var(--green);
   margin-bottom: 30px;
 }
 
+.SessionRoute-container li img {
+  position:relative;
+  bottom:60px;
+  left:150px;
+}
+
 /* MEDIA QUERIES */
 
 @media only screen and (min-width: 500px) {

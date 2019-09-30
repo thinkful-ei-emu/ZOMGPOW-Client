@@ -5,6 +5,9 @@ import TeacherContext from '../../Contexts/TeacherContext';
 import TeacherAuthService from '../../Services/teacher-auth-api-service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './SessionRoute.css';
+import HighFlag from '../../Images/HighStickyNote.svg';
+import MedFlag from '../../Images/MediumStickyNote.svg';
+import LowFlag from '../../Images/LowStickyNote.svg';
 
 class SessionRoute extends React.Component {
 
@@ -169,9 +172,11 @@ componentDidMount() {
       return (
         <li
           key={student.user_name}
-          className={student.expired === true ? `expired ${student.priority}` : ''}
+          className={student.expired === true ? `expired ${student.priority} card` : 'card'}
         >
-          <h3>{student.full_name}</h3>
+        
+          <h3>{student.full_name}</h3><img src={this.student.priority === 'high' ? {HighFlag} : this.student.priority === 'medium' ? {MedFlag} : {LowFlag}} alt='flag' />
+          
           {student.iscomplete ? 
             <div>
               <p>Learning Target Complete!</p>
@@ -181,7 +186,7 @@ componentDidMount() {
                 }>Undo Complete</button>
             </div> 
             : 
-            <div>
+            <div className='card-sub'>
             {student.expand && <button 
               className='button green-button'
               onClick={() => this.toggleTargetComplete(student.studentGoalId, student.iscomplete)
