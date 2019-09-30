@@ -1,8 +1,8 @@
 import React from 'react';
 import StudentApiService from '../../Services/student-auth-api-service';
 import StudentContext from '../../Contexts/StudentContext';
-import config from '../../config';
-import TokenService from '../../Services/token-service';
+//import config from '../../config';
+//import TokenService from '../../Services/token-service';
 
 class ExitTicketStudentRoute extends React.Component {
   state = {
