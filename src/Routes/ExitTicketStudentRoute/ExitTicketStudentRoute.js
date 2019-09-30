@@ -18,7 +18,7 @@ class ExitTicketStudentRoute extends React.Component {
 
   static contextType = StudentContext;
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({
       studentId: this.context.user.id
     })

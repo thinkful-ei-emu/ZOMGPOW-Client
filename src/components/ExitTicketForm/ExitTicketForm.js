@@ -14,7 +14,7 @@ class ExitTicketForm extends React.Component {
       return null;
     }
     return (
-      <div className='modal-content modal-show '>
+      <div className='modal '>
         <h2>Would you like to create an exit ticket for this learning target?</h2>
         <div className={this.state.multipleChoiceVisible ? '' : 'hidden'}>
           <form 
