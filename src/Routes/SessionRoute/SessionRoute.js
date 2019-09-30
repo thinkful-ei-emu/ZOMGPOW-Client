@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './SessionRoute.css';
 
 class SessionRoute extends React.Component {
-
   static contextType = TeacherContext;
 
   constructor(props) {
@@ -19,46 +18,52 @@ class SessionRoute extends React.Component {
       updatedPriority: null,
       classId: null,
       students: [],
+      newSubgoal: '',
+      currentSubgoal: ''
     }
   }
 
 componentDidMount() {
   let classId;
-  if (TokenService.hasAuthToken()) {
-    if (!this.state.classId) {
-      TeacherAuthService.getTeacherClasses()
-        .then(classes => {
-          this.context.setClass(classes[0]);
-          classId = this.context.teacherClass.id;
-          //get students, goals, and subgoals
-          return StudentApiService.getAllStudents(classId)
-        })
-        .then(res => {              
-          this.setupStudents(res.students)
-            .then(setupStudents => {
-              let goals = [...res.goals]
-              const learningTarget = goals[0] ? goals.pop() : {}
-              this.setState({
-                classId,
-                loaded: true,
-                students: setupStudents,
-                learningTarget: learningTarget.goal_title ? learningTarget.goal_title : ''
-              })
-            })
-          
-        })
-        .catch(error => this.setState({ error }))
+    if (TokenService.hasAuthToken()) {
+      if (!this.state.classId) {
+        TeacherAuthService.getTeacherClasses()
+          .then(classes => {
+            this.context.setClass(classes[0]);
+            classId = this.context.teacherClass.id;
+            //get students, goals, and subgoals
+            return StudentApiService.getAllStudents(classId)
+          })
+          .then(res => {               
+            this.setupStudents(res.students)
+              .then(setupStudents => {
+                let goals = [...res.goals]
+                const learningTarget = goals[0] ? goals.pop() : {}
+                this.setState({
+                  classId,
+                  loaded: true,
+                  students: setupStudents,
+                  learningTarget: learningTarget.goal_title ? learningTarget.goal_title : ''
+                })
+            })  
+          })
+          .catch(error => this.setState({ error }))
+        }
+      } else {
+        this.props.history.push('/login/teacher');
       }
-    } else {
-      this.props.history.push('/login/teacher');
     }
-  }
 
   getGoal(student_id) {
     //get student goals
     return StudentApiService.getStudentGoals(student_id)
       .then(res => {
-        return res.goals.pop();
+        let goals = [...res.goals]
+        let subgoals = [...res.subgoals]
+        return {
+          goals: goals.pop(),
+          subgoals: subgoals[subgoals.length-1]
+        }
       })
       .catch(error => this.setState({ error }))
   }
@@ -67,10 +72,20 @@ componentDidMount() {
     //students should be an array of objects
     return Promise.all(students.map(student => {
       return this.getGoal(student.id).then(goal => {
-        student.mainGoal = goal.goal_title;
-        student.mainGoalId = goal.id;
-        student.studentGoalId = goal.sg_id;
-        student.iscomplete = goal.iscomplete;
+        student.mainGoal = goal.goals.goal_title;
+        student.mainGoalId = goal.goals.id;
+        student.studentGoalId = goal.goals.sg_id;
+
+        student.mainGoalDate = goal.goals.date_created;
+        
+        goal.subgoals 
+        ? student.studentSubgoalDate = goal.subgoals.date_created
+        : student.studentSubgoalDate = '';
+
+        (goal.subgoals && student.studentSubgoalDate > student.mainGoalDate)
+        ? student.studentSubgoal = goal.subgoals.subgoal_title
+        : goal.subgoals = {}
+        student.iscomplete = goal.goals.iscomplete;
         student.expand = false;
         student.expired = false;
         student.order = 0;
@@ -89,6 +104,7 @@ componentDidMount() {
     this.props.handleStudentTimers(studentUsername, time)
   }
 
+ 
   // Should toggle expired key to true and set order when timer expires
   // Setting the order allows the first timer that ends to remain first in line and
   // subsequent timers to follow in line after
@@ -104,7 +120,8 @@ componentDidMount() {
     e.preventDefault();
     const priority = this.state.updatedPriority;
     const data = { subgoal_title: this.state.updatedSubGoal };
-    const student = this.state.students.filter(student => student.user_name === studentUsername).pop();
+    const filterStudent = [...this.state.students]
+    const student = filterStudent.filter(student => student.user_name === studentUsername).pop();
     const goalId = student.studentGoalId;
 
     StudentApiService.postStudentSubgoal(goalId, data)
@@ -133,7 +150,7 @@ componentDidMount() {
       .catch(error => {
         console.error(error);
         this.setState({ error })
-      });
+      });  
   }
 
   // Should toggle when clicking to expand and hide extra student information
@@ -186,7 +203,11 @@ componentDidMount() {
               className='button green-button'
               onClick={() => this.toggleTargetComplete(student.studentGoalId, student.iscomplete)
                 }>Target Complete</button>}
-            <p>{student.subgoal ? student.subgoal : this.state.learningTarget}</p>
+
+              <p>{this.state.learningTarget}</p>
+       
+            <p>{student.studentSubgoal ? student.studentSubgoal : ''}</p>
+
             <button
               className={student.expand ? ' button blue-button' : 'button purple-button'}
               onClick={e => this.toggleExpand(student.user_name)}>{student.expand ? 'Cancel' : 'Check In'}</button>
@@ -244,10 +265,6 @@ componentDidMount() {
                     type='submit'>Update Goal</button>
                 </div>
               </form>
-              {/* {student.subgoal ? <h4>Previous Goals:</h4> : ''}
-              <ul>
-              {student.subgoal ? student.subgoal.map((subgoal, index) => <li key={index}>subgoal</li>) : ''}
-              </ul> */}
             </div>
           </div>
           }
