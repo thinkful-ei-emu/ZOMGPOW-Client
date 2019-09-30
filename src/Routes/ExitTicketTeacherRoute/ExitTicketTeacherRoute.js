@@ -13,20 +13,18 @@ class ExitTicketTeacherRoute extends React.Component {
     exitTicketCorrectAnswer: null, 
     studentAnswers: [], 
     classId: null,
+    loaded: false,
   }
 
   static contextType = TeacherContext;
 
   componentDidMount() {
-    let token;
     let classId = this.state.classId;
     if(TokenService.getAuthToken() && !classId){
-      token = TokenService.parseAuthToken()
 
     TeacherAuthApiService.getTeacherClasses()
       .then(classes => this.context.setClass(classes[0]))
       .then(() => this.setState({
-        loaded: true,
         classId: this.context.teacherClass.id
       }))
       .then(() => {
@@ -37,16 +35,19 @@ class ExitTicketTeacherRoute extends React.Component {
             authorization: `bearer ${TokenService.getAuthToken()}`
           }
         }).then((res) => {
+          
           if(!res){
             return res.json().then(e => Promise.reject(e));
           }
           return res.json();
         }).then(res => {
+          console.log('RES', res)
           let goal = res.goals.pop();
           this.setState({
             exitTicketQuestion: goal.exit_ticket_question,
             exitTicketOptions: goal.exit_ticket_options,
             exitTicketCorrectAnswer: goal.exit_ticket_correct_answer,
+            loaded: true
           })
         })
         .catch(error => {
@@ -68,6 +69,10 @@ class ExitTicketTeacherRoute extends React.Component {
     let options = this.state.exitTicketOptions ?
       this.state.exitTicketOptions.map((option, index) => <li key={index}>{option}</li>)
       : ''
+
+      if(!this.state.loaded){
+        return <div>loading...</div>
+      }
     return (
       <div>
         <h2>{this.state.exitTicketQuestion ? 'Exit Ticket Prompt:' : `You didn't create an exit ticket this time!`}</h2>

@@ -7,6 +7,7 @@
   --blue: #0ABAD4;
   --green: #81D40A;
   --red: rgb(241, 46, 79);
+  --gray: rgb(226, 226, 226);
 }
 
 /* BUTTONS NEED TWO CLASSES, MAIN BUTTON CLASS AND COLOR */
@@ -145,4 +146,5 @@ ul {
 button {
   border: none;
 }
+
 

@@ -3,10 +3,13 @@ import StudentAuthApiService from '../../Services/student-auth-api-service';
 import { Link } from 'react-router-dom';
 import StudentTimer from '../../Components/Timer/StudentTimer';
 import StudentContext from '../../Contexts/StudentContext';
+import openSocket from 'socket.io-client';
 import './StudentDashboard.css';
 
 class StudentDashboard extends React.Component{
   static contextType = StudentContext;
+  socket = openSocket('http://localhost:8000');
+  
   state = {
     studentId: null,
     goals: [],
@@ -35,10 +38,15 @@ class StudentDashboard extends React.Component{
           learningTarget: learningTarget,
           currentGoal: currentGoal
         })
+        console.log(this.state.goals)
       })
       .catch(res => {
         this.setState({ error: res.error })
       })
+      this.socket.on('new goal', this.rTNewGoal);
+      this.socket.on('patch goal', this.rTPatchGoal);
+      this.socket.on('new subgoal', this.rTNewSubgoal);
+      this.socket.on('patch subgoal', this.rTPatchSubgoal);
   }
 
   handleLogoutClick = () => {
@@ -72,6 +80,38 @@ class StudentDashboard extends React.Component{
     //currStudent is student username
     let currTimer = studentTimers.find(timer => timer.student === currStudent)
     return currTimer;
+  }
+  
+  rTNewGoal = async (data) => {
+    const { goals, studentId } = this.state;
+    let { student } = await StudentAuthApiService.getStudent(studentId)
+    if(data.class_id === student.class_id)
+      this.setState({ goals: [...goals, data] })
+  }
+
+  rTPatchGoal = async (data) => {
+    const { goals, studentId } = this.state;
+    let { student } = await StudentAuthApiService.getStudent(studentId)
+    if(data.class_id === student.class_id){
+      let newGoals = goals.map(goal => data.id === goal.id ? goal = data : goal)
+      this.setState({ goals: newGoals })
+    }
+  }
+
+  rTNewSubgoal = async (data) => {
+    const { subgoals, studentId } = this.state;
+    let { student } = await StudentAuthApiService.getStudent(studentId)
+    if(data.student_id === student.id)
+      this.setState({ goals: [...subgoals, data] })
+  }
+
+  rTPatchSubgoal = async (data) => {
+    const { subgoals, studentId } = this.state;
+    let { student } = await StudentAuthApiService.getStudent(studentId)
+    if(data.student_id === student.id){
+      let newSubgoals = subgoals.map(subgoals => data.id === subgoals.id ? subgoals = data : subgoals)
+      this.setState({ subgoals: newSubgoals })
+    }
   }
 
   render() {

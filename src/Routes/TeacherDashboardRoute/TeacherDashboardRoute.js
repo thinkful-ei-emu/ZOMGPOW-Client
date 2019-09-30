@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import LearningTargetForm from '../../Components/LearningTargetForm/LearningTargetForm';
 import StudentList from '../../Components/StudentList/StudentList';
 import './TeacherDashboardRoute.css';
@@ -66,8 +67,13 @@ class TeacherDashboardRoute extends React.Component{
     } else {
       return (
         <section className='TeacherDashboardRoute-section'>
+        <div className='data'>
+          <Link to={'/data'} className='button blue-button'>Data display</Link>
+          </div>
         {students.length > 0 ? <div className='TeacherDashboardRoute-learning-target-submit'>
-            <LearningTargetForm history={this.props.history} classId={this.state.classId}/>
+            <LearningTargetForm history={this.props.history}
+             classId={this.state.classId}
+             />
           </div>: <></>}
           <div className='TeacherDashboardRoute-student-list'>
             <StudentList 
