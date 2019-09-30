@@ -3,6 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 import RegistrationRoute from '../../Routes/RegistrationRoute/RegistrationRoute';
 import Header from '../Header/Header';
 import PrivateRoute from '../../Utils/PrivateRoute';
+import PublicOnlyTeacherRoute from '../../Utils/PublicOnlyTeacherRoute';
+import PublicOnlyStudentRoute from '../../Utils/PublicOnlyStudentRoute';
 import LandingPage from '../LandingPage/LandingPage';
 import TeacherLoginRoute from '../../Routes/TeacherLoginRoute/TeacherLoginRoute';
 import StudentDashboard from '../../Routes/StudentDashboard/StudentDashboard';
@@ -14,6 +16,8 @@ import SelfEvaluate from '../SelfEvaluate/SelfEvaluate';
 import DataDisplay from '../../Routes/DataDisplayRoute/DataDisplayRoute';
 import ExitTicketStudentRoute from '../../Routes/ExitTicketStudentRoute/ExitTicketStudentRoute';
 import ExitTicketTeacherRoute from '../../Routes/ExitTicketTeacherRoute/ExitTicketTeacherRoute';
+import GoalDataDisplay from '../../Components/GoalDataDisplay/GoalDataDisplay';
+import SubGoalDataDisplay from '../../Components/SubGoalDataDisplay/SubGoalDataDisplay';
 import './App.css';
 
 export default class App extends React.Component {
@@ -46,11 +50,11 @@ export default class App extends React.Component {
       <div className="App">
         <Header />
         <Switch>
-          <Route
+          <PublicOnlyTeacherRoute
             path='/login/teacher'
             component={TeacherLoginRoute}
           />
-          <Route
+          <PublicOnlyTeacherRoute
             path='/register'
             component={RegistrationRoute}
           />
@@ -58,15 +62,19 @@ export default class App extends React.Component {
             exact path='/'
             component={LandingPage}
           />
-          <Route
+          <PublicOnlyStudentRoute
             path='/login/student'
             component={StudentLoginRoute}
           />
           <PrivateRoute
             path='/dashboard/teacher'
-            component={TeacherDashboardRoute}
+            render={(props) => {
+              return (
+                <TeacherDashboardRoute {...props}/>
+              )
+            }}
           />
-          <Route
+          <PrivateRoute
             path='/session'
             render={(props) => {
               return (
@@ -74,29 +82,56 @@ export default class App extends React.Component {
               )
             }}
           />
-          <Route
+          <PrivateRoute
             path='/dashboard/student'
-            render={() => {
+            render={(props) => {
               return (
-                <StudentDashboard studentTimers={this.state.studentTimers} />
+                <StudentDashboard {...props} studentTimers={this.state.studentTimers} />
               );
             }}
           />
           <PrivateRoute
             path='/selfEvaluate'
-            component={SelfEvaluate}
+            render={(props)=> {
+              return (
+                <SelfEvaluate {...props}/>
+              )
+            }}
           />
-          <PrivateRoute
+          <Route
+            exact
             path='/data'
-            component={DataDisplay}
+            render={(props)=> {
+              return (
+                <DataDisplay {...props}/>
+              )
+            }}
           />
-          <PrivateRoute
+          <Route
+            exact
+            path='/data/:goalId'
+            component={GoalDataDisplay}
+          />
+          <Route
+            exact
+            path='/data/:goalId/:studentGoalId'
+            component={SubGoalDataDisplay}
+          />
+          <Route
             path='/exitTicket'
-            component={ExitTicketTeacherRoute}
+            render={(props)=> {
+              return (
+                <ExitTicketTeacherRoute {...props}/>
+              )
+            }}
             />
           <PrivateRoute
             path='/student/exitTicket'
-            component={ExitTicketStudentRoute}
+            render={(props)=> {
+              return (
+                <ExitTicketStudentRoute {...props}/>
+              )
+            }}
           />
           <Route
             component={NotFoundRoute}

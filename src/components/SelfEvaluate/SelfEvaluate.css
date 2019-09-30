@@ -8,3 +8,30 @@
   max-width: 300px;
   align-items: center;
 }
+
+.option .low {
+  background: white;
+  color: var(--purple);
+  border-radius: 3px;
+  margin-left: 10px;
+  vertical-align: middle;
+  padding: 15px;
+}
+
+.option .medium {
+  background: white;
+  color: var(--green);
+  border-radius: 3px;
+  margin-left: 10px;
+  vertical-align: middle;
+  padding: 15px;
+}
+
+.option .high {
+  background: white;
+  color: var(--blue);
+  border-radius: 3px;
+  margin-left: 10px;
+  vertical-align: middle;
+  padding: 15px;
+}
