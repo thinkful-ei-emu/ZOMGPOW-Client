@@ -2,13 +2,11 @@ import React from 'react';
 import './LearningTargetForm.css';
 import config from '../../config';
 import TokenService from '../../Services/token-service';
-import ExitTicketForm from '../ExitTicketForm/ExitTicketForm';
 
 class LearningTargetForm extends React.Component {
   state = {
     error: null,
     learningTarget: '',
-    exitTicketData: {},
   }
   staticDefaultProps={}
 
@@ -16,12 +14,6 @@ class LearningTargetForm extends React.Component {
   handleChange = (e) => {
     this.setState({
       learningTarget: e.target.value,
-    })
-  }
-
-  updateExitTicket = (data) => {
-    this.setState({
-      exitTicketData: data,
     })
   }
 
@@ -48,8 +40,8 @@ class LearningTargetForm extends React.Component {
       this.setState({
         learningTarget: ''
       })
-      const { history } = this.props
-      history.push('/session')
+      // const { history } = this.props
+      // history.push('/session')
     })
     .catch(error => {
       console.error({ error })
@@ -57,9 +49,9 @@ class LearningTargetForm extends React.Component {
   }
 
   render() {
-    console.log(
-      'PROPS', this.props
-    )
+    // console.log(
+    //   'PROPS', this.props
+    // )
     return (
       <div className='learning-target-container'>
       <form className='learning-target-form'
@@ -78,7 +70,7 @@ class LearningTargetForm extends React.Component {
               <button type='submit' className='button green-button'>Start Session</button>
             </div>
           </form>
-          <ExitTicketForm updateExitTicket={this.updateExitTicket}/>
+          
           </div>
     )
   }

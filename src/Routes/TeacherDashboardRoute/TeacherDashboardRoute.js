@@ -6,6 +6,8 @@ import './TeacherDashboardRoute.css';
 import TeacherContext from '../../Contexts/TeacherContext';
 import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
 import TokenService from '../../Services/token-service';
+import ExitTicketForm from '../../Components/ExitTicketForm/ExitTicketForm';
+
 
 class TeacherDashboardRoute extends React.Component{
 
@@ -14,6 +16,8 @@ class TeacherDashboardRoute extends React.Component{
     classId: null,
     students: [],
     loaded: false,
+    show: true, //shows exit ticket form (modal) if true
+    exitTicketData: {},
   }
   
   static contextType = TeacherContext;
@@ -59,6 +63,19 @@ class TeacherDashboardRoute extends React.Component{
     })
   }
 
+  //toggles state to show exit ticket form (modal) if true
+  toggleModal = () => {
+    this.setState({
+      show: !this.state.show,
+    })
+  }
+
+  updateExitTicket = (data) => {
+    this.setState({
+      exitTicketData: data,
+    })
+  }
+
   render() {
     console.log(this.props, 'DASH PROPS')
     const {loaded, students} = this.state;
@@ -71,8 +88,9 @@ class TeacherDashboardRoute extends React.Component{
           <Link to={'/data'} className='button blue-button'>Data display</Link>
           </div>
         {students.length > 0 ? <div className='TeacherDashboardRoute-learning-target-submit'>
-            <LearningTargetForm history={this.props.history} classId={this.state.classId}/>
+            <LearningTargetForm history={this.props.history} classId={this.state.classId} showModal={this.toggleModal} />
           </div>: <></>}
+          <ExitTicketForm updateExitTicket={this.updateExitTicket} show={this.state.show} onClose={this.toggleModal} />
           <div className='TeacherDashboardRoute-student-list'>
             <StudentList 
               addStudents= {this.addStudents} 

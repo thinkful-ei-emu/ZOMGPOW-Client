@@ -74,10 +74,6 @@ class ExitTicketTeacherRoute extends React.Component {
         <h3>{this.state.exitTicketQuestion? this.state.exitTicketQuestion : ''}</h3>
         <ul>{options}</ul>
         <h3>{this.state.exitTicketCorrectAnswer ? `Correct Answer: ${this.state.exitTicketCorrectAnswer}` : ''}</h3>
-        {/* <div className='student-answers'>
-          <h2>Student Responses</h2>
-        </div> */}
-        {/* Link to dashboard or data view? */}
       </div>
     )
   }

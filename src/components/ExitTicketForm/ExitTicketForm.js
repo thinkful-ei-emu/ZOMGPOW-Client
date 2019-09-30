@@ -101,19 +101,19 @@ class ExitTicketForm extends React.Component {
       })    
   }
 
-  render() {
+  onClose = e => {
+    this.props.onClose && this.props.onClose(e);
+  }
 
+  render() {
+    if(!this.props.show) {
+      return null;
+    }
     return (
-      <div className={this.state.exitTicketFormVisible ? 'exit-ticket-form' : 'hidden'}>
-        <p> -OR- </p>
-        <button 
-          className={this.state.createPromptVisible ? 'button purple-button' : 'hidden'}
-          onClick={() => this.setState({exitTicketChoiceVisible: true, createPromptVisible: false})}
-          >
-        Create an Exit Ticket for this Learning Target?
-        </button>
+      <div className='modal-content modal-show modal'>
+        <h2>Would you like to create an exit ticket for this learning target?</h2>
         
-        <div className={this.state.exitTicketChoiceVisible ? '' : 'hidden'}>
+        <div>
           <button 
             className='button blue-button'
             onClick={() => this.setState({multipleChoiceVisible: true, shortAnswerVisible: false})}
@@ -123,6 +123,11 @@ class ExitTicketForm extends React.Component {
             className='button green-button'
             onClick={() => this.setState({multipleChoiceVisible: false, shortAnswerVisible: true})}
           >Short Answer
+          </button>
+          <button 
+            className='button red-button'
+            onClick={() => this.setState({multipleChoiceVisible: true, shortAnswerVisible: false})}
+          >No thanks, start my session
           </button>
         </div>
 
@@ -215,6 +220,7 @@ class ExitTicketForm extends React.Component {
               {this.state.error && <p className='alert'>{this.state.error}</p>}
             <button 
               type='submit'
+              onClose={e => {this.onClose(e)}}
               className='button purple-button'
             >Save Exit Ticket</button>
           </form>
@@ -233,6 +239,7 @@ class ExitTicketForm extends React.Component {
             />
             <button 
               type='submit'
+              onClose={e => {this.onClose(e)}}
               className='button purple-button'
             >Save Exit Ticket</button>
           </form>
