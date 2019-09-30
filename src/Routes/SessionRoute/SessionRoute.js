@@ -42,7 +42,6 @@ componentDidMount() {
             .then(setupStudents => {
               let goals = [...res.goals]
               const learningTarget = goals[0] ? goals.pop() : {}
-              console.log('LT', learningTarget)
               this.setState({
                 classId,
                 loaded: true,
@@ -65,9 +64,10 @@ componentDidMount() {
       .then(res => {
         let goals = [...res.goals]
         let subgoals = [...res.subgoals]
+        //need the correct subgoal (newest goal, but for current learning target)
         return {
           goals: goals.pop(),
-          subgoals: subgoals[subgoals.length-1]
+          subgoals: subgoals.pop()
         }
       })
       .catch(error => this.setState({ error }))
@@ -80,21 +80,23 @@ componentDidMount() {
         student.mainGoal = goal.goals.goal_title;
         student.mainGoalId = goal.goals.id;
         student.studentGoalId = goal.goals.sg_id;
-
         student.mainGoalDate = goal.goals.date_created;
-        
+
         goal.subgoals 
         ? student.studentSubgoalDate = goal.subgoals.date_created
         : student.studentSubgoalDate = '';
 
-        (goal.subgoals && student.studentSubgoalDate > student.mainGoalDate)
+        goal.subgoals 
         ? student.studentSubgoal = goal.subgoals.subgoal_title
-        : goal.subgoals = {}
+        : goal.subgoals = {};
+
+    
         student.iscomplete = goal.goals.iscomplete;
         student.expand = false;
         student.expired = false;
         student.order = 0;
         student.priority = 'low';
+        // console.log('each student', student)
         return student;
       })
     }))
