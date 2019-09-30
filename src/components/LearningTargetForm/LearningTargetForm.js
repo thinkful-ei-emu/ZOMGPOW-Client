@@ -2,9 +2,13 @@ import React from 'react';
 import './LearningTargetForm.css';
 import config from '../../config';
 import TokenService from '../../Services/token-service';
+import TeacherContext from '../../Contexts/TeacherContext';
 import ExitTicketForm from '../ExitTicketForm/ExitTicketForm';
 
 class LearningTargetForm extends React.Component {
+
+  static contextType = TeacherContext;
+
   state = {
     error: null,
     learningTarget: '',
@@ -20,13 +24,14 @@ class LearningTargetForm extends React.Component {
   }
 
   updateExitTicket = (data) => {
-    this.setState({
+    this.setState({ 
       exitTicketData: data,
     })
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
+    this.context.startSession();
     const { learningTarget } = e.target;
     const data = {
       goal_title: learningTarget.value,
@@ -57,9 +62,6 @@ class LearningTargetForm extends React.Component {
   }
 
   render() {
-    console.log(
-      'PROPS', this.props
-    )
     return (
       <div className='learning-target-container'>
       <form className='learning-target-form'

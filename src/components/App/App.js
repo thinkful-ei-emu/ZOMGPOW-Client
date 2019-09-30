@@ -21,11 +21,14 @@ import SubGoalDataDisplay from '../../Components/SubGoalDataDisplay/SubGoalDataD
 import './App.css';
 
 export default class App extends React.Component {
-
-  state = {
-    studentTimers: [],
+  constructor(props){
+    super(props);
+    this.state ={
+      studentTimers: [],
+    };
   }
 
+  
 
   handleStudentTimers = (studentUsername, time) => {
     let start = Date.now();
@@ -37,8 +40,9 @@ export default class App extends React.Component {
     }
 
     let newTimers = this.state.studentTimers
+    
     newTimers.push(timerObj)
-
+  
     this.setState({
       studentTimers: newTimers
     })
@@ -46,6 +50,7 @@ export default class App extends React.Component {
 
 
   render() {
+   
     return (
       <div className="App">
         <Header />
@@ -70,7 +75,8 @@ export default class App extends React.Component {
             path='/dashboard/teacher'
             render={(props) => {
               return (
-                <TeacherDashboardRoute {...props}/>
+                <TeacherDashboardRoute {...props}
+                 />
               )
             }}
           />
@@ -78,7 +84,9 @@ export default class App extends React.Component {
             path='/session'
             render={(props) => {
               return (
-                <SessionRoute {...props} handleStudentTimers={this.handleStudentTimers} />
+                <SessionRoute {...props}
+                 handleStudentTimers={this.handleStudentTimers}
+                 />
               )
             }}
           />
@@ -86,10 +94,13 @@ export default class App extends React.Component {
             path='/dashboard/student'
             render={(props) => {
               return (
+                
                 <StudentDashboard {...props} studentTimers={this.state.studentTimers} />
+                
               );
             }}
           />
+          
           <PrivateRoute
             path='/selfEvaluate'
             render={(props)=> {
@@ -136,7 +147,9 @@ export default class App extends React.Component {
           <Route
             component={NotFoundRoute}
           />
+          
         </Switch>
+        
       </div>
     );
   }
