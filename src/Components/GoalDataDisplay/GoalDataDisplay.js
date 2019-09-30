@@ -137,8 +137,8 @@ class GoalDataDisplay extends React.Component {
           } else if (correctAnswer === 'D') {
             correctIndex = 3
           }
-          let optionClass = 'incorrect-option';
-          let prefix = 'A: ';
+          //let optionClass = 'incorrect-option';
+          //let prefix = 'A: ';
 
           exitTicketElements = <div>
             <h3>{exitTicketInfo[0].question}</h3>

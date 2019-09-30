@@ -36,7 +36,7 @@ export class TeacherProvider extends Component {
         full_name: jwtPayload.full_name,
         email: jwtPayload.email,
       }
-
+    console.log(state.user)
     this.state = state;
     // IdleService.setIdleCallback(this.logoutBecauseIdle)
   }
@@ -84,7 +84,6 @@ export class TeacherProvider extends Component {
   }
 
   processLogin = response => {
-    console.log(response);
     const authToken = response.authToken;
     const user = response.user;
     const teacherClass = response.class;
