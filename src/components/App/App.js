@@ -28,6 +28,7 @@ export default class App extends React.Component {
     };
   }
 
+  
 
   handleStudentTimers = (studentUsername, time) => {
     let start = Date.now();
@@ -74,7 +75,8 @@ export default class App extends React.Component {
             path='/dashboard/teacher'
             render={(props) => {
               return (
-                <TeacherDashboardRoute {...props}/>
+                <TeacherDashboardRoute {...props}
+                 />
               )
             }}
           />
@@ -82,7 +84,9 @@ export default class App extends React.Component {
             path='/session'
             render={(props) => {
               return (
-                <SessionRoute {...props} handleStudentTimers={this.handleStudentTimers} />
+                <SessionRoute {...props}
+                 handleStudentTimers={this.handleStudentTimers}
+                 />
               )
             }}
           />

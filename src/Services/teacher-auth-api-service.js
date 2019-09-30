@@ -58,6 +58,21 @@ const TeacherAuthApiService = {
         : res.json()
       )
   },
+  endSessionGoal(goalData){
+    return fetch(`${config.API_ENDPOINT}/goals/goal/${goalData.id}`, {
+      method: 'PATCH',
+      headers: {
+        'authorization': `Bearer ${TokenService.getAuthToken()}`,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(goalData)
+    })
+    .then(res => 
+      (!res.ok)
+      ? res.json().then(e => Promise.reject(e))
+      : res
+      )
+  },
 }
 
 export default TeacherAuthApiService;
