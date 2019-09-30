@@ -166,6 +166,7 @@ componentDidMount() {
   }
 
   handleEndSession = (e) => {
+    this.context.endSession();
 
     //creates and formats the time the button was clicked
     let time = new Date()
