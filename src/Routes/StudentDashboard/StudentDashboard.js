@@ -7,22 +7,25 @@ import './StudentDashboard.css';
 
 class StudentDashboard extends React.Component{
   static contextType = StudentContext;
-  state = {
-    studentId: null,
-    goals: [],
-    subgoals: [],
-    error: null,
-    timer: false,
-    show: true,
-    evaluations:[],
-    learningTarget: null,
-    currentGoal: null,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      studentId: null,
+      goals: [],
+      subgoals: [],
+      error: null,
+      timer: false,
+      show: false,
+      evaluations:[],
+      learningTarget: null,
+      currentGoal: null,
+      };
+  }
 
   componentDidMount() {
-    this.setState({
-      studentId: this.context.user.id,
-    })
+    // this.setState({
+    //   studentId: this.context.user.id,
+    // })
     StudentAuthApiService.getStudentGoals(this.context.user.id)
       .then(res => {
         const student_goals = res.goals;
@@ -62,7 +65,10 @@ class StudentDashboard extends React.Component{
     )
   }
 
-  toggleTimer = () => {
+   toggleTimer = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     this.setState({
       show: !this.state.show,
     })
@@ -70,67 +76,80 @@ class StudentDashboard extends React.Component{
 
   findStudentWithTimer = (studentTimers, currStudent) => {
     //currStudent is student username
+   
     let currTimer = studentTimers.find(timer => timer.student === currStudent)
+    
     return currTimer;
+    
   }
-
+  
   render() {
+
     let currStudent = this.context.user.username;
     let currTimer = this.findStudentWithTimer(this.props.studentTimers, currStudent);
-
+   
     //grabs the last goal in goals which should be the most current learning target
     const learningTarget = this.state.goals[this.state.goals.length-1];
     //removes the last subgoal from subgoals
-    const currentGoal = this.state.subgoals.pop();
+    
+    let array = [...this.state.subgoals]; 
+    const currentGoal = array.pop();
     //maps through the rest of the subgoals
-    const previousGoals = this.state.subgoals.map((sub, index) => <li key={index}>{sub.subgoal_title}</li>);
+    
+    const previousGoals = array.map((sub, index) => <li key={index}>{sub.subgoal_title}</li>);
     
     return(
-      <section className="student-dashboard-section">
-        <div className="links">
-          {this.renderStudentLogout()}
-        </div>  
-      <div className='goals-container'>
-        <h2>Learning Target: </h2>
-        {learningTarget === undefined 
-        ? <p>Loading..</p>
-        : <div className='student-goal'><p>{learningTarget.goal_title}</p></div>}
+      <section className="student-dashboard-section" >
+          <div className="links">
+            {this.renderStudentLogout()}
+          </div>  
+        <div className='goals-container'>
+          {/* Learning Target */}
+          <h2>Learning Target: </h2>
+          {learningTarget === undefined 
+          ? <p>Loading..</p>
+          : <div className='student-goal'><p>{learningTarget.goal_title}</p></div>}
 
-        {/* current goal */}
-        {currentGoal === undefined
-        ? <> </>
-        :<div>
-        <h2>Current Goal:</h2> 
-        <div className='student-subgoal'>
-        <p>{currentGoal.subgoal_title}</p>
+          {/* current goal */}
+          <h2>Current Goal:</h2> 
+          {currentGoal === undefined
+          ? <> </>
+          :
+          <div className='student-subgoal'>
+          <p>{currentGoal.subgoal_title}</p>          
+          </div>}
         </div>
-        </div>}
-      </div>
 
-      <div className='timer-container'>
-        <button 
-        className='button blue-button'
-        onClick={this.toggleTimer}>{this.state.show ? 'Hide' : 'Timer'}</button>
-        <div className={this.state.show ? '' : 'hidden'}>
-          <StudentTimer currTimer={currTimer}/>
+        <div className='timer-container'>
+        
+          <button 
+          className='button blue-button'
+          
+          onClick={this.toggleTimer}
+         
+          >{this.state.show ? 'Hide' : 'Timer'}</button>
+          <div className={this.state.show ? '' : 'hidden'}>
+            <StudentTimer currTimer={currTimer}/>
+            
+          </div>
         </div>
-      </div>
-
-       <Link to={{
-        pathname: '/selfEvaluate', 
-        state: {
-          currentGoal: this.state.currentGoal,
-          learningTarget: this.state.learningTarget
-        }
-        }}>Ready to self-evaluate?</Link> 
-      
-      {(previousGoals.length > 1) 
-      ? <div> 
-      <h3>Previous Goals</h3>
-      <ul>{previousGoals}</ul>
-      </div>
-      : <></>}
-
+        <div>
+        <Link to={{
+          pathname: '/selfEvaluate', 
+          state: {
+            currentGoal: this.state.currentGoal,
+            learningTarget: this.state.learningTarget
+          }
+          }}>Ready to self-evaluate?</Link> 
+        </div>
+        <div>
+          <h3>Previous Goals</h3>
+          {(previousGoals.length > 1) 
+          ? <div>
+          <ul>{previousGoals}</ul>
+          </div>
+          : <></>}
+        </div>
       </section>
     )
   }
