@@ -16,6 +16,7 @@ class SessionRoute extends React.Component {
       error: null,
       currentGoal: null,
       learningTarget: '',
+      learningTargetCompleted: false,
       updatedSubGoal: '',
       updatedPriority: null,
       classId: null,
@@ -40,10 +41,12 @@ componentDidMount() {
             .then(setupStudents => {
               let goals = [...res.goals]
               const learningTarget = goals[0] ? goals.pop() : {}
+              console.log('LT', learningTarget)
               this.setState({
                 classId,
                 loaded: true,
                 students: setupStudents,
+                learningTargetCompleted: learningTarget.date_completed ? true : false,
                 currentGoal: learningTarget,
                 learningTarget: learningTarget.goal_title ? learningTarget.goal_title : ''
               })
@@ -280,10 +283,6 @@ componentDidMount() {
     const studentsToList = this.state.students.filter(student => student.order === 0);
     const allStudents = [...sortedStudents, ...studentsToList];
     const students = this.makeCards(allStudents);
-    let completedText = ''
-    if(this.state.currentGoal !== null && this.state.currentGoal.date_completed !== null){
-      completedText = <p>This session has been marked as complete</p> 
-    }
 
     if(!loaded) {
       return <div>loading...</div>
@@ -294,18 +293,22 @@ componentDidMount() {
         <div className='alert' role='alert'>
           {error && <p>{error.message}</p>}
         </div>
-        <div>
-          <h2>Learning Target: </h2>
-          {completedText}
-          <p className='learning-target'>{learningTarget}</p>
-          <button 
-            className='button blue-button'
-            onClick={(e) => {this.handleEndSession(e)}}
-          >End Session</button>
+        <div className={this.state.learningTargetCompleted ? 'hidden' : ''}>
+          <div>
+            <h2>Learning Target: </h2>
+            <p className='learning-target'>{learningTarget}</p>
+            <button 
+              className={'button blue-button'}
+              onClick={(e) => {this.handleEndSession(e)}}
+            >End Session</button>
+          </div>
+          <ul className='student-list'>
+            {students}
+          </ul>
         </div>
-        <ul className='student-list'>
-          {students}
-        </ul>
+        <div className={this.state.learningTargetCompleted ? '' : 'hidden'}>
+        <h2>No active learning target!  Set a new one on your dashboard!</h2>
+        </div>
       </section>
     )
   }
