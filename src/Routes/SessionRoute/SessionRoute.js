@@ -14,10 +14,12 @@ class SessionRoute extends React.Component {
     super(props)
     this.state = {
       error: null,
+      currentGoal: null,
       learningTarget: '',
       updatedSubGoal: '',
       updatedPriority: null,
       classId: null,
+      loaded: false,
       students: [],
     }
   }
@@ -42,6 +44,7 @@ componentDidMount() {
                 classId,
                 loaded: true,
                 students: setupStudents,
+                currentGoal: learningTarget,
                 learningTarget: learningTarget.goal_title ? learningTarget.goal_title : ''
               })
             })
@@ -160,7 +163,19 @@ componentDidMount() {
   }
 
   handleEndSession = (e) => {
-    this.props.history.push('/exitTicket')
+
+    //creates and formats the time the button was clicked
+    let time = new Date()
+    let endTime = time.toISOString()
+    
+    //gets the current goal and sets the date_completed to the current time
+    let goal = this.state.currentGoal;
+    goal.date_completed = endTime;
+
+    //patches the goal in the db and pushes to the exit ticket route
+    TeacherAuthService.endSessionGoal(goal)
+      .then(() => this.props.history.push('/exitTicket'))
+
   }
 
   // Will make cards for students given
@@ -258,13 +273,21 @@ componentDidMount() {
   }
 
   render() {
-    const error = this.state.error;
+    const {error, loaded} = this.state;
     const learningTarget = this.state.learningTarget;
     const studentsToSort = this.state.students.filter(student => student.order !== 0)
     const sortedStudents = studentsToSort.sort((a, b) => a.order > b.order ? 1 : -1);
     const studentsToList = this.state.students.filter(student => student.order === 0);
     const allStudents = [...sortedStudents, ...studentsToList];
     const students = this.makeCards(allStudents);
+    let completedText = ''
+    if(this.state.currentGoal !== null && this.state.currentGoal.date_completed !== null){
+      completedText = <p>This session has been marked as complete</p> 
+    }
+
+    if(!loaded) {
+      return <div>loading...</div>
+    }
 
     return (
       <section className='SessionRoute-container'>
@@ -273,6 +296,7 @@ componentDidMount() {
         </div>
         <div>
           <h2>Learning Target: </h2>
+          {completedText}
           <p className='learning-target'>{learningTarget}</p>
           <button 
             className='button blue-button'
