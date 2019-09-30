@@ -54,7 +54,7 @@
   margin: 5px 20px;
 }
 
-input[type="radio"]{
+.SessionRoute-container input[type="radio"]{
   margin: 0px 5px;
   display: none;
 }
