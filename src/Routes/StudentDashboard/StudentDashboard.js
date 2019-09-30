@@ -8,22 +8,6 @@ import './StudentDashboard.css';
 
 class StudentDashboard extends React.Component{
   static contextType = StudentContext;
-<<<<<<< HEAD
-  constructor(props) {
-    super(props);
-    this.state = {
-      studentId: null,
-      goals: [],
-      subgoals: [],
-      error: null,
-      timer: false,
-      show: false,
-      evaluations:[],
-      learningTarget: null,
-      currentGoal: null,
-      };
-  }
-=======
   socket = openSocket('http://localhost:8000');
   
   state = {
@@ -37,7 +21,6 @@ class StudentDashboard extends React.Component{
     learningTarget: null,
     currentGoal: null,
   };
->>>>>>> development
 
   componentDidMount() {
     // this.setState({
