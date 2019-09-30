@@ -1,8 +1,7 @@
 import React from 'react';
 import StudentApiService from '../../Services/student-auth-api-service';
 import StudentContext from '../../Contexts/StudentContext';
-import config from '../../config';
-import TokenService from '../../Services/token-service';
+
 
 class ExitTicketStudentRoute extends React.Component {
   state = {
@@ -35,11 +34,6 @@ class ExitTicketStudentRoute extends React.Component {
           classId: studentGoal.class_id,
         })
       })
-        // .then(res => {
-        //   this.setState({
-        //     goal: res.goals.pop()
-        //   })
-        // })
       .catch(res => {
         this.setState({ error: res.error })
       })

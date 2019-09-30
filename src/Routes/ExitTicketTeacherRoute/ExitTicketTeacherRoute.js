@@ -17,7 +17,7 @@ class ExitTicketTeacherRoute extends React.Component {
 
   static contextType = TeacherContext;
 
-  componentDidMount() {
+  componentWillMount() {
     let token;
     let classId = this.state.classId;
     if(TokenService.getAuthToken() && !classId){
