@@ -15,6 +15,7 @@ class SessionRoute extends React.Component {
     this.state = {
       error: null,
       learningTarget: '',
+      learningTargetCompleted: false,
       updatedSubGoal: '',
       updatedPriority: null,
       classId: null,
@@ -38,10 +39,12 @@ componentDidMount() {
             .then(setupStudents => {
               let goals = [...res.goals]
               const learningTarget = goals[0] ? goals.pop() : {}
+              console.log('LT', learningTarget)
               this.setState({
                 classId,
                 loaded: true,
                 students: setupStudents,
+                learningTargetCompleted: learningTarget.date_completed ? true : false,
                 learningTarget: learningTarget.goal_title ? learningTarget.goal_title : ''
               })
             })
@@ -271,17 +274,22 @@ componentDidMount() {
         <div className='alert' role='alert'>
           {error && <p>{error.message}</p>}
         </div>
-        <div>
-          <h2>Learning Target: </h2>
-          <p className='learning-target'>{learningTarget}</p>
-          <button 
-            className='button blue-button'
-            onClick={(e) => {this.handleEndSession(e)}}
-          >End Session</button>
+        <div className={this.state.learningTargetCompleted ? 'hidden' : ''}>
+          <div>
+            <h2>Learning Target: </h2>
+            <p className='learning-target'>{learningTarget}</p>
+            <button 
+              className={'button blue-button'}
+              onClick={(e) => {this.handleEndSession(e)}}
+            >End Session</button>
+          </div>
+          <ul className='student-list'>
+            {students}
+          </ul>
         </div>
-        <ul className='student-list'>
-          {students}
-        </ul>
+        <div className={this.state.learningTargetCompleted ? '' : 'hidden'}>
+        <h2>No active learning target!  Set a new one on your dashboard!</h2>
+        </div>
       </section>
     )
   }

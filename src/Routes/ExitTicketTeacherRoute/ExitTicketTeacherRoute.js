@@ -17,7 +17,7 @@ class ExitTicketTeacherRoute extends React.Component {
 
   static contextType = TeacherContext;
 
-  componentDidMount() {
+  componentWillMount() {
     let token;
     let classId = this.state.classId;
     if(TokenService.getAuthToken() && !classId){
@@ -37,11 +37,13 @@ class ExitTicketTeacherRoute extends React.Component {
             authorization: `bearer ${TokenService.getAuthToken()}`
           }
         }).then((res) => {
+          
           if(!res){
             return res.json().then(e => Promise.reject(e));
           }
           return res.json();
         }).then(res => {
+          console.log('RES', res)
           let goal = res.goals.pop();
           this.setState({
             exitTicketQuestion: goal.exit_ticket_question,
