@@ -80,22 +80,15 @@ componentDidMount() {
         student.mainGoalId = goal.id;
         student.studentGoalId = goal.sg_id;
         student.mainGoalDate = goal.date_created;
-        console.log(goal)
-        // goal.subgoals 
-        // ? student.studentSubgoalDate = goal.subgoals.date_created
-        // : student.studentSubgoalDate = '';
-        console.log(goal.subgoals)
+        //checks if there are subgoals and gets the most recent one for that specified goal   
         goal.subgoals.length > 0 
         ? student.studentSubgoal = goal.subgoals[goal.subgoals.length-1].subgoal_title
-        : student.studentSubgoal = '';
-
-    
+        : student.studentSubgoal = '';    
         student.iscomplete = goal.iscomplete;
         student.expand = false;
         student.expired = false;
         student.order = 0;
-        student.priority = 'low';
-        // console.log('each student', student)
+        student.priority = 'low';     
         return student;
       })
     }))
@@ -106,8 +99,18 @@ componentDidMount() {
     // High - 5 min/300000, Medium - 10min/600000, Low - 20 min/1200000 
     // Testing - high/5 sec(5000), medium/7 sec(7000), low/10 sec(10000)
     const time = priority === 'high' ? 50000 : priority === 'medium' ? 70000 : 100000;
-    setTimeout(this.handleExpire, time, studentUsername);
+    let timerId = setTimeout(this.handleExpire, time, studentUsername);
+    //setState to the timerId
+   this.setState({
+    timerId: timerId
+   })
     this.props.handleStudentTimers(studentUsername, time)
+   
+  }
+
+  componentWillUnmount (){
+   //clearTimer to avoid memory leakage
+    clearTimeout(this.state.timerId)
   }
 
  
