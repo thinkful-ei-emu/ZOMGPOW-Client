@@ -81,6 +81,7 @@ componentDidMount() {
         student.mainGoalId = goal.id;
         student.studentGoalId = goal.sg_id;
         student.mainGoalDate = goal.date_created;
+        console.log(goal.subgoals)
         //checks if there are subgoals and gets the most recent one for that specified goal   
         goal.subgoals 
         ? student.studentSubgoal = goal.subgoals[goal.subgoals.length-1].subgoal_title

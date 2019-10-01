@@ -16,7 +16,8 @@ class StudentResponseDisplay extends React.Component {
     userInput: '',
     newStudent: null,
     classId: null,
-    loaded: false
+    loaded: false,
+    students: this.props.students
   }
 
   componentDidMount() {
@@ -43,7 +44,14 @@ class StudentResponseDisplay extends React.Component {
       .catch(res => {
         this.setState({ error: res.error })
       })
-    this.socket.on('patch student goal', this.rTPatchStudentGoal);
+    this.socket.on('patch student goal', this.ticketResponse);
+  }
+
+  ticketResponse = async (data) => {
+    const { students } = this.state;
+    let { newStudent } = await StudentAuthApiService.getStudent(data.student_id)
+      let updateStudents = students.map(student => data.student_id === student.id ? student = data : student)
+      this.setState({ students: updateStudents })
   }
 
   // Updates state with every user input change
@@ -54,9 +62,9 @@ class StudentResponseDisplay extends React.Component {
   }
 
   render() {
-    const { error, classId, loaded } = this.state;
-    const fullname = this.props.students.map((student, index) => <li key={index}>{student.full_name}</li>)
-    const response = this.props.students.map((student, index) => <li key={index}>{student.response ? student.response : 'awaiting response'}</li>)
+    const { error, classId, loaded, students } = this.state;
+    const fullname = students.map((student, index) => <li key={index}>{student.full_name}</li>)
+    const response = students.map((student, index) => <li key={index}>{student.response ? student.response : 'awaiting response'}</li>)
     
     if(!loaded){
       return (<div>loading...</div>)
