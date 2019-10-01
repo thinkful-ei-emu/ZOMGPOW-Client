@@ -17,6 +17,11 @@ class ExitTicketForm extends React.Component {
     this.setState({multipleChoiceVisible: false, shortAnswerVisible: true})
   }
 
+  onClose = () => {
+    this.setState({multipleChoiceVisible: false, shortAnswerVisible: false});
+    this.props.onClose();
+  }
+
   render() {
     if(!this.props.show) {
       return null;
@@ -24,7 +29,7 @@ class ExitTicketForm extends React.Component {
     return (
       <div className='modal-container'>
       <div className='modal'>
-        <div className='close' onClick={this.props.onClose}>X</div>
+        <div className='close' onClick={this.onClose}>X</div>
         <h2>Would you like to create an exit ticket for this learning target?</h2>
         <div className={this.state.multipleChoiceVisible ? '' : 'hidden'}>
           <form 
@@ -134,7 +139,7 @@ class ExitTicketForm extends React.Component {
             >Start Session</button>
           </form>
           </div>
-        <div>
+        <div className='exit-ticket-button-container'>
           <button 
             className='button blue-button'
             onClick={() => this.setState({multipleChoiceVisible: true, shortAnswerVisible: false})}
