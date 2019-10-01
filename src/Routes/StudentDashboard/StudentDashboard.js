@@ -3,6 +3,7 @@ import StudentAuthApiService from '../../Services/student-auth-api-service';
 import { Link } from 'react-router-dom';
 import StudentTimer from '../../Components/Timer/StudentTimer';
 import StudentContext from '../../Contexts/StudentContext';
+import Loading from '../../Components/Loading/Loading';
 import openSocket from 'socket.io-client';
 import './StudentDashboard.css';
 
@@ -20,6 +21,7 @@ class StudentDashboard extends React.Component{
     evaluations:[],
     learningTarget: null,
     currentGoal: null,
+    loaded: false,
   };
 
   componentDidMount() {
@@ -36,7 +38,8 @@ class StudentDashboard extends React.Component{
           goals: student_goals,
           subgoals: student_subgoals,
           learningTarget: learningTarget,
-          currentGoal: currentGoal
+          currentGoal: currentGoal,
+          loaded: true,
         })
         console.log(this.state.goals)
       })
@@ -124,7 +127,11 @@ class StudentDashboard extends React.Component{
 
     let currStudent = this.context.user.username;
     let currTimer = this.findStudentWithTimer(this.props.studentTimers, currStudent);
-   
+    const {loaded} = this.state;
+    if(!loaded){
+      return <Loading />
+    }
+
     //grabs the last goal in goals which should be the most current learning target
     const learningTarget = this.state.goals[this.state.goals.length-1];
     //removes the last subgoal from subgoals
