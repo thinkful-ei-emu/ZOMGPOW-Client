@@ -3,6 +3,7 @@ import StudentApiService from '../../Services/student-auth-api-service';
 import TokenService from '../../Services/token-service';
 import TeacherContext from '../../Contexts/TeacherContext';
 import TeacherAuthService from '../../Services/teacher-auth-api-service';
+import Loading from '../../Components/Loading/Loading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './SessionRoute.css';
 
@@ -80,8 +81,8 @@ componentDidMount() {
         student.mainGoalId = goal.id;
         student.studentGoalId = goal.sg_id;
         student.mainGoalDate = goal.date_created;
-        //checks if there are subgoals and gets the most recent one for that specified goal   
-        goal.subgoals 
+        //checks if there are subgoals and gets the most recent one for that specified goal 
+        goal.subgoals.length
         ? student.studentSubgoal = goal.subgoals[goal.subgoals.length-1].subgoal_title
         : student.studentSubgoal = '';    
         student.iscomplete = goal.iscomplete;
@@ -305,7 +306,7 @@ componentDidMount() {
     const students = this.makeCards(allStudents);
 
     if(!loaded) {
-      return <div>loading...</div>
+      return <Loading />
     }
 
     return (

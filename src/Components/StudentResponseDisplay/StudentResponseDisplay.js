@@ -1,15 +1,15 @@
 import React from 'react';
 import StudentAuthApiService from '../../Services/student-auth-api-service';
-import './StudentList.css';
+import './StudentResponseDisplay.css';
 import TeacherContext from '../../Contexts/TeacherContext'
 import config from '../../config'
 import TokenService from '../../Services/token-service'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Loading from '../../Components/Loading/Loading';
+import openSocket from 'socket.io-client';
 
-class StudentList extends React.Component {
+class StudentResponseDisplay extends React.Component {
 
   static contextType = TeacherContext;
+  socket = openSocket('http://localhost:8000');
 
   state = {
     error: null,
@@ -17,7 +17,6 @@ class StudentList extends React.Component {
     newStudent: null,
     classId: null,
     isDeleting: false,
-    loaded: false,
   }
 
   componentDidMount() {
@@ -39,7 +38,6 @@ class StudentList extends React.Component {
       )
       .then(resStudents => {
         this.props.displayStudents(resStudents)
-        this.setState({ loaded: true })
       })
       .catch(res => {
         this.setState({ error: res.error })
@@ -91,15 +89,15 @@ class StudentList extends React.Component {
   }
 
   render() {
-    const { error, classId, loaded} = this.state;
+    const { error, classId, isDeleting} = this.state;
     const fullname = this.props.students.map((student, index) => <li key={index}>{student.full_name}</li>)
-    const username = this.props.students.map((student, index) => <li key={index}>{student.user_name}<span><button className='delete-student' onClick={() => this.handleDeleteStudent(student.user_name, classId)}> <FontAwesomeIcon icon={['far', 'trash-alt']} /></button></span></li>)
+    const response = this.props.students.map((student, index) => <li key={index}>response</li>)
     
-    if(!loaded){
-      return (<Loading />)
+    if(isDeleting){
+      return (<div>loading...</div>)
     } 
     return(
-      <div className='StudentList-container'>
+      <div className='StudentResponseDisplay-container'>
       <h2>Students</h2>
       <div className='alert' role='alert'>
         {error && <p>{error}</p>}
@@ -107,44 +105,25 @@ class StudentList extends React.Component {
       {fullname.length < 1 
             ? <p>Add your students!</p> 
             :
-            <div className='StudentList'>
+            <div className='StudentResponseDisplay'>
               <div className='student-name'>
                 <h3>Student Name</h3>
                 <ul>
                   {fullname}
                 </ul>
               </div>
-              <div className='student-username'>
-                <h3>Username</h3>
+              <div className='student-response'>
+                <h3>Response</h3>
                 <ul>
-                  {username}
+                  {response}
                 </ul>
               </div>
             </div>
-      }      
-        <form 
-          onSubmit={this.handleSubmit}
-          className='add-student-form'>
-          <label
-            htmlFor='add-student'>Student Name: </label>
-          <input
-            onChange={this.handleChange}
-            value={this.state.userInput}
-            id='add-student'
-            name='add-student'
-            aria-label='Add student to list'
-            aria-required='true'
-            placeholder='eg. John Smith'
-            required
-          />
-          <div>
-            <button type='submit' className='button blue-button'>Add Student</button>
-          </div>
-        </form>
+      }
       </div>
     )
   }
 }
 
-export default StudentList;
+export default StudentResponseDisplay;
 
