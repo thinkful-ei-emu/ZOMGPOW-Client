@@ -86,7 +86,7 @@ class StudentDashboard extends React.Component{
     //currStudent is student username
    
     let currTimer = studentTimers.find(timer => timer.student === currStudent)
-    
+    console.log(currTimer)
     return currTimer;
     
   }

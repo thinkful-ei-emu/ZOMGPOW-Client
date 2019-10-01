@@ -60,6 +60,7 @@ class ExitTicketTeacherRoute extends React.Component {
 
     } else {
       const classId = this.context.teacherClass.id;
+      console.log(classId);
       this.setState({
         loaded: true,
         classId

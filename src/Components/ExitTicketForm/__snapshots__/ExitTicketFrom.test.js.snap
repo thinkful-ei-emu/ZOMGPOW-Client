@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExitTicketForm component renders a .ExitTicketForm by default 1`] = `
+<div
+  className="exit-ticket-form"
+>
+  <p>
+     -OR- 
+  </p>
+  <button
+    className="button purple-button"
+    onClick={[Function]}
+  >
+    Create an Exit Ticket for this Learning Target?
+  </button>
+  <div
+    className="hidden"
+  >
+    <button
+      className="button blue-button"
+      onClick={[Function]}
+    >
+      Multiple Choice
+    </button>
+    <button
+      className="button green-button"
+      onClick={[Function]}
+    >
+      Short Answer
+    </button>
+  </div>
+  <div
+    className="hidden"
+  >
+    <form
+      className="form multiple-choice"
+      onSubmit={[Function]}
+    >
+      <label
+        htmlFor="exit-ticket-question-mc"
+      >
+        Exit Ticket Question:
+      </label>
+      <textarea
+        id="exit-ticket-question-mc"
+        onChange={[Function]}
+        required={true}
+        value=""
+      />
+      <label
+        htmlFor="option-A"
+      >
+        Option A:
+      </label>
+      <input
+        id="option-A"
+        onChange={[Function]}
+        required={true}
+        value=""
+      />
+      <label
+        htmlFor="option-B"
+      >
+        Option B:
+      </label>
+      <input
+        id="option-B"
+        onChange={[Function]}
+        required={true}
+        value=""
+      />
+      <label
+        htmlFor="option-C"
+      >
+        Option C:
+      </label>
+      <input
+        id="option-C"
+        onChange={[Function]}
+        required={true}
+        value=""
+      />
+      <label
+        htmlFor="option-D"
+      >
+        Option D:
+      </label>
+      <input
+        id="option-D"
+        onChange={[Function]}
+        required={true}
+        value=""
+      />
+      <label
+        htmlFor="exit-ticket-correct-answer"
+      >
+        Correct Option:
+      </label>
+      <div>
+        <input
+          id="correct-option-A"
+          name="radio"
+          onChange={[Function]}
+          type="radio"
+          value="A"
+        />
+        <label
+          htmlFor="correct-option-A"
+        >
+          A
+        </label>
+        <input
+          id="option-B"
+          name="radio"
+          onChange={[Function]}
+          type="radio"
+          value="B"
+        />
+        <label
+          htmlFor="option-B"
+        >
+          B
+        </label>
+        <input
+          id="option-C"
+          name="radio"
+          onChange={[Function]}
+          type="radio"
+          value="C"
+        />
+        <label
+          htmlFor="option-C"
+        >
+          C
+        </label>
+        <input
+          id="option-D"
+          name="radio"
+          onChange={[Function]}
+          type="radio"
+          value="D"
+        />
+        <label
+          htmlFor="option-D"
+        >
+          D
+        </label>
+      </div>
+      <button
+        className="button purple-button"
+        type="submit"
+      >
+        Save Exit Ticket
+      </button>
+    </form>
+  </div>
+  <div
+    className="hidden"
+  >
+    <form
+      className="form short-answer"
+      onSubmit={[Function]}
+    >
+      <label
+        htmlFor="exit-ticket-question"
+      >
+        Exit Ticket Question:
+      </label>
+      <textarea
+        id="exit-ticket-question-sa"
+        onChange={[Function]}
+        required={true}
+        value=""
+      />
+      <button
+        className="button purple-button"
+        type="submit"
+      >
+        Save Exit Ticket
+      </button>
+    </form>
+  </div>
+</div>
+`;
