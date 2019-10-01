@@ -35,11 +35,13 @@ class ExitTicketTeacherRoute extends React.Component {
             authorization: `bearer ${TokenService.getAuthToken()}`
           }
         }).then((res) => {
+          
           if(!res){
             return res.json().then(e => Promise.reject(e));
           }
           return res.json();
         }).then(res => {
+          console.log('RES', res)
           let goal = res.goals.pop();
           this.setState({
             exitTicketQuestion: goal.exit_ticket_question,
@@ -77,10 +79,6 @@ class ExitTicketTeacherRoute extends React.Component {
         <h3>{this.state.exitTicketQuestion? this.state.exitTicketQuestion : ''}</h3>
         <ul>{options}</ul>
         <h3>{this.state.exitTicketCorrectAnswer ? `Correct Answer: ${this.state.exitTicketCorrectAnswer}` : ''}</h3>
-        {/* <div className='student-answers'>
-          <h2>Student Responses</h2>
-        </div> */}
-        {/* Link to dashboard or data view? */}
       </div>
     )
   }

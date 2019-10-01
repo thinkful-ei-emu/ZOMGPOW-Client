@@ -24,8 +24,6 @@ class SubGoalDataDisplay extends React.Component {
 
   componentDidMount() {
 
-    console.log('From goal data', this.state.studentGoalId, this.state.goalId, this.context.teacherClass.id)
-
     if (TokenService.getAuthToken() && !this.state.classId) {
       TeacherAuthApiService.getTeacherClasses()
         .then(classes => this.context.setClass(classes[0]))
@@ -69,7 +67,6 @@ class SubGoalDataDisplay extends React.Component {
     }
     else {
       let subGoals = this.makeGoalsTable(subGoalData);
-      console.log(subGoalData)
 
 
       if (subGoals.length) {

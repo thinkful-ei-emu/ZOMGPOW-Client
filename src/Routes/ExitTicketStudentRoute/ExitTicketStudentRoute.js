@@ -20,7 +20,7 @@ class ExitTicketStudentRoute extends React.Component {
 
   static contextType = StudentContext;
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({
       studentId: this.context.user.id
     })
@@ -37,11 +37,6 @@ class ExitTicketStudentRoute extends React.Component {
           loaded: true,
         })
       })
-        // .then(res => {
-        //   this.setState({
-        //     goal: res.goals.pop()
-        //   })
-        // })
       .catch(res => {
         this.setState({ error: res.error })
       })

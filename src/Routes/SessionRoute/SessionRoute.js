@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './SessionRoute.css';
 
 class SessionRoute extends React.Component {
-
   static contextType = TeacherContext;
 
   constructor(props) {
@@ -17,11 +16,14 @@ class SessionRoute extends React.Component {
       error: null,
       currentGoal: null,
       learningTarget: '',
+      learningTargetCompleted: false,
       updatedSubGoal: '',
       updatedPriority: null,
       classId: null,
       loaded: false,
       students: [],
+      newSubgoal: '',
+      currentSubgoal: ''
     }
   }
 
@@ -45,6 +47,7 @@ componentDidMount() {
                 classId,
                 loaded: true,
                 students: setupStudents,
+                learningTargetCompleted: learningTarget.date_completed ? true : false,
                 currentGoal: learningTarget,
                 learningTarget: learningTarget.goal_title ? learningTarget.goal_title : ''
               })
@@ -53,8 +56,6 @@ componentDidMount() {
         })
         .catch(error => this.setState({ error }))
       }
-    } else {
-      this.props.history.push('/login/teacher');
     }
   }
 
@@ -62,7 +63,12 @@ componentDidMount() {
     //get student goals
     return StudentApiService.getStudentGoals(student_id)
       .then(res => {
-        return res.goals.pop();
+        let goals = [...res.goals]
+        // let subgoals = [...res.subgoals]
+        //need the correct subgoal (newest goal, but for current learning target)
+        return goals.pop();
+          // subgoals: subgoals.pop()
+        
       })
       .catch(error => this.setState({ error }))
   }
@@ -74,11 +80,16 @@ componentDidMount() {
         student.mainGoal = goal.goal_title;
         student.mainGoalId = goal.id;
         student.studentGoalId = goal.sg_id;
+        student.mainGoalDate = goal.date_created;
+        //checks if there are subgoals and gets the most recent one for that specified goal   
+        goal.subgoals 
+        ? student.studentSubgoal = goal.subgoals[goal.subgoals.length-1].subgoal_title
+        : student.studentSubgoal = '';    
         student.iscomplete = goal.iscomplete;
         student.expand = false;
         student.expired = false;
         student.order = 0;
-        student.priority = 'low';
+        student.priority = 'low';     
         return student;
       })
     }))
@@ -89,10 +100,21 @@ componentDidMount() {
     // High - 5 min/300000, Medium - 10min/600000, Low - 20 min/1200000 
     // Testing - high/5 sec(5000), medium/7 sec(7000), low/10 sec(10000)
     const time = priority === 'high' ? 50000 : priority === 'medium' ? 70000 : 100000;
-    setTimeout(this.handleExpire, time, studentUsername);
+    let timerId = setTimeout(this.handleExpire, time, studentUsername);
+    //setState to the timerId
+   this.setState({
+    timerId: timerId
+   })
     this.props.handleStudentTimers(studentUsername, time)
+   
   }
 
+  componentWillUnmount (){
+   //clearTimer to avoid memory leakage
+    clearTimeout(this.state.timerId)
+  }
+
+ 
   // Should toggle expired key to true and set order when timer expires
   // Setting the order allows the first timer that ends to remain first in line and
   // subsequent timers to follow in line after
@@ -108,7 +130,8 @@ componentDidMount() {
     e.preventDefault();
     const priority = this.state.updatedPriority;
     const data = { subgoal_title: this.state.updatedSubGoal };
-    const student = this.state.students.filter(student => student.user_name === studentUsername).pop();
+    const filterStudent = [...this.state.students]
+    const student = filterStudent.filter(student => student.user_name === studentUsername).pop();
     const goalId = student.studentGoalId;
 
     StudentApiService.postStudentSubgoal(goalId, data)
@@ -137,7 +160,7 @@ componentDidMount() {
       .catch(error => {
         console.error(error);
         this.setState({ error })
-      });
+      });  
   }
 
   // Should toggle when clicking to expand and hide extra student information
@@ -198,12 +221,15 @@ componentDidMount() {
                 }>Undo Complete</button>
             </div> 
             : 
-            <div>
+            <div>   
+                    
             {student.expand && <button 
               className='button green-button'
               onClick={() => this.toggleTargetComplete(student.studentGoalId, student.iscomplete)
-                }>Target Complete</button>}
-            <p>{student.subgoal ? student.subgoal : this.state.learningTarget}</p>
+                }>Learning Target Complete</button>}
+
+              <p>{student.studentSubgoal? student.expand? `Student Goal: ${student.studentSubgoal}`: student.studentSubgoal: this.state.learningTarget}</p>
+          
             <button
               className={student.expand ? ' button blue-button' : 'button purple-button'}
               onClick={e => this.toggleExpand(student.user_name)}>{student.expand ? 'Cancel' : 'Check In'}</button>
@@ -261,10 +287,6 @@ componentDidMount() {
                     type='submit'>Update Goal</button>
                 </div>
               </form>
-              {/* {student.subgoal ? <h4>Previous Goals:</h4> : ''}
-              <ul>
-              {student.subgoal ? student.subgoal.map((subgoal, index) => <li key={index}>subgoal</li>) : ''}
-              </ul> */}
             </div>
           </div>
           }
@@ -282,10 +304,6 @@ componentDidMount() {
     const studentsToList = this.state.students.filter(student => student.order === 0);
     const allStudents = [...sortedStudents, ...studentsToList];
     const students = this.makeCards(allStudents);
-    let completedText = ''
-    if(this.state.currentGoal !== null && this.state.currentGoal.date_completed !== null){
-      completedText = <p>This session has been marked as complete</p> 
-    }
 
     if(!loaded) {
       return <Loading />
@@ -296,18 +314,22 @@ componentDidMount() {
         <div className='alert' role='alert'>
           {error && <p>{error.message}</p>}
         </div>
-        <div>
-          <h2>Learning Target: </h2>
-          {completedText}
-          <p className='learning-target'>{learningTarget}</p>
-          <button 
-            className='button blue-button'
-            onClick={(e) => {this.handleEndSession(e)}}
-          >End Session</button>
+        <div className={this.state.learningTargetCompleted ? 'hidden' : ''}>
+          <div>
+            <h2>Learning Target: </h2>
+            <p className='learning-target'>{learningTarget}</p>
+            <button 
+              className={'button blue-button'}
+              onClick={(e) => {this.handleEndSession(e)}}
+            >End Session</button>
+          </div>
+          <ul className='student-list'>
+            {students}
+          </ul>
         </div>
-        <ul className='student-list'>
-          {students}
-        </ul>
+        <div className={this.state.learningTargetCompleted ? '' : 'hidden'}>
+        <h2>No active learning target!  Set a new one on your dashboard!</h2>
+        </div>
       </section>
     )
   }
