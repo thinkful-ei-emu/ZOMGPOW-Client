@@ -6,7 +6,7 @@ import StudentContext from '../../Contexts/StudentContext';
 import Loading from '../../Components/Loading/Loading';
 import openSocket from 'socket.io-client';
 import './StudentDashboard.css';
-import config from '../../config'
+
 
 class StudentDashboard extends React.Component{
   static contextType = StudentContext;
