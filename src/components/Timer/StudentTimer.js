@@ -21,14 +21,14 @@ class StudentTimer extends React.Component {
   handleDisplayTimer = (endTime) => {
     this.setState({
       timer: true,
-      interval: setInterval(this.displayTimer, 1000, endTime)
     })
+    this.interval = setInterval(this.displayTimer, 1000, endTime)
   }
 
   displayTimer = (endTime) => {
     let now = Date.now()
     if(now > endTime){
-      clearInterval(this.state.interval)
+      clearInterval(this.interval)
       this.setState({
         currMin: 0,
         currSec: '00'
@@ -49,11 +49,18 @@ class StudentTimer extends React.Component {
     })
   }
 
+  componentWillUnmount(){
+    clearInterval(this.interval)
+  }
+
   render() {    
-    const {currMin, currSec} = this.state
-    //I set the state to timer: true when the timer is initialized 
-    //so if we want to display something else when there is no timer we could do that - Nick
-    // so that would be if(timer){display timer} else {display an alternative}
+    const {currMin, currSec, timer} = this.state
+    
+
+    if (!timer){
+      //Don't know what to use as a placeholder when no timer?? -- Nick
+      return <div className='timer'></div>
+    }
     return (
       <div className='timer'>{currMin}:{currSec}</div>
     )
