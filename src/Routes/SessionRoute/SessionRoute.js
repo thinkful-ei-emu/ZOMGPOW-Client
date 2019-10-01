@@ -220,16 +220,15 @@ componentDidMount() {
                 }>Undo Complete</button>
             </div> 
             : 
-            <div>
+            <div>   
+                    
             {student.expand && <button 
               className='button green-button'
               onClick={() => this.toggleTargetComplete(student.studentGoalId, student.iscomplete)
-                }>Target Complete</button>}
+                }>Learning Target Complete</button>}
 
-              <p>{this.state.learningTarget}</p>
-       
-            <p>{student.studentSubgoal ? student.studentSubgoal : ''}</p>
-
+              <p>{student.studentSubgoal? student.expand? `Student Goal: ${student.studentSubgoal}`: student.studentSubgoal: this.state.learningTarget}</p>
+          
             <button
               className={student.expand ? ' button blue-button' : 'button purple-button'}
               onClick={e => this.toggleExpand(student.user_name)}>{student.expand ? 'Cancel' : 'Check In'}</button>
