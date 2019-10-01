@@ -105,7 +105,6 @@ class ExitTicketForm extends React.Component {
 
     return (
       <div className={this.state.exitTicketFormVisible ? 'exit-ticket-form' : 'hidden'}>
-        <p> -OR- </p>
         <button 
           className={this.state.createPromptVisible ? 'button purple-button' : 'hidden'}
           onClick={() => this.setState({exitTicketChoiceVisible: true, createPromptVisible: false})}
@@ -120,7 +119,7 @@ class ExitTicketForm extends React.Component {
           >Multiple Choice
           </button>
           <button 
-            className='button green-button'
+            className='button purple-button'
             onClick={() => this.setState({multipleChoiceVisible: false, shortAnswerVisible: true})}
           >Short Answer
           </button>
