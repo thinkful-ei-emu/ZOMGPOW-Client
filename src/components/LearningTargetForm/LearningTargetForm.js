@@ -2,7 +2,6 @@ import React from 'react';
 import './LearningTargetForm.css';
 
 class LearningTargetForm extends React.Component {
-
   state = {
     error: null,
   }
