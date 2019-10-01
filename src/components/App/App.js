@@ -21,9 +21,11 @@ import SubGoalDataDisplay from '../../Components/SubGoalDataDisplay/SubGoalDataD
 import './App.css';
 
 export default class App extends React.Component {
-
-  state = {
-    studentTimers: [],
+  constructor(props){
+    super(props);
+    this.state ={
+      studentTimers: [],
+    };
   }
 
   
@@ -38,8 +40,9 @@ export default class App extends React.Component {
     }
 
     let newTimers = this.state.studentTimers
+    
     newTimers.push(timerObj)
-
+  
     this.setState({
       studentTimers: newTimers
     })
@@ -47,6 +50,7 @@ export default class App extends React.Component {
 
 
   render() {
+   
     return (
       <div className="App">
         <Header />
@@ -90,10 +94,13 @@ export default class App extends React.Component {
             path='/dashboard/student'
             render={(props) => {
               return (
+                
                 <StudentDashboard {...props} studentTimers={this.state.studentTimers} />
+                
               );
             }}
           />
+          
           <PrivateRoute
             path='/selfEvaluate'
             render={(props)=> {
@@ -140,7 +147,9 @@ export default class App extends React.Component {
           <Route
             component={NotFoundRoute}
           />
+          
         </Switch>
+        
       </div>
     );
   }

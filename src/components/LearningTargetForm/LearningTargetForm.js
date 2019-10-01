@@ -13,7 +13,6 @@ class LearningTargetForm extends React.Component {
     this.props.showModal();
   }
   render() {
-    
     return (
       <div className='learning-target-container'>
       <form className='learning-target-form'

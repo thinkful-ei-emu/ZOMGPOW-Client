@@ -2,7 +2,6 @@ import React from 'react';
 import StudentApiService from '../../Services/student-auth-api-service';
 import StudentContext from '../../Contexts/StudentContext';
 
-
 class ExitTicketStudentRoute extends React.Component {
   state = {
     error: null,
