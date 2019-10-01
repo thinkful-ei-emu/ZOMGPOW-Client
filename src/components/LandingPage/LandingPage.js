@@ -15,7 +15,7 @@ class LandingPage extends React.Component {
           the classroom.
         </p>
         <div className='landing-page-link-container'>
-        <Link to='/register' className='teacher'>
+        <Link to='/login/teacher' className='teacher'>
           I'm a Teacher
         </Link>
         {' '}
