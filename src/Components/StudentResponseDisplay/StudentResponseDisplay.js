@@ -5,11 +5,12 @@ import TeacherContext from '../../Contexts/TeacherContext'
 import config from '../../config'
 import TokenService from '../../Services/token-service'
 import openSocket from 'socket.io-client';
+import { compileFunction } from 'vm';
 
 class StudentResponseDisplay extends React.Component {
 
   static contextType = TeacherContext;
-  // socket = openSocket('http://localhost:8000');
+  socket = openSocket('http://localhost:8000');
 
   state = {
     error: null,
@@ -17,14 +18,15 @@ class StudentResponseDisplay extends React.Component {
     newStudent: null,
     classId: null,
     loaded: false,
-    students: this.props.students
+    students: []
   }
 
   componentDidMount() {
     // Fetch students from API
     let classId = this.context.teacherClass.id
     this.setState({
-      classId: classId
+      classId: classId,
+      students: [...this.props.students]
     })
     fetch(`${config.API_ENDPOINT}/class/${classId}/students`, {
       method: 'GET',
@@ -49,9 +51,9 @@ class StudentResponseDisplay extends React.Component {
 
   ticketResponse = async (data) => {
     const { students } = this.state;
-    let { newStudent } = await StudentAuthApiService.getStudent(data.student_id)
-      let updateStudents = students.map(student => data.student_id === student.id ? student = data : student)
-      this.setState({ students: updateStudents })
+    console.log(data)
+    let updateStudents = students.map(student => data.student_id === student.id ? student = data : student)
+    this.setState({ students: updateStudents })
   }
 
   // Updates state with every user input change
@@ -63,8 +65,10 @@ class StudentResponseDisplay extends React.Component {
 
   render() {
     const { error, classId, loaded, students } = this.state;
-    const fullname = students.map((student, index) => <li key={index}>{student.full_name}</li>)
-    const response = students.map((student, index) => <li key={index}>{student.response ? student.response : 'awaiting response'}</li>)
+    let studentList;
+    students.length ? studentList = students : studentList = this.props.students
+    const fullname = studentList.map((student, index) => <li key={index}>{student.full_name}</li>)
+    const response = studentList.map((student, index) => <li key={index}>{student.response ? student.response : 'awaiting response'}</li>)
     
     if(!loaded){
       return (<div>loading...</div>)
