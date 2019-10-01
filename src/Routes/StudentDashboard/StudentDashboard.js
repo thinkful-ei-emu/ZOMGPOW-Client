@@ -25,23 +25,22 @@ class StudentDashboard extends React.Component{
   };
 
   componentDidMount() {
-    // this.setState({
-    //   studentId: this.context.user.id,
-    // })
+    console.log('student dashboard CDM')
+    console.log(this.context.user.id)
     StudentAuthApiService.getStudentGoals(this.context.user.id)
       .then(res => {
         const student_goals = res.goals;
-        const student_subgoals = res.subgoals;
         const learningTarget = res.goals[res.goals.length-1];
-        const currentGoal = res.subgoals[res.subgoals.length-1];
+        const student_subgoals = learningTarget.subgoals;
+        const currentGoal = learningTarget.subgoals[learningTarget.subgoals.length -1] || learningTarget
         this.setState({
+          studentId: this.context.user.id,
           goals: student_goals,
           subgoals: student_subgoals,
           learningTarget: learningTarget,
           currentGoal: currentGoal,
           loaded: true,
         })
-        console.log(this.state.goals)
       })
       .catch(res => {
         this.setState({ error: res.error })
@@ -127,21 +126,28 @@ class StudentDashboard extends React.Component{
 
     let currStudent = this.context.user.username;
     let currTimer = this.findStudentWithTimer(this.props.studentTimers, currStudent);
-    const {loaded} = this.state;
+    const {loaded, error, currentGoal, learningTarget, subgoals, timer} = this.state;
+    console.log(this.state)
+    console.log('loaded', loaded)
+
+    
+
+    //grabs the last goal in goals which should be the most current learning target
+    // const learningTarget = this.state.goals[this.state.goals.length-1];
+    //removes the last subgoal from subgoals
+    
+    // let array = [...this.state.subgoals]; 
+    // const currentGoal = array.pop();
+    //maps through the rest of the subgoals
+    
+    // const previousGoals = array.map((sub, index) => <li key={index}>{sub.subgoal_title}</li>);
+
+    if(error){
+      return <p>{error.message}</p>
+    }
     if(!loaded){
       return <Loading />
     }
-
-    //grabs the last goal in goals which should be the most current learning target
-    const learningTarget = this.state.goals[this.state.goals.length-1];
-    //removes the last subgoal from subgoals
-    
-    let array = [...this.state.subgoals]; 
-    const currentGoal = array.pop();
-    //maps through the rest of the subgoals
-    
-    const previousGoals = array.map((sub, index) => <li key={index}>{sub.subgoal_title}</li>);
-    
     return(
       <section className="student-dashboard-section" >
           <div className="links">
@@ -150,18 +156,13 @@ class StudentDashboard extends React.Component{
         <div className='goals-container'>
           {/* Learning Target */}
           <h2>Learning Target: </h2>
-          {learningTarget === undefined 
-          ? <p>Loading..</p>
-          : <div className='student-goal'><p>{learningTarget.goal_title}</p></div>}
+          <div className='student-goal'><p>{learningTarget.goal_title}</p></div>
 
           {/* current goal */}
-          <h2>Current Goal:</h2> 
-          {currentGoal === undefined
-          ? <> </>
-          :
+          <h2>Current Goal:</h2>
           <div className='student-subgoal'>
-          <p>{currentGoal.subgoal_title}</p>          
-          </div>}
+          <p>{(currentGoal.subgoal_title) ? currentGoal.subgoal_title : currentGoal.goal_title}</p>          
+          </div>
         </div>
 
         <div className='timer-container'>
@@ -188,11 +189,9 @@ class StudentDashboard extends React.Component{
         </div>
         <div>
           <h3>Previous Goals</h3>
-          {(previousGoals.length > 1) 
-          ? <div>
-          <ul>{previousGoals}</ul>
-          </div>
-          : <></>}
+          {(subgoals.length) 
+          ? <ul>{subgoals.map((goal, i) => <li key={i}>{(currentGoal.subgoal_title === goal.subgoal_title) ? <p>No previous goals</p> : goal.subgoal_title}</li>)}</ul> 
+          : <p>No previous goals</p>}
         </div>
       </section>
     )
