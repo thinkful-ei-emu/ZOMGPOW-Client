@@ -127,15 +127,11 @@ class StudentDashboard extends React.Component{
 
     let currStudent = this.context.user.username;
     let currTimer = this.findStudentWithTimer(this.props.studentTimers, currStudent);
-<<<<<<< HEAD
     const {loaded} = this.state;
     if(!loaded){
       return <Loading />
     }
 
-=======
-   
->>>>>>> development
     //grabs the last goal in goals which should be the most current learning target
     const learningTarget = this.state.goals[this.state.goals.length-1];
     //removes the last subgoal from subgoals
