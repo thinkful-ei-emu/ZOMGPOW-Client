@@ -209,6 +209,8 @@ class TeacherDashboardRoute extends React.Component{
     this.setState({ multipleChoiceCorrect: answer })
   }
 
+  
+
   render() {
     const {loaded, students} = this.state;
     if(!loaded){
@@ -216,6 +218,7 @@ class TeacherDashboardRoute extends React.Component{
     } else {
       return (
         <section className='TeacherDashboardRoute-section'>
+        
         <div className='data'>
           <Link to={'/data'} className='button blue-button'>Data display</Link>
           </div>

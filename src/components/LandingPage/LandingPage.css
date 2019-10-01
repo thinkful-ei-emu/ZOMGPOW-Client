@@ -41,5 +41,5 @@
 }
 
 .landing-page .student:hover, .landing-page .teacher:hover {
-  background: black;
+  background: var(--darkgray);
 }

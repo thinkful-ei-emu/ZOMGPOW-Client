@@ -9,12 +9,22 @@ class ExitTicketForm extends React.Component {
     shortAnswerVisible: false,
   }
 
+  multipleChoice = () => {
+    this.setState({multipleChoiceVisible: true, shortAnswerVisible: false})
+  }
+
+  shortAnswer = () => {
+    this.setState({multipleChoiceVisible: false, shortAnswerVisible: true})
+  }
+
   render() {
     if(!this.props.show) {
       return null;
     }
     return (
-      <div className='modal '>
+      <div className='modal-container'>
+      <div className='modal'>
+        <div className='close' onClick={this.props.onClose}>X</div>
         <h2>Would you like to create an exit ticket for this learning target?</h2>
         <div className={this.state.multipleChoiceVisible ? '' : 'hidden'}>
           <form 
@@ -102,7 +112,6 @@ class ExitTicketForm extends React.Component {
               {this.state.error && <p className='alert'>{this.state.error}</p>}
             <button 
               type='submit'
-              // onClose={e => {this.onClose(e)}}
               className='button purple-button'
             >Start Session</button>
           </form>
@@ -116,12 +125,11 @@ class ExitTicketForm extends React.Component {
             <textarea 
               id='exit-ticket-question-sa' 
               onChange={(e) => this.props.updateQuestion(e)}
-              value={this.state.exitTicketQuestion}
+              value={this.props.exitTicketQuestion}
               required
             />
             <button 
               type='submit'
-              // onClose={e => {this.onClose(e)}}
               className='button purple-button'
             >Start Session</button>
           </form>
@@ -143,6 +151,7 @@ class ExitTicketForm extends React.Component {
           >No thanks, start my session
           </button>
         </div>
+      </div>
 
         
         
