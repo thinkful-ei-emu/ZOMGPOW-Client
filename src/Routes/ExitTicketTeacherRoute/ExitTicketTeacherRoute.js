@@ -3,6 +3,7 @@ import config from '../../config';
 import TokenService from '../../Services/token-service';
 import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
 import TeacherContext from '../../Contexts/TeacherContext';
+import StudentResponseDislpay from '../../Components/StudentResponseDisplay/StudentResponseDisplay';
 
 class ExitTicketTeacherRoute extends React.Component {
 
@@ -14,6 +15,7 @@ class ExitTicketTeacherRoute extends React.Component {
     studentAnswers: [], 
     classId: null,
     loaded: false,
+    students: []
   }
 
   static contextType = TeacherContext;
@@ -25,6 +27,7 @@ class ExitTicketTeacherRoute extends React.Component {
     TeacherAuthApiService.getTeacherClasses()
       .then(classes => this.context.setClass(classes[0]))
       .then(() => this.setState({
+        loaded: true,
         classId: this.context.teacherClass.id
       }))
       .then(() => {
@@ -57,13 +60,19 @@ class ExitTicketTeacherRoute extends React.Component {
 
     } else {
       const classId = this.context.teacherClass.id;
+      console.log(classId);
       this.setState({
         loaded: true,
         classId
       })
     }
-}
+  }
 
+  displayStudents = (resStudents) => {
+    this.setState({
+      students: resStudents.students,
+    })
+  }
 
   render() {
     let options = this.state.exitTicketOptions ?
@@ -79,9 +88,17 @@ class ExitTicketTeacherRoute extends React.Component {
         <h3>{this.state.exitTicketQuestion? this.state.exitTicketQuestion : ''}</h3>
         <ul>{options}</ul>
         <h3>{this.state.exitTicketCorrectAnswer ? `Correct Answer: ${this.state.exitTicketCorrectAnswer}` : ''}</h3>
-        {/* <div className='student-answers'>
+        <div className='student-answers'>
           <h2>Student Responses</h2>
-        </div> */}
+        </div>
+        <section className='TeacherDashboardRoute-section'>
+        <div className='TeacherDashboardRoute-student-list'>
+          <StudentResponseDislpay 
+            displayStudents= {this.displayStudents} 
+            classId={this.state.classId} 
+            students={this.state.students}/>
+        </div>
+        </section>
         {/* Link to dashboard or data view? */}
       </div>
     )

@@ -1,0 +1,139 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelfEvaluate component renders a .SelfEvaluate by default 1`] = `
+<div
+  className="self-evaluate-form"
+>
+  <form
+    className="form"
+    onSubmit={[Function]}
+  >
+    <h3>
+      Rate your level of understanding:
+    </h3>
+    <div
+      className="option"
+    >
+      <input
+        className="radio"
+        id="high"
+        name="priority"
+        onChange={[Function]}
+        type="radio"
+        value="high"
+      />
+      <label
+        htmlFor="high"
+      >
+        <FontAwesomeIcon
+          border={false}
+          className="high"
+          fixedWidth={false}
+          flip={null}
+          icon={
+            Array [
+              "far",
+              "smile",
+            ]
+          }
+          inverse={false}
+          listItem={false}
+          mask={null}
+          pull={null}
+          pulse={false}
+          rotation={null}
+          size="2x"
+          spin={false}
+          symbol={false}
+          title=""
+          transform={null}
+        />
+      </label>
+    </div>
+    <div
+      className="option"
+    >
+      <input
+        className="radio"
+        id="medium"
+        name="priority"
+        onChange={[Function]}
+        type="radio"
+        value="medium"
+      />
+      <label
+        htmlFor="medium"
+      >
+        <FontAwesomeIcon
+          border={false}
+          className="medium"
+          fixedWidth={false}
+          flip={null}
+          icon={
+            Array [
+              "far",
+              "meh",
+            ]
+          }
+          inverse={false}
+          listItem={false}
+          mask={null}
+          pull={null}
+          pulse={false}
+          rotation={null}
+          size="2x"
+          spin={false}
+          symbol={false}
+          title=""
+          transform={null}
+        />
+      </label>
+    </div>
+    <div
+      className="option"
+    >
+      <input
+        className="radio"
+        id="low"
+        name="priority"
+        onChange={[Function]}
+        required={true}
+        type="radio"
+        value="low"
+      />
+      <label
+        htmlFor="low"
+      >
+        <FontAwesomeIcon
+          border={false}
+          className="low"
+          fixedWidth={false}
+          flip={null}
+          icon={
+            Array [
+              "far",
+              "angry",
+            ]
+          }
+          inverse={false}
+          listItem={false}
+          mask={null}
+          pull={null}
+          pulse={false}
+          rotation={null}
+          size="2x"
+          spin={false}
+          symbol={false}
+          title=""
+          transform={null}
+        />
+      </label>
+    </div>
+    <button
+      className="button purple-button"
+    >
+      Submit Evaluation
+    </button>
+  </form>
+</div>
+`;

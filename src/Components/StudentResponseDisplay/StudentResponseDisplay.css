@@ -1,0 +1,69 @@
+
+.add-student-form {
+  display: flex; 
+  flex-direction: column;
+  padding: 15px;
+  border-radius: 15px;
+  margin: 20px auto;
+  width: 80%;
+  max-width: 300px;
+  align-items: center;
+}
+
+.StudentResponseDisplay {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid darkgray;
+  border-radius: 15px;
+  margin: 0px 20px;
+  max-width: 400px;
+}
+
+.StudentResponseDisplay ul {
+  margin: 5px;
+}
+.student-name {
+  text-align: left;
+  width: 100%;
+
+}
+
+.student-response {
+  border-left: 1px solid darkgray;
+  text-align: left;
+  width: 100%;
+}
+
+.student-response li {
+  border-bottom: 1px solid darkgray;
+  padding-bottom: 2%;
+}
+
+.student-response ul li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.student-name li {
+  border-bottom: 1px solid darkgray;
+  padding-bottom: 2%;
+}
+
+.StudentResponseDisplay h3 {
+  font-size: 18px;
+  margin: 10px 5px;
+  text-align: left;
+  height: 30px;
+}
+
+
+
+@media only screen and (min-width: 400px) {
+  
+  .StudentResponseDisplay {
+    margin: 0px auto;
+
+  }
+}
