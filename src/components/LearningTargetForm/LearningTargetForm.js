@@ -15,7 +15,6 @@ class LearningTargetForm extends React.Component {
   render() {
     return (
       <div className='learning-target-container'>
-      <ExitTicketForm updateExitTicket={this.updateExitTicket}/>
       <form className='learning-target-form'
         onSubmit={(e) => this.handleSubmit(e)}>
             <label htmlFor='learningTarget'>Learning Target:</label>
