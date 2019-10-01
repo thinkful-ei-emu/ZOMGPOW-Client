@@ -63,12 +63,11 @@ componentDidMount() {
     return StudentApiService.getStudentGoals(student_id)
       .then(res => {
         let goals = [...res.goals]
-        let subgoals = [...res.subgoals]
+        // let subgoals = [...res.subgoals]
         //need the correct subgoal (newest goal, but for current learning target)
-        return {
-          goals: goals.pop(),
-          subgoals: subgoals.pop()
-        }
+        return goals.pop();
+          // subgoals: subgoals.pop()
+        
       })
       .catch(error => this.setState({ error }))
   }
@@ -77,21 +76,21 @@ componentDidMount() {
     //students should be an array of objects
     return Promise.all(students.map(student => {
       return this.getGoal(student.id).then(goal => {
-        student.mainGoal = goal.goals.goal_title;
-        student.mainGoalId = goal.goals.id;
-        student.studentGoalId = goal.goals.sg_id;
-        student.mainGoalDate = goal.goals.date_created;
-
-        goal.subgoals 
-        ? student.studentSubgoalDate = goal.subgoals.date_created
-        : student.studentSubgoalDate = '';
-
-        goal.subgoals 
-        ? student.studentSubgoal = goal.subgoals.subgoal_title
-        : goal.subgoals = {};
+        student.mainGoal = goal.goal_title;
+        student.mainGoalId = goal.id;
+        student.studentGoalId = goal.sg_id;
+        student.mainGoalDate = goal.date_created;
+        console.log(goal)
+        // goal.subgoals 
+        // ? student.studentSubgoalDate = goal.subgoals.date_created
+        // : student.studentSubgoalDate = '';
+        console.log(goal.subgoals)
+        goal.subgoals.length > 0 
+        ? student.studentSubgoal = goal.subgoals[goal.subgoals.length-1].subgoal_title
+        : student.studentSubgoal = '';
 
     
-        student.iscomplete = goal.goals.iscomplete;
+        student.iscomplete = goal.iscomplete;
         student.expand = false;
         student.expired = false;
         student.order = 0;
