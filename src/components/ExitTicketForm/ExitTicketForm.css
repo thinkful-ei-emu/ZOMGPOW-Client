@@ -2,10 +2,10 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -30%);
   background-color: white;
   padding: 1rem 1.5rem;
-  width: 24rem;
+  width: 80%;
   border-radius: 15px;
   border: 1px solid darkgray;
 }
@@ -32,4 +32,31 @@
 .close:hover {
   color: black;
   cursor: pointer;
+}
+
+.modal textarea {
+  width: 80%;
+}
+
+.exit-ticket-button-container {
+  display: flex;
+  flex-direction: column;
+}
+.exit-ticket-button-container button {
+  margin-bottom: 5px;
+}
+
+/* MEDIA QUERIES */
+
+@media only screen and (min-width: 600px) {
+  .modal {
+    transform: translate(-50%, -50%);
+    width: 500px;
+  }
+
+  .exit-ticket-button-container button {
+    width: 50%;
+    margin: 0 auto;
+    margin-bottom: 5px;
+  }
 }
