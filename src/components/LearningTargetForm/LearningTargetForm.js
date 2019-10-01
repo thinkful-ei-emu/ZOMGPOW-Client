@@ -1,4 +1,5 @@
 import React from 'react';
+import ExitTicketForm from '../ExitTicketForm/ExitTicketForm';
 import './LearningTargetForm.css';
 
 class LearningTargetForm extends React.Component {

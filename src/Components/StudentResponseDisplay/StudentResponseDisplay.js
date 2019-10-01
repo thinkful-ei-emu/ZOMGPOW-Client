@@ -9,14 +9,14 @@ import openSocket from 'socket.io-client';
 class StudentResponseDisplay extends React.Component {
 
   static contextType = TeacherContext;
-  socket = openSocket('http://localhost:8000');
+  // socket = openSocket('http://localhost:8000');
 
   state = {
     error: null,
     userInput: '',
     newStudent: null,
     classId: null,
-    isDeleting: false,
+    loaded: false
   }
 
   componentDidMount() {
@@ -25,7 +25,7 @@ class StudentResponseDisplay extends React.Component {
     this.setState({
       classId: classId
     })
-    return fetch(`${config.API_ENDPOINT}/class/${classId}/students`, {
+    fetch(`${config.API_ENDPOINT}/class/${classId}/students`, {
       method: 'GET',
       headers: {
         'authorization': `Bearer ${TokenService.getAuthToken()}`,
@@ -38,23 +38,12 @@ class StudentResponseDisplay extends React.Component {
       )
       .then(resStudents => {
         this.props.displayStudents(resStudents)
+        this.setState({ loaded: true })
       })
       .catch(res => {
         this.setState({ error: res.error })
       })
-  }
-
-  handleDeleteStudent = (username, classId) => {
-    this.setState({isDeleting: true})
-    StudentAuthApiService.deleteStudent(username, classId)
-      .then(res => {
-        if(!res.ok){
-          this.setState({error: res.error})
-        } else {
-          this.props.removeStudent(username)
-          this.setState({isDeleting: false})
-        }
-      })
+    this.socket.on('patch student goal', this.rTPatchStudentGoal);
   }
 
   // Updates state with every user input change
@@ -64,36 +53,12 @@ class StudentResponseDisplay extends React.Component {
     })
   }
 
-  handleSubmit = (e) => { 
-    e.preventDefault();
-    this.setState({
-      newStudent: this.state.userInput,
-    })
-    // Use Student Api Service to post student - PSUEDO CODE
-    let newStudent = { full_name: this.state.userInput, class_id: this.state.classId }
-    StudentAuthApiService.postStudent(newStudent)
-      .then(res => {
-        this.props.addStudents(res)
-        this.setState({
-          userInput: '',
-        })
-
-      })
-      .catch(res => {
-        this.setState({
-          error: res.error,
-          newStudent: null,
-          userInput: '',
-        })
-      })
-  }
-
   render() {
-    const { error, classId, isDeleting} = this.state;
+    const { error, classId, loaded } = this.state;
     const fullname = this.props.students.map((student, index) => <li key={index}>{student.full_name}</li>)
-    const response = this.props.students.map((student, index) => <li key={index}>response</li>)
+    const response = this.props.students.map((student, index) => <li key={index}>{student.response ? student.response : 'awaiting response'}</li>)
     
-    if(isDeleting){
+    if(!loaded){
       return (<div>loading...</div>)
     } 
     return(

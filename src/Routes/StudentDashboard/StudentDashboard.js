@@ -45,6 +45,7 @@ class StudentDashboard extends React.Component{
       })
       this.socket.on('new goal', this.rTNewGoal);
       this.socket.on('patch goal', this.rTPatchGoal);
+      this.socket.on('patch student goal', this.rTPatchStudentGoal);
       this.socket.on('new subgoal', this.rTNewSubgoal);
       this.socket.on('patch subgoal', this.rTPatchSubgoal);
   }
@@ -117,6 +118,15 @@ class StudentDashboard extends React.Component{
     if(data.student_id === student.id){
       let newSubgoals = subgoals.map(subgoals => data.id === subgoals.id ? subgoals = data : subgoals)
       this.setState({ subgoals: newSubgoals })
+    }
+  }
+
+  rTPatchStudentGoal = async (data) => {
+    const { goals, studentId } = this.state;
+    let { student } = await StudentAuthApiService.getStudent(studentId)
+    if(data.student_id === student.id){
+      let newGoals = goals.map(goal => data.id === goal.id ? goal = data : goal)
+      this.setState({ goals: newGoals })
     }
   }
 
