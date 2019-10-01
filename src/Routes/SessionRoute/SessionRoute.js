@@ -81,7 +81,7 @@ componentDidMount() {
         student.studentGoalId = goal.sg_id;
         student.mainGoalDate = goal.date_created;
         //checks if there are subgoals and gets the most recent one for that specified goal   
-        goal.subgoals.length > 0 
+        goal.subgoals 
         ? student.studentSubgoal = goal.subgoals[goal.subgoals.length-1].subgoal_title
         : student.studentSubgoal = '';    
         student.iscomplete = goal.iscomplete;
