@@ -2,6 +2,7 @@ import React from 'react';
 import TeacherContext from '../../Contexts/TeacherContext';
 import TokenService from '../../Services/token-service';
 import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
+import Loading from '../../Components/Loading/Loading';
 import { Link } from 'react-router-dom';
 import config from '../../config';
 
@@ -24,7 +25,6 @@ class GoalDataDisplay extends React.Component {
 
   componentDidMount() {
 
-    console.log('From goal data', this.state.goalId, this.context.teacherClass.id)
 
     if (TokenService.getAuthToken() && !this.state.classId) {
       TeacherAuthApiService.getTeacherClasses()
@@ -115,10 +115,9 @@ class GoalDataDisplay extends React.Component {
 
   render() {
     const { loaded, goalData, exitTicketInfo, exitTicketHidden } = this.state;
-    console.log(exitTicketInfo[0])
 
     if (!loaded) {
-      return (<div>loading...</div>)
+      return (<Loading />)
     }
     else {
       let goals = this.makeGoalsTable(goalData);
@@ -129,16 +128,16 @@ class GoalDataDisplay extends React.Component {
         if (exitTicketInfo[0].question_type.toLowerCase() === 'multiple choice') {
           let correctAnswer = exitTicketInfo[0].answer
           let studentResponseRows = this.makeStudentResponseRows(goalData, correctAnswer);
-          let correctIndex = 0;
-          if (correctAnswer === 'B') {
-            correctIndex = 1
-          } else if (correctAnswer === 'C') {
-            correctIndex = 2
-          } else if (correctAnswer === 'D') {
-            correctIndex = 3
-          }
-          let optionClass = 'incorrect-option';
-          let prefix = 'A: ';
+          // let correctIndex = 0;
+          // if (correctAnswer === 'B') {
+          //   correctIndex = 1
+          // } else if (correctAnswer === 'C') {
+          //   correctIndex = 2
+          // } else if (correctAnswer === 'D') {
+          //   correctIndex = 3
+          // }
+          // let optionClass = 'incorrect-option';
+          // let prefix = 'A: ';
 
           exitTicketElements = <div>
             <h3>{exitTicketInfo[0].question}</h3>

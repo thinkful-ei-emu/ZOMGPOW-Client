@@ -1,8 +1,8 @@
 import React from 'react';
 import StudentApiService from '../../Services/student-auth-api-service';
 import StudentContext from '../../Contexts/StudentContext';
-import config from '../../config';
-import TokenService from '../../Services/token-service';
+import Loading from '../../Components/Loading/Loading';
+
 
 class ExitTicketStudentRoute extends React.Component {
   state = {
@@ -15,6 +15,7 @@ class ExitTicketStudentRoute extends React.Component {
     studentGoal: null,
     studentId: null,
     studentGoalId: null,
+    loaded: false,
   }
 
   static contextType = StudentContext;
@@ -33,6 +34,7 @@ class ExitTicketStudentRoute extends React.Component {
           exitTicketType: studentGoal.exit_ticket_type,
           studentGoalId: studentGoal.id,
           classId: studentGoal.class_id,
+          loaded: true,
         })
       })
         // .then(res => {
@@ -147,6 +149,11 @@ class ExitTicketStudentRoute extends React.Component {
   render() {
     let answer = this.renderAnswer();
     let motivationalMessage = this.randomMotivationalMessage();
+    const {loaded} = this.state;
+
+    if (!loaded){
+      return (<Loading />)
+    }
     return(
       <section>
         <div className={this.state.motivationalMessage ? 'hidden' : ''}>

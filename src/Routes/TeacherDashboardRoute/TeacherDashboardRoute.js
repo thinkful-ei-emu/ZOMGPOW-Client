@@ -6,6 +6,7 @@ import './TeacherDashboardRoute.css';
 import TeacherContext from '../../Contexts/TeacherContext';
 import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
 import TokenService from '../../Services/token-service';
+import Loading from '../../Components/Loading/Loading';
 
 class TeacherDashboardRoute extends React.Component{
 
@@ -63,7 +64,7 @@ class TeacherDashboardRoute extends React.Component{
     console.log(this.props, 'DASH PROPS')
     const {loaded, students} = this.state;
     if(!loaded){
-      return <div><p>loading...</p></div>
+      return <Loading />
     } else {
       return (
         <section className='TeacherDashboardRoute-section'>

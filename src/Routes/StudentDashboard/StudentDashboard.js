@@ -3,6 +3,7 @@ import StudentAuthApiService from '../../Services/student-auth-api-service';
 import { Link } from 'react-router-dom';
 import StudentTimer from '../../Components/Timer/StudentTimer';
 import StudentContext from '../../Contexts/StudentContext';
+import Loading from '../../Components/Loading/Loading';
 import './StudentDashboard.css';
 
 class StudentDashboard extends React.Component{
@@ -17,6 +18,7 @@ class StudentDashboard extends React.Component{
     evaluations:[],
     learningTarget: null,
     currentGoal: null,
+    loaded: false,
   };
 
   componentDidMount() {
@@ -33,7 +35,8 @@ class StudentDashboard extends React.Component{
           goals: student_goals,
           subgoals: student_subgoals,
           learningTarget: learningTarget,
-          currentGoal: currentGoal
+          currentGoal: currentGoal,
+          loaded: true,
         })
       })
       .catch(res => {
@@ -77,6 +80,10 @@ class StudentDashboard extends React.Component{
   render() {
     let currStudent = this.context.user.username;
     let currTimer = this.findStudentWithTimer(this.props.studentTimers, currStudent);
+    const {loaded} = this.state;
+    if(!loaded){
+      return <Loading />
+    }
 
     //grabs the last goal in goals which should be the most current learning target
     const learningTarget = this.state.goals[this.state.goals.length-1];

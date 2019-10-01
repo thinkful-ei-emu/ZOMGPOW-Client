@@ -2,6 +2,7 @@ import React from 'react';
 import TeacherContext from '../../Contexts/TeacherContext';
 import TokenService from '../../Services/token-service';
 import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
+import Loading from '../../Components/Loading/Loading';
 import { Link } from 'react-router-dom';
 import config from '../../config';
 
@@ -64,7 +65,7 @@ class SubGoalDataDisplay extends React.Component {
     const { loaded, subGoalData } = this.state;
 
     if (!loaded) {
-      return (<div>loading...</div>)
+      return (<Loading />)
     }
     else {
       let subGoals = this.makeGoalsTable(subGoalData);

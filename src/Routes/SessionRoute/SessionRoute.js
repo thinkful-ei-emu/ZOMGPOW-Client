@@ -3,6 +3,7 @@ import StudentApiService from '../../Services/student-auth-api-service';
 import TokenService from '../../Services/token-service';
 import TeacherContext from '../../Contexts/TeacherContext';
 import TeacherAuthService from '../../Services/teacher-auth-api-service';
+import Loading from '../../Components/Loading/Loading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './SessionRoute.css';
 
@@ -287,7 +288,7 @@ componentDidMount() {
     }
 
     if(!loaded) {
-      return <div>loading...</div>
+      return <Loading />
     }
 
     return (
