@@ -54,10 +54,10 @@
   margin: 5px 20px;
 }
 
-.SessionRoute-container input[type="radio"]{
+/* .SessionRoute-container input[type="radio"]{
   margin: 0px 5px;
   display: none;
-}
+} */
 
 .radio-label{
   padding: 5px;
