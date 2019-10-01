@@ -43,3 +43,8 @@
 .landing-page .student:hover, .landing-page .teacher:hover {
   background: var(--darkgray);
 }
+
+.description {
+  border-top: 1px solid var(--darkgray);
+  margin-top: 10px;
+}
