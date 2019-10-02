@@ -114,6 +114,19 @@ const StudentAuthApiService = {
         : res.json()
     )
   },
+  getCurrentStudentGoal(student_id) {
+    console.log('get student goals run')
+    return fetch(`${config.API_ENDPOINT}/goals/student/current/${student_id}`, {
+      headers: {
+        authorization: `bearer ${TokenService.getAuthToken()}`
+      },
+    })
+    .then(res =>
+      (!res.ok)
+        ? res.json().then(e => Promise.reject(e))
+        : res.json()
+    )
+  },
   postStudentSubgoal(student_goal_id, data) {
     return fetch(`${config.API_ENDPOINT}/subgoals/${student_goal_id}`, {
       method: 'POST',

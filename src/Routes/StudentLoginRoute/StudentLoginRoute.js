@@ -2,6 +2,7 @@ import React from 'react'
 import './StudentLoginRoute.css'
 import StudentAuthApiService from '../../Services/student-auth-api-service'
 import StudentContext from '../../Contexts/StudentContext';
+import config from '../../config';
 
 
 class StudentLoginRoute extends React.Component {
@@ -18,6 +19,7 @@ class StudentLoginRoute extends React.Component {
   }
 
   onLoginSuccess = () => {
+    this.props.handleHeaderType(config.STUDENT);
     const { location, history } = this.props
     const destination = (location.state || {}).from || '/dashboard/student'
     history.push(destination)

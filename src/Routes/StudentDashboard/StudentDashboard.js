@@ -7,6 +7,7 @@ import Loading from '../../Components/Loading/Loading';
 import openSocket from 'socket.io-client';
 import './StudentDashboard.css';
 
+
 class StudentDashboard extends React.Component{
   static contextType = StudentContext;
   socket = openSocket('http://localhost:8000');
@@ -57,15 +58,9 @@ class StudentDashboard extends React.Component{
     this.context.processLogout();
   }
 
-  renderStudentLogout(){
+  renderExitTicketLink(){
     return (
       <nav>
-        <Link 
-          onClick={this.handleLogoutClick}
-          to='/'
-          className='green-button button'>
-          Logout
-        </Link>
         <Link
         to='/student/exitTicket'
         className='button blue-button'
@@ -162,7 +157,7 @@ class StudentDashboard extends React.Component{
     return(
       <section className="student-dashboard-section" >
           <div className="links">
-            {this.renderStudentLogout()}
+            {this.renderExitTicketLink()}
           </div>  
         <div className='goals-container'>
           {/* Learning Target */}

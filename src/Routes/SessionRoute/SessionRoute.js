@@ -40,8 +40,11 @@ componentDidMount() {
         })
         .then(res => {              
           this.setupStudents(res.students)
-            .then(setupStudents => {
+            .then(setupStudents => {    
               let goals = [...res.goals]
+              goals.sort(function (a, b) {
+                return a.id - b.id;
+              });             
               const learningTarget = goals[0] ? goals.pop() : {}
               this.setState({
                 classId,
@@ -61,13 +64,10 @@ componentDidMount() {
 
   getGoal(student_id) {
     //get student goals
-    return StudentApiService.getStudentGoals(student_id)
-      .then(res => {
-        let goals = [...res.goals]
-        // let subgoals = [...res.subgoals]
-        //need the correct subgoal (newest goal, but for current learning target)
-        return goals.pop();
-          // subgoals: subgoals.pop()
+    return StudentApiService.getCurrentStudentGoal(student_id)
+      .then(res => {      
+          let goal = res.currentGoal;
+          return goal
         
       })
       .catch(error => this.setState({ error }))
