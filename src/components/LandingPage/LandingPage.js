@@ -57,6 +57,12 @@ class LandingPage extends React.Component {
         <section className='description'>
           {/* Video or gif tutorial? */}
         </section>
+        <section className='description'>
+        <h2>Sprout Demo</h2>
+          <p>Discover what Sprout has to offer:</p>
+          <p>Username: Teacher1</p>
+          <p>Password: Teacher1pass!</p>
+        </section>
       </div>
     )
   }
