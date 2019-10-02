@@ -1,9 +1,10 @@
 import React from 'react';
 import config from '../../config';
 import TokenService from '../../Services/token-service';
+import { Link } from 'react-router-dom';
 import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
 import TeacherContext from '../../Contexts/TeacherContext';
-import StudentResponseDislpay from '../../Components/StudentResponseDisplay/StudentResponseDisplay';
+import StudentResponseDisplay from '../../Components/StudentResponseDisplay/StudentResponseDisplay';
 
 class ExitTicketTeacherRoute extends React.Component {
 
@@ -89,17 +90,18 @@ class ExitTicketTeacherRoute extends React.Component {
         <ul>{options}</ul>
         <h3>{this.state.exitTicketCorrectAnswer ? `Correct Answer: ${this.state.exitTicketCorrectAnswer}` : ''}</h3>
         <div className='student-answers'>
-          <h2>Student Responses</h2>
+          {this.state.exitTicketQuestion && <h2>Student Responses</h2>}
         </div>
         <section className='TeacherDashboardRoute-section'>
         <div className='TeacherDashboardRoute-student-list'>
-          <StudentResponseDislpay 
+          {this.state.exitTicketQuestion && 
+          <StudentResponseDisplay 
             displayStudents= {this.displayStudents} 
             classId={this.state.classId} 
-            students={this.state.students}/>
+            students={this.state.students}/>}
         </div>
         </section>
-        {/* Link to dashboard or data view? */}
+        <Link to={'/dashboard/teacher'} className='button green-button'>Dashboard</Link> 
       </div>
     )
   }
