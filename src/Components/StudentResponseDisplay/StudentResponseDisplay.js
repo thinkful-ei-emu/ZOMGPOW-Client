@@ -22,10 +22,6 @@ class StudentResponseDisplay extends React.Component {
   componentDidMount() {
     // Fetch students from API
     let classId = this.context.teacherClass.id
-    this.setState({
-      classId: classId,
-      students: [...this.props.students]
-    })
     fetch(`${config.API_ENDPOINT}/class/${classId}/students`, {
       method: 'GET',
       headers: {
@@ -38,8 +34,13 @@ class StudentResponseDisplay extends React.Component {
           : res.json()
       )
       .then(resStudents => {
+        console.log('resStudents: ', resStudents)
         this.props.displayStudents(resStudents)
         this.setState({ loaded: true })
+        this.setState({
+          classId: classId,
+          students: [...this.props.students]
+        })
       })
       .catch(res => {
         this.setState({ error: res.error })
@@ -49,8 +50,7 @@ class StudentResponseDisplay extends React.Component {
 
   ticketResponse = async (data) => {
     const { students } = this.state;
-    console.log('DATA:', data)
-    let updateStudents = students.map(student => data.student_id === student.id ? student = data : student)
+    let updateStudents = students.map(student => data.student_id === student.id ? student = {...student, student_response: data.student_response} : student)
     this.setState({ students: updateStudents })
   }
 
@@ -67,7 +67,7 @@ class StudentResponseDisplay extends React.Component {
     students.length ? studentList = students : studentList = this.props.students
     console.log(studentList)
     const fullname = studentList.map((student, index) => <li key={index}>{student.full_name}</li>)
-    const response = studentList.map((student, index) => <li key={index}>{student.response ? student.response : 'awaiting response'}</li>)
+    const response = studentList.map((student, index) => <li key={index}>{student.student_response ? student.student_response : 'awaiting response'}</li>)
     
     if(!loaded){
       return (<div>loading...</div>)

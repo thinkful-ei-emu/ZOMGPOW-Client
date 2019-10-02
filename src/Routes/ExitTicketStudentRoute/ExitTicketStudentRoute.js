@@ -28,11 +28,12 @@ class ExitTicketStudentRoute extends React.Component {
     StudentApiService.getStudentGoals(this.context.user.id)
       .then(res => {
         const studentGoal = res.goals.pop();
+        console.log(studentGoal)
         this.setState({
           exitTicketQuestion: studentGoal.exit_ticket_question,
           exitTicketOptions: studentGoal.exit_ticket_options,
           exitTicketType: studentGoal.exit_ticket_type,
-          studentGoalId: studentGoal.id,
+          studentGoalId: studentGoal.sg_id,
           classId: studentGoal.class_id,
           loaded: true,
         })

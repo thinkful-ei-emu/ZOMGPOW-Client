@@ -28,7 +28,7 @@ class SelfEvaluate extends React.Component {
       });
     }
     else{
-    const id = this.props.location.state.currentGoal.id;
+    const id = this.props.location.state.currentGoal.sg_id;
       StudentAuthApiService.patchSubGoal(id, {evaluation: studentScore})
       .then(() => this.props.history.goBack())
       .catch(error => {
