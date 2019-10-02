@@ -1,5 +1,4 @@
 import React from 'react';
-import StudentAuthApiService from '../../Services/student-auth-api-service';
 import './StudentResponseDisplay.css';
 import TeacherContext from '../../Contexts/TeacherContext'
 import config from '../../config'
@@ -16,16 +15,18 @@ class StudentResponseDisplay extends React.Component {
     userInput: '',
     newStudent: null,
     classId: null,
-    isDeleting: false,
+    loaded: false,
+    students: []
   }
 
   componentDidMount() {
     // Fetch students from API
     let classId = this.context.teacherClass.id
     this.setState({
-      classId: classId
+      classId: classId,
+      students: [...this.props.students]
     })
-    return fetch(`${config.API_ENDPOINT}/class/${classId}/students`, {
+    fetch(`${config.API_ENDPOINT}/class/${classId}/students`, {
       method: 'GET',
       headers: {
         'authorization': `Bearer ${TokenService.getAuthToken()}`,
@@ -38,23 +39,19 @@ class StudentResponseDisplay extends React.Component {
       )
       .then(resStudents => {
         this.props.displayStudents(resStudents)
+        this.setState({ loaded: true })
       })
       .catch(res => {
         this.setState({ error: res.error })
       })
+    this.socket.on('patch student goal', this.ticketResponse);
   }
 
-  handleDeleteStudent = (username, classId) => {
-    this.setState({isDeleting: true})
-    StudentAuthApiService.deleteStudent(username, classId)
-      .then(res => {
-        if(!res.ok){
-          this.setState({error: res.error})
-        } else {
-          this.props.removeStudent(username)
-          this.setState({isDeleting: false})
-        }
-      })
+  ticketResponse = async (data) => {
+    const { students } = this.state;
+    console.log('DATA:', data)
+    let updateStudents = students.map(student => data.student_id === student.id ? student = data : student)
+    this.setState({ students: updateStudents })
   }
 
   // Updates state with every user input change
@@ -64,36 +61,14 @@ class StudentResponseDisplay extends React.Component {
     })
   }
 
-  handleSubmit = (e) => { 
-    e.preventDefault();
-    this.setState({
-      newStudent: this.state.userInput,
-    })
-    // Use Student Api Service to post student - PSUEDO CODE
-    let newStudent = { full_name: this.state.userInput, class_id: this.state.classId }
-    StudentAuthApiService.postStudent(newStudent)
-      .then(res => {
-        this.props.addStudents(res)
-        this.setState({
-          userInput: '',
-        })
-
-      })
-      .catch(res => {
-        this.setState({
-          error: res.error,
-          newStudent: null,
-          userInput: '',
-        })
-      })
-  }
-
   render() {
-    const { error, classId, isDeleting} = this.state;
-    const fullname = this.props.students.map((student, index) => <li key={index}>{student.full_name}</li>)
-    const response = this.props.students.map((student, index) => <li key={index}>response</li>)
+    const { error, classId, loaded, students } = this.state;
+    let studentList;
+    students.length ? studentList = students : studentList = this.props.students
+    const fullname = studentList.map((student, index) => <li key={index}>{student.full_name}</li>)
+    const response = studentList.map((student, index) => <li key={index}>{student.response ? student.response : 'awaiting response'}</li>)
     
-    if(isDeleting){
+    if(!loaded){
       return (<div>loading...</div>)
     } 
     return(
