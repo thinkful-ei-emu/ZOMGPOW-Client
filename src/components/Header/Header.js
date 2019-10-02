@@ -3,6 +3,7 @@ import './Header.css';
 import { Link } from 'react-router-dom';
 import TeacherContext from '../../Contexts/TeacherContext';
 import TokenService from '../../Services/token-service';
+import GreenSprout from '../../Images/green-sprout.svg';
 
 class Header extends React.Component {
   static contextType = TeacherContext;
@@ -39,12 +40,12 @@ class Header extends React.Component {
     return (
       <nav className='logout-buttons'>
         <Link to='/dashboard/teacher' className='purple-button button'>Dashboard</Link>
-        {disabled ? '' : <Link to='/session' className='blue-button button'>Session Goals</Link>}
-        <Link to='/data' className='red-button button'>Data</Link>
+        {disabled ? '' : <Link to='/session' className='green-button button'>Session Goals</Link>}
+        <Link to='/data' className='blue-button button'>Data Display</Link>
         <Link 
           onClick={this.handleLogoutClick}
           to='/'
-          className='green-button button'>
+          className='red-button button'>
           Logout
         </Link>
       </nav>
@@ -57,7 +58,7 @@ class Header extends React.Component {
         <Link 
           onClick={this.handleLogoutClick}
           to='/'
-          className='green-button button'>
+          className='red-button button'>
           Logout
         </Link>
       </nav>
@@ -65,13 +66,17 @@ class Header extends React.Component {
   }
 
   render(){
+    console.log(TokenService.hasAuthToken(), "AUTH")
     return (
       <header className="header" role="banner">
+      
         <h1>
+          <img src={GreenSprout} alt='sprout' height='80px' width='80px'/>
           <Link to='/'>
           Sprout
           </Link>
         </h1>
+        
         <div className="links">
           {TokenService.hasAuthToken() 
           ? this.renderLogOutLinks()

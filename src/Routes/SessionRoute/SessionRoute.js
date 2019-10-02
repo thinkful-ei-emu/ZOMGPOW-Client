@@ -36,12 +36,15 @@ componentDidMount() {
           this.context.setClass(classes[0]);
           classId = this.context.teacherClass.id;
           //get students, goals, and subgoals
-          return StudentApiService.getAllStudents(classId)
+          return StudentApiService.getClass(classId)
         })
         .then(res => {              
           this.setupStudents(res.students)
-            .then(setupStudents => {
+            .then(setupStudents => {    
               let goals = [...res.goals]
+              goals.sort(function (a, b) {
+                return a.id - b.id;
+              });             
               const learningTarget = goals[0] ? goals.pop() : {}
               this.setState({
                 classId,
@@ -61,13 +64,10 @@ componentDidMount() {
 
   getGoal(student_id) {
     //get student goals
-    return StudentApiService.getStudentGoals(student_id)
-      .then(res => {
-        let goals = [...res.goals]
-        // let subgoals = [...res.subgoals]
-        //need the correct subgoal (newest goal, but for current learning target)
-        return goals.pop();
-          // subgoals: subgoals.pop()
+    return StudentApiService.getCurrentStudentGoal(student_id)
+      .then(res => {      
+          let goal = res.currentGoal;
+          return goal
         
       })
       .catch(error => this.setState({ error }))
@@ -216,9 +216,9 @@ componentDidMount() {
             <div>
               <p>Learning Target Complete!</p>
               <button 
-                className='button green-button'
+                className='button purple-button'
                 onClick={() => this.toggleTargetComplete(student.studentGoalId, student.iscomplete)
-                }>Undo Complete</button>
+                }>Undo Completed Learning Target</button>
             </div> 
             : 
             <div>   
@@ -230,9 +230,7 @@ componentDidMount() {
 
               <p>{student.studentSubgoal? student.expand? `Student Goal: ${student.studentSubgoal}`: student.studentSubgoal: this.state.learningTarget}</p>
           
-            <button
-              className={student.expand ? ' button blue-button' : 'button purple-button'}
-              onClick={e => this.toggleExpand(student.user_name)}>{student.expand ? 'Cancel' : 'Check In'}</button>
+            
             <div className={student.expand ? '' : 'hidden'}>
               <form onSubmit={e => this.handleUpdateGoal(e, student.user_name)}>
                 <label
@@ -250,44 +248,56 @@ componentDidMount() {
                 />
                 <div>
                   <h4>Priority:</h4>
-                  <input
-                    className='radio'
-                    type='radio'
-                    value='high'
-                    id='high'
-                    name='priority'
-                    onChange={(e) => this.setState({ updatedPriority: 'high' })} />
-                  <label
-                    className='radio-label'
-                    htmlFor='high'><FontAwesomeIcon className='high-priority' icon={['fas', 'search']} />High</label>
-                  <input
-                    className='radio'
-                    type='radio'
-                    value='medium'
-                    id='medium'
-                    name='priority'
-                    onChange={(e) => this.setState({ updatedPriority: 'medium' })} />
-                  <label
-                    className='radio-label'
-                    htmlFor='medium'><FontAwesomeIcon className='medium-priority' icon={['fas', 'search']} />Medium</label>
-                  <input
-                    className='radio'
-                    type='radio'
-                    value='low'
-                    id='low'
-                    name='priority'
-                    onChange={(e) => this.setState({ updatedPriority: 'low' })} />
-                  <label
-                    className='radio-label'
-                    htmlFor='low'><FontAwesomeIcon className='low-priority' icon={['fas', 'search']} />Low</label>
+                  <div className='priority-container'>
+                  <div>
+                    <input
+                      className='radio'
+                      type='radio'
+                      value='high'
+                      id='high'
+                      name='priority'
+                      onChange={(e) => this.setState({ updatedPriority: 'high' })} />
+                    <label
+                      className='radio-label'
+                      htmlFor='high'><FontAwesomeIcon className='high-priority' icon={['fas', 'search']} />High</label>
+                      </div>
+                      <div>
+                    <input
+                      className='radio'
+                      type='radio'
+                      value='medium'
+                      id='medium'
+                      name='priority'
+                      onChange={(e) => this.setState({ updatedPriority: 'medium' })} />
+                    <label
+                      className='radio-label'
+                      htmlFor='medium'><FontAwesomeIcon className='medium-priority' icon={['fas', 'search']} />Medium</label>
+                      </div>
+                      <div>
+                    <input
+                      className='radio'
+                      type='radio'
+                      value='low'
+                      id='low'
+                      name='priority'
+                      onChange={(e) => this.setState({ updatedPriority: 'low' })} />
+                    <label
+                      className='radio-label'
+                      htmlFor='low'><FontAwesomeIcon className='low-priority' icon={['fas', 'search']} />Low</label>
+                      </div>
+                  </div> 
                 </div>
                 <div>
                   <button
-                    className='update button green-button'
+                    className='update button purple-button'
                     type='submit'>Update Goal</button>
                 </div>
               </form>
+              
             </div>
+            <button
+              className={student.expand ? ' button red-button' : 'button purple-button'}
+              onClick={e => this.toggleExpand(student.user_name)}>{student.expand ? 'Cancel' : 'Check In'}</button>
           </div>
           }
         </li>
@@ -319,7 +329,7 @@ componentDidMount() {
             <h2>Learning Target: </h2>
             <p className='learning-target'>{learningTarget}</p>
             <button 
-              className={'button blue-button'}
+              className={'button green-button'}
               onClick={(e) => {this.handleEndSession(e)}}
             >End Session</button>
           </div>

@@ -7,6 +7,7 @@ import Loading from '../../Components/Loading/Loading';
 import openSocket from 'socket.io-client';
 import './StudentDashboard.css';
 
+
 class StudentDashboard extends React.Component{
   static contextType = StudentContext;
   socket = openSocket('http://localhost:8000');
@@ -29,6 +30,7 @@ class StudentDashboard extends React.Component{
     console.log(this.context.user.id)
     StudentAuthApiService.getStudentGoals(this.context.user.id)
       .then(res => {
+        console.log('goals: ', res.goals)
         const student_goals = res.goals;
         const learningTarget = res.goals[res.goals.length-1];
         const student_subgoals = learningTarget.subgoals;
@@ -47,6 +49,7 @@ class StudentDashboard extends React.Component{
       })
       this.socket.on('new goal', this.rTNewGoal);
       this.socket.on('patch goal', this.rTPatchGoal);
+      this.socket.on('patch student goal', this.rTPatchStudentGoal);
       this.socket.on('new subgoal', this.rTNewSubgoal);
       this.socket.on('patch subgoal', this.rTPatchSubgoal);
   }
@@ -55,15 +58,9 @@ class StudentDashboard extends React.Component{
     this.context.processLogout();
   }
 
-  renderStudentLogout(){
+  renderExitTicketLink(){
     return (
       <nav>
-        <Link 
-          onClick={this.handleLogoutClick}
-          to='/'
-          className='green-button button'>
-          Logout
-        </Link>
         <Link
         to='/student/exitTicket'
         className='button blue-button'
@@ -85,16 +82,17 @@ class StudentDashboard extends React.Component{
     //currStudent is student username
    
     let currTimer = studentTimers.find(timer => timer.student === currStudent)
-    console.log(currTimer)
+
     return currTimer;
-    
   }
+
+  
   
   rTNewGoal = async (data) => {
     const { goals, studentId } = this.state;
     let { student } = await StudentAuthApiService.getStudent(studentId)
     if(data.class_id === student.class_id)
-      this.setState({ goals: [...goals, data] })
+      this.setState({ goals: [...goals, data], learningTarget: data, currentGoal: data })
   }
 
   rTPatchGoal = async (data) => {
@@ -102,23 +100,32 @@ class StudentDashboard extends React.Component{
     let { student } = await StudentAuthApiService.getStudent(studentId)
     if(data.class_id === student.class_id){
       let newGoals = goals.map(goal => data.id === goal.id ? goal = data : goal)
-      this.setState({ goals: newGoals })
+      this.setState({ goals: newGoals, learningTarget: data })
     }
   }
 
   rTNewSubgoal = async (data) => {
     const { subgoals, studentId } = this.state;
-    let { student } = await StudentAuthApiService.getStudent(studentId)
-    if(data.student_id === student.id)
-      this.setState({ goals: [...subgoals, data] })
+    let { studentGoal } = await StudentAuthApiService.getStudentGoalbyStuId(studentId, data.student_goal_id)
+    if(studentGoal)
+      this.setState({ goals: [...subgoals, data], currentGoal: data })
   }
 
   rTPatchSubgoal = async (data) => {
     const { subgoals, studentId } = this.state;
+    let { studentGoal } = await StudentAuthApiService.getStudentGoalbyStuId(studentId, data.student_goal_id)
+    if(studentGoal){
+      let newSubgoals = subgoals.map(subgoals => data.id === subgoals.id ? subgoals = data : subgoals)
+      this.setState({ subgoals: newSubgoals, currentGoal: data })
+    }
+  }
+
+  rTPatchStudentGoal = async (data) => {
+    const { goals, studentId } = this.state;
     let { student } = await StudentAuthApiService.getStudent(studentId)
     if(data.student_id === student.id){
-      let newSubgoals = subgoals.map(subgoals => data.id === subgoals.id ? subgoals = data : subgoals)
-      this.setState({ subgoals: newSubgoals })
+      let newGoals = goals.map(goal => data.id === goal.id ? goal = data : goal)
+      this.setState({ goals: newGoals, learningTarget: data })
     }
   }
 
@@ -127,8 +134,9 @@ class StudentDashboard extends React.Component{
     let currStudent = this.context.user.username;
     let currTimer = this.findStudentWithTimer(this.props.studentTimers, currStudent);
     const {loaded, error, currentGoal, learningTarget, subgoals, timer} = this.state;
-    console.log(this.state)
     console.log('loaded', loaded)
+    console.log('timer', timer)
+
 
     
 
@@ -151,7 +159,7 @@ class StudentDashboard extends React.Component{
     return(
       <section className="student-dashboard-section" >
           <div className="links">
-            {this.renderStudentLogout()}
+            {this.renderExitTicketLink()}
           </div>  
         <div className='goals-container'>
           {/* Learning Target */}
@@ -167,17 +175,18 @@ class StudentDashboard extends React.Component{
 
         <div className='timer-container'>
         
-          <button 
-          className='button blue-button'
+        <button 
+        className='button blue-button'
+        
+        onClick={this.toggleTimer}
+       
+        >{this.state.show ? 'Hide' : 'Timer'}</button>
+        <div className={this.state.show ? '' : 'hidden'}>
+          <StudentTimer currTimer={currTimer} />
           
-          onClick={this.toggleTimer}
-         
-          >{this.state.show ? 'Hide' : 'Timer'}</button>
-          <div className={this.state.show ? '' : 'hidden'}>
-            <StudentTimer currTimer={currTimer}/>
-            
-          </div>
         </div>
+      </div>
+        
         <div>
         <Link to={{
           pathname: '/selfEvaluate', 
