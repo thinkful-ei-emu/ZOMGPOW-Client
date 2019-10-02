@@ -29,6 +29,7 @@ class StudentDashboard extends React.Component{
     console.log(this.context.user.id)
     StudentAuthApiService.getStudentGoals(this.context.user.id)
       .then(res => {
+        console.log('goals: ', res.goals)
         const student_goals = res.goals;
         const learningTarget = res.goals[res.goals.length-1];
         const student_subgoals = learningTarget.subgoals;
@@ -95,7 +96,7 @@ class StudentDashboard extends React.Component{
     const { goals, studentId } = this.state;
     let { student } = await StudentAuthApiService.getStudent(studentId)
     if(data.class_id === student.class_id)
-      this.setState({ goals: [...goals, data] })
+      this.setState({ goals: [...goals, data], learningTarget: data, currentGoal: data })
   }
 
   rTPatchGoal = async (data) => {
@@ -103,23 +104,23 @@ class StudentDashboard extends React.Component{
     let { student } = await StudentAuthApiService.getStudent(studentId)
     if(data.class_id === student.class_id){
       let newGoals = goals.map(goal => data.id === goal.id ? goal = data : goal)
-      this.setState({ goals: newGoals })
+      this.setState({ goals: newGoals, learningTarget: data })
     }
   }
 
   rTNewSubgoal = async (data) => {
     const { subgoals, studentId } = this.state;
-    let { student } = await StudentAuthApiService.getStudent(studentId)
-    if(data.student_id === student.id)
-      this.setState({ goals: [...subgoals, data] })
+    let { studentGoal } = await StudentAuthApiService.getStudentGoalbyStuId(studentId, data.student_goal_id)
+    if(studentGoal)
+      this.setState({ goals: [...subgoals, data], currentGoal: data })
   }
 
   rTPatchSubgoal = async (data) => {
     const { subgoals, studentId } = this.state;
-    let { student } = await StudentAuthApiService.getStudent(studentId)
-    if(data.student_id === student.id){
+    let { studentGoal } = await StudentAuthApiService.getStudentGoalbyStuId(studentId, data.student_goal_id)
+    if(studentGoal){
       let newSubgoals = subgoals.map(subgoals => data.id === subgoals.id ? subgoals = data : subgoals)
-      this.setState({ subgoals: newSubgoals })
+      this.setState({ subgoals: newSubgoals, currentGoal: data })
     }
   }
 
@@ -128,7 +129,7 @@ class StudentDashboard extends React.Component{
     let { student } = await StudentAuthApiService.getStudent(studentId)
     if(data.student_id === student.id){
       let newGoals = goals.map(goal => data.id === goal.id ? goal = data : goal)
-      this.setState({ goals: newGoals })
+      this.setState({ goals: newGoals, learningTarget: data })
     }
   }
 

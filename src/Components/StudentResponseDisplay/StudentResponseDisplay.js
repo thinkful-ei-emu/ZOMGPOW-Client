@@ -1,11 +1,9 @@
 import React from 'react';
-import StudentAuthApiService from '../../Services/student-auth-api-service';
 import './StudentResponseDisplay.css';
 import TeacherContext from '../../Contexts/TeacherContext'
 import config from '../../config'
 import TokenService from '../../Services/token-service'
 import openSocket from 'socket.io-client';
-import { compileFunction } from 'vm';
 
 class StudentResponseDisplay extends React.Component {
 
@@ -51,7 +49,7 @@ class StudentResponseDisplay extends React.Component {
 
   ticketResponse = async (data) => {
     const { students } = this.state;
-    console.log(data)
+    console.log('DATA:', data)
     let updateStudents = students.map(student => data.student_id === student.id ? student = data : student)
     this.setState({ students: updateStudents })
   }
