@@ -54,102 +54,103 @@ export default class App extends React.Component {
     return (
       <div className="App">
         <Header />
-        <Switch>
-          <PublicOnlyTeacherRoute
-            path='/login/teacher'
-            component={TeacherLoginRoute}
-          />
-          <PublicOnlyTeacherRoute
-            path='/register'
-            component={RegistrationRoute}
-          />
-          <Route
-            exact path='/'
-            component={LandingPage}
-          />
-          <PublicOnlyStudentRoute
-            path='/login/student'
-            component={StudentLoginRoute}
-          />
-          <PrivateRoute
-            path='/dashboard/teacher'
-            render={(props) => {
-              return (
-                <TeacherDashboardRoute {...props}
-                 />
-              )
-            }}
-          />
-          <PrivateRoute
-            path='/session'
-            render={(props) => {
-              return (
-                <SessionRoute {...props}
-                 handleStudentTimers={this.handleStudentTimers}
-                 />
-              )
-            }}
-          />
-          <PrivateRoute
-            path='/dashboard/student'
-            render={(props) => {
-              return (
-                
-                <StudentDashboard {...props} studentTimers={this.state.studentTimers} />
-                
-              );
-            }}
-          />
-          
-          <PrivateRoute
-            path='/selfEvaluate'
-            render={(props)=> {
-              return (
-                <SelfEvaluate {...props}/>
-              )
-            }}
-          />
-          <Route
-            exact
-            path='/data'
-            render={(props)=> {
-              return (
-                <DataDisplay {...props}/>
-              )
-            }}
-          />
-          <Route
-            exact
-            path='/data/:goalId'
-            component={GoalDataDisplay}
-          />
-          <Route
-            exact
-            path='/data/:goalId/:studentGoalId'
-            component={SubGoalDataDisplay}
-          />
-          <Route
-            path='/exitTicket'
-            render={(props)=> {
-              return (
-                <ExitTicketTeacherRoute {...props}/>
-              )
-            }}
+        <main>
+          <Switch>
+            <PublicOnlyTeacherRoute
+              path='/login/teacher'
+              component={TeacherLoginRoute}
             />
-          <PrivateRoute
-            path='/student/exitTicket'
-            render={(props)=> {
-              return (
-                <ExitTicketStudentRoute {...props}/>
-              )
-            }}
-          />
-          <Route
-            component={NotFoundRoute}
-          />
-          
-        </Switch>
-        
+            <PublicOnlyTeacherRoute
+              path='/register'
+              component={RegistrationRoute}
+            />
+            <Route
+              exact path='/'
+              component={LandingPage}
+            />
+            <PublicOnlyStudentRoute
+              path='/login/student'
+              component={StudentLoginRoute}
+            />
+            <PrivateRoute
+              path='/dashboard/teacher'
+              render={(props) => {
+                return (
+                  <TeacherDashboardRoute {...props}
+                  />
+                )
+              }}
+            />
+            <PrivateRoute
+              path='/session'
+              render={(props) => {
+                return (
+                  <SessionRoute {...props}
+                  handleStudentTimers={this.handleStudentTimers}
+                  />
+                )
+              }}
+            />
+            <PrivateRoute
+              path='/dashboard/student'
+              render={(props) => {
+                return (
+                  
+                  <StudentDashboard {...props} studentTimers={this.state.studentTimers} />
+                  
+                );
+              }}
+            />
+            
+            <PrivateRoute
+              path='/selfEvaluate'
+              render={(props)=> {
+                return (
+                  <SelfEvaluate {...props}/>
+                )
+              }}
+            />
+            <Route
+              exact
+              path='/data'
+              render={(props)=> {
+                return (
+                  <DataDisplay {...props}/>
+                )
+              }}
+            />
+            <Route
+              exact
+              path='/data/:goalId'
+              component={GoalDataDisplay}
+            />
+            <Route
+              exact
+              path='/data/:goalId/:studentGoalId'
+              component={SubGoalDataDisplay}
+            />
+            <Route
+              path='/exitTicket'
+              render={(props)=> {
+                return (
+                  <ExitTicketTeacherRoute {...props}/>
+                )
+              }}
+              />
+            <PrivateRoute
+              path='/student/exitTicket'
+              render={(props)=> {
+                return (
+                  <ExitTicketStudentRoute {...props}/>
+                )
+              }}
+            />
+            <Route
+              component={NotFoundRoute}
+            />
+            
+          </Switch>
+        </main>
       </div>
     );
   }

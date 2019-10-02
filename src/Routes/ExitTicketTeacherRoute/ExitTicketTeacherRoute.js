@@ -74,6 +74,24 @@ class ExitTicketTeacherRoute extends React.Component {
     })
   }
 
+  displayStudentResponses = () => {
+    if (this.state.exitTicketQuestion) {
+      return (
+        <section className='TeacherDashboardRoute-student-list TeacherDashboardRoute-section' >
+          <div className='student-answers'>
+            <h2>Student Responses</h2>
+          </div>
+          <StudentResponseDislpay 
+            displayStudents= {this.displayStudents} 
+            classId={this.state.classId} 
+            students={this.state.students}/>
+        </section>
+      ) 
+    } else {
+      return <></>
+    }
+  }
+
   render() {
     let options = this.state.exitTicketOptions ?
       this.state.exitTicketOptions.map((option, index) => <li key={index}>{option}</li>)
@@ -82,24 +100,16 @@ class ExitTicketTeacherRoute extends React.Component {
       if(!this.state.loaded){
         return <div>loading...</div>
       }
+    let studentResponseDisplay = this.displayStudentResponses();
     return (
       <div>
-        <h2>{this.state.exitTicketQuestion ? 'Exit Ticket Prompt:' : `You didn't create an exit ticket this time!`}</h2>
-        <h3>{this.state.exitTicketQuestion? this.state.exitTicketQuestion : ''}</h3>
-        <ul>{options}</ul>
-        <h3>{this.state.exitTicketCorrectAnswer ? `Correct Answer: ${this.state.exitTicketCorrectAnswer}` : ''}</h3>
-        <div className='student-answers'>
-          <h2>Student Responses</h2>
-        </div>
-        <section className='TeacherDashboardRoute-section'>
-        <div className='TeacherDashboardRoute-student-list'>
-          <StudentResponseDislpay 
-            displayStudents= {this.displayStudents} 
-            classId={this.state.classId} 
-            students={this.state.students}/>
-        </div>
+        <section>
+          <h2>{this.state.exitTicketQuestion ? 'Exit Ticket Prompt:' : `You didn't create an exit ticket this time!`}</h2>
+          <h3>{this.state.exitTicketQuestion? this.state.exitTicketQuestion : ''}</h3>
+          <ul>{options}</ul>
+          <h3>{this.state.exitTicketCorrectAnswer ? `Correct Answer: ${this.state.exitTicketCorrectAnswer}` : ''}</h3>
         </section>
-        {/* Link to dashboard or data view? */}
+        {studentResponseDisplay}
       </div>
     )
   }

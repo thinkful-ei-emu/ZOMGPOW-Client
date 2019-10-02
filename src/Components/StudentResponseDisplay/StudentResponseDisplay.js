@@ -98,7 +98,6 @@ class StudentResponseDisplay extends React.Component {
     } 
     return(
       <div className='StudentResponseDisplay-container'>
-      <h2>Students</h2>
       <div className='alert' role='alert'>
         {error && <p>{error}</p>}
       </div>
