@@ -2,8 +2,8 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import TokenService from '../Services/token-service';
 
-function PublicOnlyTeacherRoute({ component, ...props }){
-  const Component = component
+function PublicOnlyTeacherRoute({ component, render, ...props }){
+  const Component = component || render
   return (
     <Route
     {...props}

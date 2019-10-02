@@ -68,6 +68,7 @@ class Header extends React.Component {
   }
 
   render(){
+    console.log(TokenService.hasAuthToken(), "AUTH")
     return (
       <header className="header" role="banner">
       

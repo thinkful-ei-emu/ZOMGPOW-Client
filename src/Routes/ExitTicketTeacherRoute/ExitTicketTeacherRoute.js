@@ -1,9 +1,10 @@
 import React from 'react';
 import config from '../../config';
 import TokenService from '../../Services/token-service';
+import { Link } from 'react-router-dom';
 import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
 import TeacherContext from '../../Contexts/TeacherContext';
-import StudentResponseDislpay from '../../Components/StudentResponseDisplay/StudentResponseDisplay';
+import StudentResponseDisplay from '../../Components/StudentResponseDisplay/StudentResponseDisplay';
 
 class ExitTicketTeacherRoute extends React.Component {
 
@@ -104,12 +105,24 @@ class ExitTicketTeacherRoute extends React.Component {
     return (
       <div>
         <section>
-          <h2>{this.state.exitTicketQuestion ? 'Exit Ticket Prompt:' : `You didn't create an exit ticket this time!`}</h2>
-          <h3>{this.state.exitTicketQuestion? this.state.exitTicketQuestion : ''}</h3>
-          <ul>{options}</ul>
-          <h3>{this.state.exitTicketCorrectAnswer ? `Correct Answer: ${this.state.exitTicketCorrectAnswer}` : ''}</h3>
+        <h2>{this.state.exitTicketQuestion ? 'Exit Ticket Prompt:' : `You didn't create an exit ticket this time!`}</h2>
+        <h3>{this.state.exitTicketQuestion? this.state.exitTicketQuestion : ''}</h3>
+        <ul>{options}</ul>
+        <h3>{this.state.exitTicketCorrectAnswer ? `Correct Answer: ${this.state.exitTicketCorrectAnswer}` : ''}</h3>
         </section>
-        {studentResponseDisplay}
+        <div className='student-answers'>
+          {this.state.exitTicketQuestion && <h2>Student Responses</h2>}
+        </div>
+        <section className='TeacherDashboardRoute-section'>
+        <div className='TeacherDashboardRoute-student-list'>
+          {this.state.exitTicketQuestion && 
+          <StudentResponseDisplay 
+            displayStudents= {this.displayStudents} 
+            classId={this.state.classId} 
+            students={this.state.students}/>}
+        </div>
+        </section>
+        <Link to={'/dashboard/teacher'} className='button green-button'>Dashboard</Link> 
       </div>
     )
   }

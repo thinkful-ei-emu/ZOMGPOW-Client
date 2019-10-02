@@ -75,8 +75,21 @@ const StudentAuthApiService = {
         : res.json()
     )
   },
-  getStudent(id){
-    return fetch(`${config.API_ENDPOINT}/studentgoals/student/${id}`, {
+  getStudent(stuId){
+    return fetch(`${config.API_ENDPOINT}/studentgoals/student/${stuId}`, {
+      method: 'GET',
+      headers: {
+        'authorization': `Bearer ${TokenService.getAuthToken()}`,
+      },
+    })
+    .then(res =>
+      (!res.ok)
+        ? res.json().then(e => Promise.reject(e))
+        : res.json()
+    )
+  },
+  getStudentGoalbyStuId(stuId, stuGoalId){
+    return fetch(`${config.API_ENDPOINT}/studentgoals/student/${stuId}/${stuGoalId}`, {
       method: 'GET',
       headers: {
         'authorization': `Bearer ${TokenService.getAuthToken()}`,
@@ -91,6 +104,19 @@ const StudentAuthApiService = {
   getStudentGoals(student_id) {
     console.log('get student goals run')
     return fetch(`${config.API_ENDPOINT}/goals/student/${student_id}`, {
+      headers: {
+        authorization: `bearer ${TokenService.getAuthToken()}`
+      },
+    })
+    .then(res =>
+      (!res.ok)
+        ? res.json().then(e => Promise.reject(e))
+        : res.json()
+    )
+  },
+  getCurrentStudentGoal(student_id) {
+    console.log('get student goals run')
+    return fetch(`${config.API_ENDPOINT}/goals/student/current/${student_id}`, {
       headers: {
         authorization: `bearer ${TokenService.getAuthToken()}`
       },
