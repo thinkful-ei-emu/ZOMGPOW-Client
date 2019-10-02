@@ -122,7 +122,7 @@ class ExitTicketTeacherRoute extends React.Component {
             students={this.state.students}/>}
         </div>
         </section>
-        <Link to={'/dashboard/teacher'} className='button green-button'>Dashboard</Link> 
+        <Link to={'/dashboard/teacher'} className='button green-button'>Return to Dashboard</Link> 
       </div>
     )
   }

@@ -3,9 +3,7 @@ import './Header.css';
 import { Link } from 'react-router-dom';
 import TeacherContext from '../../Contexts/TeacherContext';
 import TokenService from '../../Services/token-service';
-import PurpleSprout from '../../Images/purple-sprout.svg';
 import GreenSprout from '../../Images/green-sprout.svg';
-import BlueSprout from '../../Images/blue-sprout.svg';
 
 class Header extends React.Component {
   static contextType = TeacherContext;

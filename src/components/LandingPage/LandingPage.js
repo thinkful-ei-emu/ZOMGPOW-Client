@@ -2,6 +2,8 @@ import React from 'react';
 import './LandingPage.css';
 import { Link } from 'react-router-dom';
 import Placeholder from '../../Images/placeholderimg.svg';
+import PurpleSprout from '../../Images/purple-sprout.svg';
+import BlueSprout from '../../Images/blue-sprout.svg';
 
 class LandingPage extends React.Component {
 
@@ -26,16 +28,17 @@ class LandingPage extends React.Component {
         </div>
         </section>
         <section className='description gray-background '> 
+          <img src={PurpleSprout} alt='sprout' height='100px' width='100px' />
           <h2>Set and Track Individual Student Goals</h2>
           <div className='info white-card'>
           <p>Sprout helps teachers set and track individual, 
             real-time goals with students to keep them on track 
             to reach the lesson's learning target.
           </p>
-          <img src={Placeholder} alt='placeholder' height='300px' width='300px'/>
+          <img src={Placeholder} alt='placeholder' height='300px' width='300px'className='placeholder'/>
           </div>
           <div className='info white-card'>
-          <img src={Placeholder} alt='placeholder' height='300px' width='300px'/>
+          <img src={Placeholder} alt='placeholder' height='300px' width='300px'className='placeholder'/>
           <p>In session, teachers can view all students, the 
             current learning target, and each student's current goal.
           </p>
@@ -51,21 +54,22 @@ class LandingPage extends React.Component {
             can see which students are ready for a check-in and the priority of their
             current goal.
           </p>
-          <img src={Placeholder} alt='placeholder' height='300px' width='300px'/>
+          <img src={Placeholder} alt='placeholder' height='300px' width='300px'className='placeholder'/>
           </div>
         </section>
         <section className='description'>
+        <img src={BlueSprout} alt='sprout' height='100px' width='100px' />
         <h2>Exit Ticket Feedback in Real Time</h2>
           <div className='info'>
           <p>paragraph</p>
-          <img src={Placeholder} alt='placeholder' height='300px' width='300px'/>
+          <img src={Placeholder} alt='placeholder' height='300px' width='300px'className='placeholder'/>
           </div>
         </section>
         <section className='description top-border sprout-background'>
         <h2>Data Collection and Grouping</h2>
           <div className='info white-card'>
           <p>paragraph</p>
-          <img src={Placeholder} alt='placeholder' height='300px' width='300px'/>
+          <img src={Placeholder} alt='placeholder' height='300px' width='300px'className='placeholder'/>
           </div>
         </section>
         {/* <section className='description top-border'>
