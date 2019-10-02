@@ -2,6 +2,7 @@ import React from 'react';
 import StudentApiService from '../../Services/student-auth-api-service';
 import StudentContext from '../../Contexts/StudentContext';
 import Loading from '../../Components/Loading/Loading';
+import { Link } from 'react-router-dom';
 
 
 class ExitTicketStudentRoute extends React.Component {
@@ -168,6 +169,7 @@ class ExitTicketStudentRoute extends React.Component {
         </div>
         <div className={this.state.motivationalMessage ? '' : 'hidden'}>
           <h2>{motivationalMessage}</h2>
+          <Link to='/dashboard/student' className='button green-button'>Dashboard</Link>
         </div>
       </section>
     )
