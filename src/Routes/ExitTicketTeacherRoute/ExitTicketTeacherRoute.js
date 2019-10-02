@@ -82,7 +82,7 @@ class ExitTicketTeacherRoute extends React.Component {
           <div className='student-answers'>
             <h2>Student Responses</h2>
           </div>
-          <StudentResponseDislpay 
+          <StudentResponseDisplay 
             displayStudents= {this.displayStudents} 
             classId={this.state.classId} 
             students={this.state.students}/>
