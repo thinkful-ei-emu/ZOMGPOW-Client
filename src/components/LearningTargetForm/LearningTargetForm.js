@@ -1,8 +1,10 @@
 import React from 'react';
-import ExitTicketForm from '../ExitTicketForm/ExitTicketForm';
+import TeacherContext from '../../Contexts/TeacherContext';
 import './LearningTargetForm.css';
 
 class LearningTargetForm extends React.Component {
+
+  static contextType = TeacherContext;
 
   state = {
     error: null,
@@ -11,6 +13,7 @@ class LearningTargetForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    this.context.startSession();
     this.props.showModal();
   }
   render() {
