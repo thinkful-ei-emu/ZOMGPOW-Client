@@ -62,6 +62,7 @@ export default class App extends React.Component {
    let headerType = this.state.headerType === config.STUDENT ? <StudentHeader /> : <Header />
     return (
       <div className="App">
+      <main>
         {headerType}
         <Switch>
           <PublicOnlyTeacherRoute
@@ -157,20 +158,20 @@ export default class App extends React.Component {
               )
             }}
             />
-          <PrivateRoute
-            path='/student/exitTicket'
-            render={(props)=> {
-              return (
-                <ExitTicketStudentRoute {...props}/>
-              )
-            }}
-          />
-          <Route
-            component={NotFoundRoute}
-          />
-          
-        </Switch>
-        
+            <PrivateRoute
+              path='/student/exitTicket'
+              render={(props)=> {
+                return (
+                  <ExitTicketStudentRoute {...props}/>
+                )
+              }}
+            />
+            <Route
+              component={NotFoundRoute}
+            />
+            
+          </Switch>
+        </main>
       </div>
     );
   }
