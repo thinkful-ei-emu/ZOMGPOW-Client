@@ -67,34 +67,30 @@ class StudentResponseDisplay extends React.Component {
     students.length ? studentList = students : studentList = this.props.students
     const fullname = studentList.map((student, index) => <li key={index}>{student.full_name}</li>)
     const response = studentList.map((student, index) => <li key={index}>{student.response ? student.response : 'awaiting response'}</li>)
-    
-    if(!loaded){
+
+    if (!loaded) {
       return (<div>loading...</div>)
-    } 
-    return(
+    }
+    return (
       <div className='StudentResponseDisplay-container'>
-      <h2>Students</h2>
-      <div className='alert' role='alert'>
-        {error && <p>{error}</p>}
-      </div>
-      {fullname.length < 1 
-            ? <p>Add your students!</p> 
-            :
-            <div className='StudentResponseDisplay'>
-              <div className='student-name'>
-                <h3>Student Name</h3>
-                <ul>
-                  {fullname}
-                </ul>
-              </div>
-              <div className='student-response'>
-                <h3>Response</h3>
-                <ul>
-                  {response}
-                </ul>
-              </div>
-            </div>
-      }
+        <h2>Students</h2>
+        <div className='alert' role='alert'>
+          {error && <p>{error}</p>}
+        </div>
+        <div className='StudentResponseDisplay'>
+          <div className='student-name'>
+            <h3>Student Name</h3>
+            <ul>
+              {fullname}
+            </ul>
+          </div>
+          <div className='student-response'>
+            <h3>Response</h3>
+            <ul>
+              {response}
+            </ul>
+          </div>
+        </div>
       </div>
     )
   }
