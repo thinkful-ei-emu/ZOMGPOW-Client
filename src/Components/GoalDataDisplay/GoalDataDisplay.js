@@ -83,7 +83,7 @@ class GoalDataDisplay extends React.Component {
       else if (studentResponses[i].response === 'C') {
         arrC.push(studentResponses[i].full_name)
       }
-      else {
+      else if (studentResponses[i].response === 'D'){
         arrD.push(studentResponses[i].full_name)
       }
 
