@@ -36,7 +36,7 @@ componentDidMount() {
           this.context.setClass(classes[0]);
           classId = this.context.teacherClass.id;
           //get students, goals, and subgoals
-          return StudentApiService.getAllStudents(classId)
+          return StudentApiService.getClass(classId)
         })
         .then(res => {              
           this.setupStudents(res.students)
