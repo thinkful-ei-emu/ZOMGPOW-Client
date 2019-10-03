@@ -101,7 +101,6 @@ class ExitTicketTeacherRoute extends React.Component {
       if(!this.state.loaded){
         return <div>loading...</div>
       }
-    let studentResponseDisplay = this.displayStudentResponses();
     return (
       <div>
         <section>
