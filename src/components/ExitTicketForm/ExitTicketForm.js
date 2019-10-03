@@ -117,7 +117,7 @@ class ExitTicketForm extends React.Component {
               {this.state.error && <p className='alert'>{this.state.error}</p>}
             <button 
               type='submit'
-              className='button purple-button'
+              className='button green-button'
             >Start Session</button>
           </form>
         </div>
@@ -135,7 +135,7 @@ class ExitTicketForm extends React.Component {
             />
             <button 
               type='submit'
-              className='button purple-button'
+              className='button green-button'
             >Start Session</button>
           </form>
           </div>
@@ -146,12 +146,12 @@ class ExitTicketForm extends React.Component {
           >Multiple Choice
           </button>
           <button 
-            className='button green-button'
+            className='button purple-button'
             onClick={() => this.setState({multipleChoiceVisible: false, shortAnswerVisible: true})}
           >Short Answer
           </button>
           <button 
-            className='button red-button'
+            className='button green-button'
             onClick={(e) => this.props.handleSubmit(e)}
           >No thanks, start my session
           </button>
