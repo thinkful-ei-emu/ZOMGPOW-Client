@@ -98,7 +98,7 @@ class StudentDashboard extends React.Component{
     const { subgoals, studentId } = this.state;
     let { studentGoal } = await StudentAuthApiService.getStudentGoalbyStuId(studentId, data.student_goal_id)
     if(studentGoal)
-      this.setState({ goals: [...subgoals, data], currentGoal: data })
+      this.setState({ subgoals: [...subgoals, data], currentGoal: data })
   }
 
   rTPatchSubgoal = async (data) => {
@@ -151,11 +151,9 @@ class StudentDashboard extends React.Component{
             {this.renderExitTicketLink()}
           </div>  
         <div className='goals-container'>
-          {/* Learning Target */}
           <h2>Learning Target: </h2>
           <div className='student-goal'><p>{learningTarget.goal_title}</p></div>
 
-          {/* current goal */}
           <h2>Current Goal:</h2>
           <div className='student-subgoal'>
           <p>{(currentGoal.subgoal_title) ? currentGoal.subgoal_title : currentGoal.goal_title}</p>          
@@ -179,15 +177,19 @@ class StudentDashboard extends React.Component{
         <Link to={{
           pathname: '/selfEvaluate', 
           state: {
-            currentGoal: this.state.currentGoal,
-            learningTarget: this.state.learningTarget
+            learningTargetId: learningTarget.id,
+            learningTargetTitle: learningTarget.goal_title
           }
           }}>Ready to self-evaluate?</Link> 
         </div>
         <div>
+  
           <h3>Previous Goals</h3>
           {(subgoals.length) 
-          ? <ul>{subgoals.map((goal, i) => <li key={i}>{(currentGoal.subgoal_title === goal.subgoal_title) ? <p>No previous goals</p> : goal.subgoal_title}</li>)}</ul> 
+          ? <ul>{subgoals.map((goal, i) => {
+            console.log('subgoals: ', subgoals)
+          return <li key={i}>{(currentGoal.subgoal_title === goal.subgoal_title) 
+          ? <div></div> : goal.subgoal_title}</li>})}</ul> 
           : <p>No previous goals</p>}
         </div>
       </section>
