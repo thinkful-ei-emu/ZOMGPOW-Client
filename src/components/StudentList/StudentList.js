@@ -61,6 +61,7 @@ class StudentList extends React.Component {
 
   // Updates state with every user input change
   handleChange = (e) => {
+    console.log(e.target.value)
     this.setState({
       userInput: e.target.value,
     })
@@ -71,7 +72,7 @@ class StudentList extends React.Component {
     this.setState({
       newStudent: this.state.userInput,
     })
-    // Use Student Api Service to post student - PSUEDO CODE
+    // Use Student Api Service to post student
     let newStudent = { full_name: this.state.userInput, class_id: this.state.classId }
     StudentAuthApiService.postStudent(newStudent)
       .then(res => {
@@ -85,7 +86,7 @@ class StudentList extends React.Component {
         this.setState({
           error: res.error,
           newStudent: null,
-          userInput: '',
+          
         })
       })
   }

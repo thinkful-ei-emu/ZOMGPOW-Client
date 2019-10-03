@@ -230,7 +230,7 @@ class GoalDataDisplay extends React.Component {
 
       if (goals.length) {
         return (
-          <div>
+          <div className='data-display-container'>
             <h3>{goalData[0].title}</h3>
             <div className='data-table-container'>
               <table className='data-table goal-data'>

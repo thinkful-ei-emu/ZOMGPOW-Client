@@ -1,29 +1,34 @@
+.data-display-container {
+  margin-bottom: 200px;
+}
 .data-table-container {
-  width: 100%;
+  max-width: 1100px;
   display: flex;  
   justify-content: center;
-  margin-top: 3%;
+  margin: 3% 10px;
 }
 
 .contain-student-res {
-  width: 35%;
+  width: 850px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
   align-items: flex-start;
+  border: 1px solid lightgray;
+  border-radius: 8px;
 }
 
 .student-answer-response {
   border-bottom: 1px solid lightGrey;
   padding: 1%;
   text-align: left;
+  width: 98%;
 }
 
 .exit-ticket-data-container {
-  width: 100%;
   display: flex; 
   justify-content: center;
-  margin-top: 1%;
+  margin: 1% 10px;
 }
 
 .exit-ticket-response-container {  
@@ -39,9 +44,21 @@
 
 }
 
-/* .option-title {
-  border-bottom: 1px solid gray;
-} */
+/* Zebra striping */
+tr:nth-of-type(odd) { 
+  background: #eee; 
+}
+th { 
+  background: var(--darkgray); 
+  color: white; 
+  font-weight: bold; 
+  border-radius: 8px;
+}
+td, th { 
+  padding: 9px; 
+  border: 1px solid #ccc; 
+  text-align: left; 
+}
 
 .a-column, .b-column, .c-column, .d-column {
   margin: 0 1%;
@@ -55,8 +72,6 @@
   color: red;
 }
 .goal-data > tbody > tr > td   {
-  /* border: 1px solid lightgray;
-  border-radius: 5px; */
   padding: .3% 1%;
 }
 
@@ -65,9 +80,9 @@
   border-collapse: separate;
   border: 1px solid lightgray;
   text-align: center;
-  border-radius: 15px;
+  border-radius: 8px;
   padding: 1%;
-  box-shadow: 3px 3px 10px 3px rgb(168, 164, 164);
+
 }
 
 .goal-data{
@@ -117,73 +132,66 @@
 .data-table > thead > tr > th:last-child  {
   border-right: none;
 }
-.data-table { 
-  width: 100%; 
-  border-collapse: collapse; 
+
+@media only screen and (max-width: 850px) {
+  
+    .contain-student-res {
+      width: 70%;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      align-items: flex-start;
+    } 
+    .main-table table thead, 
+    .main-table tbody, 
+    .main-table th, 
+    .main-table td, 
+    .main-table tr {
+      display: block;
+    }
+    .main-table thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+     
+    }
+    .main-table tr { 
+      border: 1px solid #ccc; 
+      
+    }
+    .main-table td {
+      border: none;
+      border-bottom: 1px solid #eee;
+      position: relative;
+      padding-left: 200px;
+      margin-left: 200px;
+    }
+    .main-table td:before {
+      position: absolute;
+      left: 6px;
+      width: 200px;
+      padding-right: 40px;
+      white-space: nowrap;
+      margin-left: -200px;
+    }
+    /*
+    Label the data
+    */
+    .main-table td:nth-of-type(1):before { content: "Title"; }
+    .main-table td:nth-of-type(2):before { content: "Total Completed"; }
+    .main-table td:nth-of-type(3):before { content: "Total Students"; }
+    .main-table td:nth-of-type(4):before { content: "Completion Rate"; }
+    .main-table td:nth-of-type(5):before { content: "Completion Time"; }
+    .main-table td:nth-of-type(6):before { content: "Confidence Rate"; }
+    .main-table td:nth-of-type(7):before { content: "Confidence Avg Score"; }
+  
 }
-/* Zebra striping */
-tr:nth-of-type(odd) { 
-  background: #eee; 
-}
-th { 
-  background: #333; 
-  color: white; 
-  font-weight: bold; 
-}
-td, th { 
-  padding: 6px; 
-  border: 1px solid #ccc; 
-  text-align: left; 
-}
-@media only screen and (max-width: 160px),(min-device-width: 768px) and (max-device-width: 1024px) {
-  /* .contain-student-res {
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    align-items: flex-start;
-  } */
-  .data-table, thead, tbody, th, td, tr{
-    display: block;
+
+@media only screen and (min-width: 1100px) {
+  .data-table-container {
+    max-width: 1100px;
+    display: flex;  
+    justify-content: center;
+    margin: 20px auto;
   }
-  thead tr { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
-	
-	tr { border: 1px solid #ccc; }
-	
-	td { 
-		/* Behave  like a "row" */
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 50%; 
-	}
-	
-	td:before { 
-		/* Now like a table header */
-		position: absolute;
-		/* Top/left values mimic padding */
-		top: 6px;
-		left: 6px;
-		width: 45%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-	}
-	
-	/*
-	Label the data
-	*/
-	td:nth-of-type(1):before { content: "First Name"; }
-	td:nth-of-type(2):before { content: "Last Name"; }
-	td:nth-of-type(3):before { content: "Job Title"; }
-	td:nth-of-type(4):before { content: "Favorite Color"; }
-	td:nth-of-type(5):before { content: "Wars of Trek?"; }
-	td:nth-of-type(6):before { content: "Secret Alias"; }
-	td:nth-of-type(7):before { content: "Date of Birth"; }
-	td:nth-of-type(8):before { content: "Dream Vacation City"; }
-	td:nth-of-type(9):before { content: "GPA"; }
-	td:nth-of-type(10):before { content: "Arbitrary Data"; }
 }
