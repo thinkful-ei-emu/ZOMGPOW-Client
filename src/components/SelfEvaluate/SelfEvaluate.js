@@ -18,7 +18,7 @@ class SelfEvaluate extends React.Component {
   postEvaluation = (e) => {
     e.preventDefault()
     const studentScore = this.state.score;
-    const student_goal_id = this.props.location.state.learningTarget;
+    const student_goal_id = this.props.location.state.learningTargetId;
       StudentAuthApiService.patchStudentGoal(student_goal_id, {evaluation: studentScore})
       .then(() => this.props.history.goBack())
       .catch(error => {
@@ -28,10 +28,12 @@ class SelfEvaluate extends React.Component {
   }
   
   render(){
+    const learningTarget = this.props.location.state.learningTargetTitle;
     return (
       <div className='self-evaluate-form'>
       <form className='form' onSubmit={this.postEvaluation}>
-      <h3>Rate your level of understanding:</h3>
+      <h3>How do you currently feel about: </h3>
+      {learningTarget}
       <div className='option'>
         <input
          onChange={(e) => this.setState({ score: 3 })}

@@ -189,7 +189,8 @@ class StudentDashboard extends React.Component{
         <Link to={{
           pathname: '/selfEvaluate', 
           state: {
-            learningTarget: learningTarget.id
+            learningTargetId: learningTarget.id,
+            learningTargetTitle: learningTarget.goal_title
           }
           }}>Ready to self-evaluate?</Link> 
         </div>
