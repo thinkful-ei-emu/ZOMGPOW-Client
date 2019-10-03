@@ -149,7 +149,7 @@ table .data-table {
 } */
 
 @media
-only screen and (max-width: 600px) {
+only screen and (max-width: 800px) {
   .contain-student-res {
     width: 70%;
     display: flex;

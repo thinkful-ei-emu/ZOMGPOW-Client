@@ -116,7 +116,7 @@ class DataDisplay extends React.Component {
 
       if(goals.length){
         return (
-          <div>
+          <div className='data-display-container'>
             <h3>Goals Data</h3>
             <div className='data-table-container'>
               <table className = 'data-table main-table'>
