@@ -2,6 +2,7 @@ import React from 'react';
 import './StudentResponseDisplay.css';
 import TeacherContext from '../../Contexts/TeacherContext'
 import config from '../../config'
+import Loading from '../../Components/Loading/Loading';
 import TokenService from '../../Services/token-service'
 import openSocket from 'socket.io-client';
 
@@ -65,27 +66,18 @@ class StudentResponseDisplay extends React.Component {
     const { error, loaded, students } = this.state;
     let studentList;
     students.length ? studentList = students : studentList = this.props.students
-    const fullname = studentList.map((student, index) => <li key={index}>{student.full_name}</li>)
-    const response = studentList.map((student, index) => <li key={index}>{student.student_response ? student.student_response : 'awaiting response'}</li>)
+    const response = studentList.map((student, index) => <li key={index}><strong className='student-name'>{student.full_name}: </strong><br></br>{student.student_response ? student.student_response : 'awaiting response'}</li>)
     
     if(!loaded){
-      return (<div>loading...</div>)
+      return (<Loading />)
     }
     return (
       <div className='StudentResponseDisplay-container'>
-        <h2>Students</h2>
         <div className='alert' role='alert'>
           {error && <p>{error}</p>}
         </div>
         <div className='StudentResponseDisplay'>
-          <div className='student-name'>
-            <h3>Student Name</h3>
-            <ul>
-              {fullname}
-            </ul>
-          </div>
           <div className='student-response'>
-            <h3>Response</h3>
             <ul>
               {response}
             </ul>
