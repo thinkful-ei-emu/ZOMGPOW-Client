@@ -101,12 +101,18 @@
   background-size: cover;
 }
 
-.middle .placeholder {
+.middle {
   border-right: 2px solid white;
   border-left: none;
 }
 
-.blue-card .placeholder {
+.middle p {
+  font-size: 35px;
+  font-family: var(--heading-font);
+  margin-top: 0;
+}
+
+.blue-card {
   border-left: 2px solid white;
 }
 
@@ -115,8 +121,9 @@
   border-left: none;
 }
 
-.placeholder {
-  border-left: 2px solid var(--purple);
+ .sprout-images{
+  width: 60%;
+  border-radius: 8px;
 }
 @media only screen and (min-width: 600px) {
   .info {

@@ -1,9 +1,11 @@
 import React from 'react';
 import './LandingPage.css';
 import { Link } from 'react-router-dom';
-import Placeholder from '../../Images/placeholderimg.svg';
 import PurpleSprout from '../../Images/purple-sprout.svg';
 import BlueSprout from '../../Images/blue-sprout.svg';
+import SproutInAction from '../../Images/SproutInAction2.png';
+import Priority from '../../Images/Priority.png';
+import ExitTicket from '../../Images/ExitTicket.png';
 
 class LandingPage extends React.Component {
 
@@ -35,10 +37,9 @@ class LandingPage extends React.Component {
               real-time goals with students to keep them on track
               to reach the lesson's learning target.
           </p>
-            <img src={Placeholder} alt='placeholder' height='300px' width='300px' className='placeholder' />
+            <img src={SproutInAction} alt='session page of app' className='sprout-images' />
           </div>
           <div className='info white-card middle'>
-            <img src={Placeholder} alt='placeholder' height='300px' width='300px' className='placeholder' />
             <p>In session, teachers can view all students, the
               current learning target, and each student's current goal.
           </p>
@@ -49,12 +50,12 @@ class LandingPage extends React.Component {
               Checking in with a student allows teachers to break the learning target
               into smaller goals on an individual basis and choose a check-in priority
               for that student.  Selecting a high priority will alert the teacher that
-              the student needs a check-in in X minutes, while a medium priority alerts
-              in X minutes, and a low priority in X minutes.  At a glance, teachers
+              the student needs a check-in in 5 minutes, while a medium priority alerts
+              in 10 minutes, and a low priority in 15 minutes.  At a glance, teachers
               can see which students are ready for a check-in and the priority of their
               current goal.
           </p>
-            <img src={Placeholder} alt='placeholder' height='300px' width='300px' className='placeholder' />
+            <img src={Priority} alt='placeholder' height='400px'  />
           </div>
         </section>
         <section className='description'>
@@ -65,13 +66,12 @@ class LandingPage extends React.Component {
               After ending a session, student responses to the exit ticket can be
               monitored in real-time.
           </p>
-            <img src={Placeholder} alt='placeholder' height='300px' width='300px' className='placeholder' />
+            <img src={ExitTicket} alt='placeholder' className='sprout-images' />
           </div>
         </section>
         <section className='description top-border sprout-background'>
           <h2>Data Collection and Grouping</h2>
           <div className='info white-card'>
-            <img src={Placeholder} alt='placeholder' height='300px' width='300px' className='data-card' />
             <p>All data collected on a class and student level can be accessed on the Data Display.
               Sprout tracks many classroom statics, including: the number and percentage of students who complete a learning target,
               individual and class average of self-evaluation scores, individual goals set for each student, exit ticket responses,
