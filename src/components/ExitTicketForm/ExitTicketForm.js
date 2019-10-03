@@ -156,10 +156,7 @@ class ExitTicketForm extends React.Component {
           >No thanks, start my session
           </button>
         </div>
-      </div>
-
-        
-        
+      </div>        
       </div>
     )
   }

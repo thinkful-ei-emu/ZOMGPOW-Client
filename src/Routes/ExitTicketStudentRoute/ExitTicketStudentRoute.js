@@ -27,7 +27,7 @@ class ExitTicketStudentRoute extends React.Component {
     })
     
     StudentApiService.getStudentGoals(this.context.user.id)
-      .then(res => { 
+      .then(res => {      
         let studentGoals = [...res.goals]       
         const studentGoal = studentGoals.pop();  
         this.setState({
@@ -41,7 +41,7 @@ class ExitTicketStudentRoute extends React.Component {
       })
       .then(() => {
         StudentApiService.getStudentGoalbyStuId(this.state.studentId, this.state.studentGoalId)
-        .then(res => {
+        .then(res => {    
         if (res.studentGoal.student_response) {
           this.setState({
             motivationalMessage: true

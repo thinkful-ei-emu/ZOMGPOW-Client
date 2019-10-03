@@ -10,8 +10,7 @@ class StudentHeader extends React.Component {
   static contextType = StudentContext;
 
   handleLogoutClick = () => {
-    this.context.processLogout();
-    
+    this.context.processLogout();    
   }
 
   renderLogInLinks = () =>{

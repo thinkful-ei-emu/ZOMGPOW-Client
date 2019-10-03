@@ -35,24 +35,9 @@ export class TeacherProvider extends Component {
         id: jwtPayload.user_id,
         full_name: jwtPayload.full_name,
         email: jwtPayload.email,
-      }
-    this.state = state;
-    // IdleService.setIdleCallback(this.logoutBecauseIdle)
+      }    
+    this.state = state;  
   }
-
-  // componentDidMount() {
-  //   if (TokenService.hasAuthToken()) {
-  //     IdleService.regiserIdleTimerResets()
-  //     TokenService.queueCallbackBeforeExpiry(() => {
-  //       this.fetchRefreshToken()
-  //     })
-  //   }
-  // }
-
-  // componentWillUnmount() {
-  //   IdleService.unRegisterIdleResets()
-  //   TokenService.clearCallbackBeforeExpiry()
-  // }
 
   startSession = () => {
     this.setState({
@@ -89,40 +74,12 @@ export class TeacherProvider extends Component {
     TokenService.saveAuthToken(authToken)
     this.setUser({user})
     this.setClass({teacherClass})
-
-  //   IdleService.regiserIdleTimerResets()
-  //   TokenService.queueCallbackBeforeExpiry(() => {
-  //     this.fetchRefreshToken()
-  //  })
   }
 
   processLogout = () => {
-    TokenService.clearAuthToken()
-    // TokenService.clearCallbackBeforeExpiry()
-    // IdleService.unRegisterIdleResets()
+    TokenService.clearAuthToken()   
     this.setUser({})
   }
-
-  // logoutBecauseIdle = () => {
-  //   TokenService.clearAuthToken()
-  //   TokenService.clearCallbackBeforeExpiry()
-  //   IdleService.unRegisterIdleResets()
-  //   this.setUser({ idle: true })
-  // }
-
-  // fetchRefreshToken = () => {
-  //   TeacherAuthApiService.refreshToken()
-  //     .then(res => {
-  //       TokenService.saveAuthToken(res.authToken)
-  //       TokenService.queueCallbackBeforeExpiry(() => {
-  //         this.fetchRefreshToken()
-  //       })
-  //     })
-  //     .catch(err => {
-  //       this.setError(err)
-  //     })
-  // }
-
 
   render() {
     const value = {

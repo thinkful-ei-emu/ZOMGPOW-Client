@@ -118,21 +118,7 @@ class StudentDashboard extends React.Component{
 
   render() {
 
-
-    const {loaded, error, currentGoal, learningTarget, subgoals } = this.state;
-
-
-    
-
-    //grabs the last goal in goals which should be the most current learning target
-    // const learningTarget = this.state.goals[this.state.goals.length-1];
-    //removes the last subgoal from subgoals
-    
-    // let array = [...this.state.subgoals]; 
-    // const currentGoal = array.pop();
-    //maps through the rest of the subgoals
-    
-    // const previousGoals = array.map((sub, index) => <li key={index}>{sub.subgoal_title}</li>);
+    const {loaded, error, currentGoal, learningTarget, subgoals } = this.state;  
 
     if(error){
       return <p>{error.message}</p>
