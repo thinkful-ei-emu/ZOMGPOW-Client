@@ -26,11 +26,8 @@ class StudentDashboard extends React.Component{
   };
 
   componentDidMount() {
-    console.log('student dashboard CDM')
-    console.log(this.context.user.id)
     StudentAuthApiService.getStudentGoals(this.context.user.id)
       .then(res => {
-        console.log('goals: ', res.goals)
         const student_goals = res.goals;
         const learningTarget = res.goals[res.goals.length-1];
         const student_subgoals = learningTarget.subgoals;
@@ -123,8 +120,6 @@ class StudentDashboard extends React.Component{
 
 
     const {loaded, error, currentGoal, learningTarget, subgoals } = this.state;
-    console.log('loaded', loaded)
-    console.log(currentGoal)
 
 
     
