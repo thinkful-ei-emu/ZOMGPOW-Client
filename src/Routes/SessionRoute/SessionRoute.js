@@ -23,9 +23,9 @@ class SessionRoute extends React.Component {
       updatedSubGoal: '',
       updatedPriority: null,
       classId: null,
+      timer: false,
       loaded: false,
       students: [],
-      timer: false,
       newSubgoal: '',
       currentSubgoal: '',
       checkedHigh: false, 
@@ -105,21 +105,21 @@ componentDidMount() {
 
   // Should set timer when sub goal is updated
   handleTimer = (studentUsername, priority, subGoalId) => {
-    console.log('handle timer run')
-    
     // High - 5 min/300000, Medium - 10min/600000, Low - 20 min/1200000 
     // Testing - high/5 sec(5000), medium/7 sec(7000), low/10 sec(10000)
-    const time = priority === 'high' ? 50000 : priority === 'medium' ? 70000: 100000;
+    const time = priority === 'high' ? 50000 : priority === 'medium' ? 70000 : 100000;
     let start = Date.now()
     let endTime = start + time;
-    
-    this.timerId = setTimeout(this.handleExpire, time, studentUsername);
+
+    this.timeId = setTimeout(this.handleExpire, time, studentUsername);
+   
     StudentApiService.updateStudentTimer(subGoalId, endTime)
       .then(() => {
         this.setState({
           timer: true
          })
-      })
+        })
+    //setState to the timerId
    
   }
 
@@ -133,12 +133,10 @@ componentDidMount() {
   // Setting the order allows the first timer that ends to remain first in line and
   // subsequent timers to follow in line after
   handleExpire = studentUsername => {
-    console.log('handle expire run');
     const expiredStudent = this.state.students.find(student => student.user_name === studentUsername);
     const studentOrder = { ...expiredStudent, expired: true, order: new Date() };
-    const newStudents = this.state.students.map(student => student.user_name !== studentUsername ? student : studentOrder)
     this.setState({
-      students: newStudents
+      students: this.state.students.map(student => student.user_name !== studentUsername ? student : studentOrder)
     })
   }
 
@@ -149,11 +147,10 @@ componentDidMount() {
     const filterStudent = [...this.state.students]
     const student = filterStudent.filter(student => student.user_name === studentUsername).pop();
     const goalId = student.studentGoalId;
-    this.handleTimer(studentUsername, priority);
-
 
     StudentApiService.postStudentSubgoal(goalId, data)
       .then(res => {
+        const studentToUpdate = this.state.students.filter(student => student.user_name === studentUsername);
         const updatedStudent = {
           ...studentToUpdate[0],
           studentSubgoal: res.subGoal.subgoal_title,
@@ -162,22 +159,20 @@ componentDidMount() {
           expired: false,
           order: 0,
         }
-        const newStudents = this.state.students.map(student => student.user_name !== studentUsername ? student : updatedStudent)
-        this.setState({
-          students: newStudents,
-          currSubgoalId: res.subGoal.id
-        })
         
+        this.setState({
+          students: this.state.students.map(student => student.user_name !== studentUsername ? student : updatedStudent),
+          currSubGoalId: res.subGoal.id
+        })
       })
       .then(() => {
-        this.handleTimer(student.user_name, priority, this.state.currSubgoalId)
+        this.handleTimer(studentUsername, priority, this.state.currSubGoalId)
       })
       .then(() => {
         this.setState({
           updatedSubGoal: '',
           updatedPriority: ''
         })
-        
       })
       .catch(error => {
         console.error(error);
@@ -190,10 +185,9 @@ componentDidMount() {
     const studentToExpand = this.state.students.find(student => student.user_name === studentUsername);
     const expiredCheck = studentToExpand.expired === false ? 0 : studentToExpand.order;
     const expandedStudent = { ...studentToExpand, expand: !studentToExpand.expand, expired: false, order: expiredCheck };
-    const newStudents = this.state.students.map(student => student.user_name !== studentUsername ? student : expandedStudent)
-
+    
     this.setState({
-      students: newStudents,
+      students: this.state.students.map(student => student.user_name !== studentUsername ? student : expandedStudent),
       updatedSubGoal: '',
       updatedPriority: '',
       checkedHigh: false,
@@ -345,7 +339,6 @@ componentDidMount() {
   }
 
   render() {
-    console.log('timer', this.timerId)
     const {error, loaded} = this.state;
     const learningTarget = this.state.learningTarget;
     const studentsToSort = this.state.students.filter(student => student.order !== 0)

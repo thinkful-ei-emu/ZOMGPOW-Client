@@ -1,7 +1,6 @@
 import React from 'react';
 import './StudentTimer.css';
 import config from '../../config';
-import StudentAuthApiService from '../../Services/student-auth-api-service';
 import openSocket from 'socket.io-client';
 
 class StudentTimer extends React.Component {
