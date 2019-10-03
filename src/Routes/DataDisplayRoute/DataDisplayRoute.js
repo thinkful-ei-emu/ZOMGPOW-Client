@@ -119,7 +119,7 @@ class DataDisplay extends React.Component {
           <div>
             <h3>Goals Data</h3>
             <div className='data-table-container'>
-              <table className = 'data-table'>
+              <table className = 'data-table main-table'>
                 <thead>
                   <tr>
                     <th>Title</th>
