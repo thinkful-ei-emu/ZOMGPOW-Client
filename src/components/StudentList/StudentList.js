@@ -61,7 +61,6 @@ class StudentList extends React.Component {
 
   // Updates state with every user input change
   handleChange = (e) => {
-    console.log(e.target.value)
     this.setState({
       userInput: e.target.value,
     })

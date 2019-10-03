@@ -35,7 +35,6 @@ class StudentResponseDisplay extends React.Component {
           : res.json()
       )
       .then(resStudents => {
-        console.log('resStudents: ', resStudents)
         this.props.displayStudents(resStudents)
         this.setState({ loaded: true })
         this.setState({

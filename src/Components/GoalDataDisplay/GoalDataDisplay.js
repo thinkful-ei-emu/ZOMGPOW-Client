@@ -71,9 +71,7 @@ class GoalDataDisplay extends React.Component {
     let arrB = [];
     let arrC = [];
     let arrD = [];
-    console.log('student responses', studentResponses)
     for (let i = 0; i < studentResponses.length; i++) {
-      console.log(studentResponses[i].response)
       if (studentResponses[i].response === 'A') {
         arrA.push(studentResponses[i].full_name)
       }
@@ -224,7 +222,6 @@ class GoalDataDisplay extends React.Component {
       }
 
 
-      console.log(goalData)
 
 
 
