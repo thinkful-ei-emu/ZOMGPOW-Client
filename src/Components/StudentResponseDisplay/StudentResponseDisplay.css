@@ -30,7 +30,6 @@
 }
 
 .student-response {
-  border-left: 1px solid darkgray;
   text-align: left;
   width: 100%;
 }
@@ -40,11 +39,7 @@
   padding-bottom: 2%;
 }
 
-.student-response ul li {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
+
 
 .student-name li {
   border-bottom: 1px solid darkgray;
