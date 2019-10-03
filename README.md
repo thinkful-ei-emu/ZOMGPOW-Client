@@ -1,18 +1,18 @@
-#Sprout
-##What is Sprout?
+# Sprout
+## What is Sprout?
 Sprout helps teachers set and track individual, real-time goals with students to keep them on track to reach the lesson's learning target.
-##Development
+## Development
 We would love to have you contribute! Fork the repo!
-###Set up
+### Set up
 ⋅⋅* Clone the repo both client and server: 
 [Sprout client](https://github.com/thinkful-ei-emu/ZOMGPOW-Client)
 [Sprout Server](https://github.com/thinkful-ei-emu/ZOMGPOW-Server)
 ⋅⋅* Run `npm install`
 ⋅⋅* Run `npm test` in another window (everything green?)
 ⋅⋅* Run `npm start` in another window to start the server
-###Deploy
+### Deploy
 `npm run deploy`
-###Tech Stack
+### Tech Stack
 ⋅⋅* JavaScript
 ⋅⋅* React
 ⋅⋅* HTML5
@@ -21,4 +21,4 @@ We would love to have you contribute! Fork the repo!
 ⋅⋅* Express
 ⋅⋅* Knex
 ⋅⋅* PostgreSQL
-###Screenshots
+### Screenshots
