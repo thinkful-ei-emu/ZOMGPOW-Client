@@ -115,7 +115,7 @@ componentDidMount() {
 
   componentWillUnmount (){
    //clearTimer to avoid memory leakage
-    clearTimeout(this.state.timerId)
+    // clearTimeout(this.state.timerId)
   }
 
  
@@ -136,12 +136,14 @@ componentDidMount() {
 
   handleUpdateGoal = (e, studentUsername) => {
     e.preventDefault();
-    console.log('HANDLE ME!')
+    console.log('HANDLE UPDATE GOAL!')
     const priority = this.state.updatedPriority;
     const data = { subgoal_title: this.state.updatedSubGoal };
     const filterStudent = [...this.state.students]
     const student = filterStudent.filter(student => student.user_name === studentUsername).pop();
     const goalId = student.studentGoalId;
+    this.handleTimer(studentUsername, priority);
+    console.log('Priority', priority, 'data', data, 'student', student, 'goalId', goalId)
 
     StudentApiService.postStudentSubgoal(goalId, data)
       .then(res => {
@@ -151,17 +153,18 @@ componentDidMount() {
           subgoal: res.subGoal.subgoal_title,
           priority: priority,
           expand: false,
-          // expired: false,
-          // order: 0,
+          expired: false,
+          order: 0,
         }
-        this.handleTimer(updatedStudent.user_name, this.state.updatedPriority);
+        
         this.setState({
           students: this.state.students.map(student => student.user_name !== studentUsername ? student : updatedStudent),
         })
-        console.log('UPDATING')
+        
+        console.log('UPDATING', this.state.students)
       })
       .then(() => {
-        this.handleTimer(studentUsername, this.state.updatedPriority)
+        // this.handleTimer(studentUsername, this.state.updatedPriority)
         this.setState({
           updatedSubGoal: '',
           updatedPriority: ''
@@ -247,7 +250,7 @@ componentDidMount() {
               onClick={() => this.toggleTargetComplete(student.studentGoalId, student.iscomplete)
                 }>Learning Target Complete</button>}
 
-              <p>{student.studentSubgoal? student.expand? `Student Goal: ${student.studentSubgoal}`: student.studentSubgoal: this.state.learningTarget}</p>
+              <p className='student-goal-learning-target'>{student.studentSubgoal? student.expand? `Student Goal: ${student.studentSubgoal}`: student.studentSubgoal: this.state.learningTarget}</p>
           
             
             <div className={student.expand ? '' : 'hidden'}>
