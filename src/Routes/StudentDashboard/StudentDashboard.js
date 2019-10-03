@@ -162,11 +162,9 @@ class StudentDashboard extends React.Component{
             {this.renderExitTicketLink()}
           </div>  
         <div className='goals-container'>
-          {/* Learning Target */}
           <h2>Learning Target: </h2>
           <div className='student-goal'><p>{learningTarget.goal_title}</p></div>
 
-          {/* current goal */}
           <h2>Current Goal:</h2>
           <div className='student-subgoal'>
           <p>{(currentGoal.subgoal_title) ? currentGoal.subgoal_title : currentGoal.goal_title}</p>          
@@ -191,12 +189,12 @@ class StudentDashboard extends React.Component{
         <Link to={{
           pathname: '/selfEvaluate', 
           state: {
-            currentGoal: this.state.currentGoal,
-            learningTarget: this.state.learningTarget
+            learningTarget: learningTarget.id
           }
           }}>Ready to self-evaluate?</Link> 
         </div>
         <div>
+  
           <h3>Previous Goals</h3>
           {(subgoals.length) 
           ? <ul>{subgoals.map((goal, i) => <li key={i}>{(currentGoal.subgoal_title === goal.subgoal_title) ? <p>No previous goals</p> : goal.subgoal_title}</li>)}</ul> 
