@@ -33,8 +33,6 @@ class StudentTimer extends React.Component {
 
   rTPatchStudentGoal = async (data) => {
     const  { subgoalTitle } = this.props;
-    console.log(data)
-    console.log(subgoalTitle)
     if(subgoalTitle === data.subgoal_title){
       let newEndTime = parseInt(data.end_time)
       this.handleDisplayTimer(newEndTime);
