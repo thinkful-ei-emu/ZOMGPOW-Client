@@ -10,4 +10,15 @@ We would love to have you contribute! Fork the repo!
 ⋅⋅* Run `npm install`
 ⋅⋅* Run `npm test` in another window (everything green?)
 ⋅⋅* Run `npm start` in another window to start the server
-
+###Deploy
+`npm run deploy`
+###Tech Stack
+⋅⋅* JavaScript
+⋅⋅* React
+⋅⋅* HTML5
+⋅⋅* CSS
+⋅⋅* Node.js
+⋅⋅* Express
+⋅⋅* Knex
+⋅⋅* PostgreSQL
+###Screenshots
