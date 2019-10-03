@@ -82,10 +82,11 @@ class StudentDashboard extends React.Component{
     //currStudent is student username
    
     let currTimer = studentTimers.find(timer => timer.student === currStudent)
-    console.log(currTimer)
+
     return currTimer;
-    
   }
+
+  
   
   rTNewGoal = async (data) => {
     const { goals, studentId } = this.state;
@@ -133,8 +134,9 @@ class StudentDashboard extends React.Component{
     let currStudent = this.context.user.username;
     let currTimer = this.findStudentWithTimer(this.props.studentTimers, currStudent);
     const {loaded, error, currentGoal, learningTarget, subgoals, timer} = this.state;
-    console.log(this.state)
     console.log('loaded', loaded)
+    console.log('timer', timer)
+
 
     
 
@@ -173,17 +175,18 @@ class StudentDashboard extends React.Component{
 
         <div className='timer-container'>
         
-          <button 
-          className='button blue-button'
+        <button 
+        className='button blue-button'
+        
+        onClick={this.toggleTimer}
+       
+        >{this.state.show ? 'Hide' : 'Timer'}</button>
+        <div className={this.state.show ? '' : 'hidden'}>
+          <StudentTimer currTimer={currTimer} />
           
-          onClick={this.toggleTimer}
-         
-          >{this.state.show ? 'Hide' : 'Timer'}</button>
-          <div className={this.state.show ? '' : 'hidden'}>
-            <StudentTimer currTimer={currTimer}/>
-            
-          </div>
         </div>
+      </div>
+        
         <div>
         <Link to={{
           pathname: '/selfEvaluate', 

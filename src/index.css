@@ -102,6 +102,7 @@ input {
   font-size: 15px;
   border: solid 1px darkgray;
   margin: 10px;
+  padding: 5px;
 }
 
 textarea {
@@ -112,6 +113,7 @@ textarea {
   height: 50px;
   border: solid 1px darkgray;
   margin: 10px;
+  padding: 5px;
  }
 
 h1 {

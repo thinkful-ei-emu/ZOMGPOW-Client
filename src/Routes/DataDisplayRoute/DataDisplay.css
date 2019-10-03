@@ -1,129 +1,77 @@
-.data-table-container {
-  width: 100%;
-  display: flex;  
-  justify-content: center;
-  margin-top: 3%;
+
+table { 
+  width: 100%; 
+  border-collapse: collapse; 
+}
+/* Zebra striping */
+tr:nth-of-type(odd) { 
+  background: #eee; 
+}
+th { 
+  background: #333; 
+  color: white; 
+  font-weight: bold; 
+}
+td, th { 
+  padding: 9px; 
+  border: 1px solid #ccc; 
+  text-align: left; 
+}
+@media
+only screen 
+and (max-width: 760px), (min-device-width: 768px) 
+and (max-device-width: 1024px)  {
+
+/* Force table to not be like tables anymore */
+table, thead, tbody, th, td, tr {
+  display: block;
 }
 
-.contain-student-res {
-  width: 35%;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  align-items: flex-start;
+/* Hide table headers (but not display: none;, for accessibility) */
+thead tr {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
 }
 
-.student-answer-response {
-  border-bottom: 1px solid lightGrey;
-  padding: 1%;
-  text-align: left;
+tr {
+  margin: 0 0 1rem 0;
+}
+  
+tr:nth-child(odd) {
+  background: #ccc;
 }
 
-.exit-ticket-data-container {
-  width: 100%;
-  display: flex; 
-  justify-content: center;
-  margin-top: 1%;
+td {
+  /* Behave  like a "row" */
+  border: none;
+  border-bottom: 1px solid #eee;
+  position: relative;
+  padding-left: 50%;
+ 
 }
 
-.exit-ticket-response-container {  
-  display: flex; 
-  flex-direction: column;
-  justify-content: center;
-  margin-bottom: 4%;
+td:before {
+  /* Now like a table header */
+  position: absolute;
+  /* Top/left values mimic padding */
+  top: 0;
+  left: 6px;
+  width: 45%;
+  padding-right: 10px;
+  white-space: nowrap;
+  font-weight: bold;
+  
 }
-
-.exit-ticket-responses {
-  display: flex;
-  justify-content: center;
-
-}
-
-/* .option-title {
-  border-bottom: 1px solid gray;
-} */
-
-.a-column, .b-column, .c-column, .d-column {
-  margin: 0 1%;
-}
-
-.correct-option {
-  color: green;
-}
-
-.incorrect-option {
-  color: red;
-}
-.goal-data > tbody > tr > td   {
-  /* border: 1px solid lightgray;
-  border-radius: 5px; */
-  padding: .3% 1%;
-}
-
-
-.data-table {
-  border-collapse: separate;
-  border: 1px solid lightgray;
-  text-align: center;
-  border-radius: 15px;
-  padding: 1%;
-  box-shadow: 3px 3px 10px 3px rgb(168, 164, 164);
-}
-
-.goal-data{
-  margin-bottom: 1%;
-}
-
-.data-button {
-  margin-bottom: 3%;
-}
-
-.data-table > tbody > tr > td   {
-  border: 1px solid lightgray;
-  border-radius: 5px;
-  padding: .3% 1%;
-}
-
-.data-link {
-  color: black;
-  text-decoration: none;
-}
-
-.data-link:visited {
-  color: black;
-}
-
-.data-link-datum-green:hover{
-  background-color: var(--green);
-}
-
-.data-link-datum-blue:hover{
-  background-color: var(--blue);
-}
-
-.data-link-datum-purple:hover{
-  background-color: var(--purple);
-}
-
-.datum a:hover{
-  color: white;
-}
-
-
-.data-table > thead > tr > th   {
-  border-right: 1px solid lightgray;
-}
-
-.data-table > thead > tr > th:last-child  {
-  border-right: none;
-}
-
-@media only screen and (max-width: 800px){
-  .contain-student-res {
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    align-items: flex-start;
-  }
+	
+	/*
+	Label the data
+	*/
+	td:nth-of-type(1):before { content: "Title"; }
+	td:nth-of-type(2):before { content: "Total Completed"; }
+	td:nth-of-type(3):before { content: "Total Students"; }
+	td:nth-of-type(4):before { content: "Completion Rate"; }
+	td:nth-of-type(5):before { content: "Completion Time"; }
+	td:nth-of-type(6):before { content: "Confidence Rate"; }
+	td:nth-of-type(7):before { content: "Confidence Avg Score"; }
 }

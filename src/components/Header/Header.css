@@ -16,6 +16,10 @@ header h1 a:hover {
   color: var(--purple);
 }
 
+header img {
+  padding-top: 25px;
+}
+
 .login-buttons{
   display: flex; 
   flex-direction: row;
@@ -31,6 +35,8 @@ header h1 a:hover {
 .logout-buttons .button {
   margin: 5px;
 }
+
+
 
 /* MEDIA QUERIES */
 

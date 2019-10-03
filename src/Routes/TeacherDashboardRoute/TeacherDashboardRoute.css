@@ -1,5 +1,6 @@
  .TeacherDashboardRoute-section {
    font-family: var(--heading-font);
+   padding-bottom: 250px;
  }
 
  .TeacherDashboardRoute-learning-target-submit {

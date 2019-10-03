@@ -1,0 +1,189 @@
+.data-table-container {
+  width: 100%;
+  display: flex;  
+  justify-content: center;
+  margin-top: 3%;
+}
+
+.contain-student-res {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+.student-answer-response {
+  border-bottom: 1px solid lightGrey;
+  padding: 1%;
+  text-align: left;
+}
+
+.exit-ticket-data-container {
+  width: 100%;
+  display: flex; 
+  justify-content: center;
+  margin-top: 1%;
+}
+
+.exit-ticket-response-container {  
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 4%;
+}
+
+.exit-ticket-responses {
+  display: flex;
+  justify-content: center;
+
+}
+
+/* .option-title {
+  border-bottom: 1px solid gray;
+} */
+
+.a-column, .b-column, .c-column, .d-column {
+  margin: 0 1%;
+}
+
+.correct-option {
+  color: green;
+}
+
+.incorrect-option {
+  color: red;
+}
+.goal-data > tbody > tr > td   {
+  /* border: 1px solid lightgray;
+  border-radius: 5px; */
+  padding: .3% 1%;
+}
+
+
+.data-table {
+  border-collapse: separate;
+  border: 1px solid lightgray;
+  text-align: center;
+  border-radius: 15px;
+  padding: 1%;
+  box-shadow: 3px 3px 10px 3px rgb(168, 164, 164);
+}
+
+.goal-data{
+  margin-bottom: 1%;
+}
+
+.data-button {
+  margin-bottom: 3%;
+}
+
+.data-table > tbody > tr > td   {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: .3% 1%;
+}
+
+.data-link {
+  color: black;
+  text-decoration: none;
+}
+
+.data-link:visited {
+  color: black;
+}
+
+.data-link-datum-green:hover{
+  background-color: var(--green);
+}
+
+.data-link-datum-blue:hover{
+  background-color: var(--blue);
+}
+
+.data-link-datum-purple:hover{
+  background-color: var(--purple);
+}
+
+.datum a:hover{
+  color: white;
+}
+
+
+.data-table > thead > tr > th   {
+  border-right: 1px solid lightgray;
+}
+
+.data-table > thead > tr > th:last-child  {
+  border-right: none;
+}
+.data-table { 
+  width: 100%; 
+  border-collapse: collapse; 
+}
+/* Zebra striping */
+tr:nth-of-type(odd) { 
+  background: #eee; 
+}
+th { 
+  background: #333; 
+  color: white; 
+  font-weight: bold; 
+}
+td, th { 
+  padding: 6px; 
+  border: 1px solid #ccc; 
+  text-align: left; 
+}
+@media only screen and (max-width: 160px),(min-device-width: 768px) and (max-device-width: 1024px) {
+  /* .contain-student-res {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    align-items: flex-start;
+  } */
+  .data-table, thead, tbody, th, td, tr{
+    display: block;
+  }
+  thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr { border: 1px solid #ccc; }
+	
+	td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	
+	/*
+	Label the data
+	*/
+	td:nth-of-type(1):before { content: "First Name"; }
+	td:nth-of-type(2):before { content: "Last Name"; }
+	td:nth-of-type(3):before { content: "Job Title"; }
+	td:nth-of-type(4):before { content: "Favorite Color"; }
+	td:nth-of-type(5):before { content: "Wars of Trek?"; }
+	td:nth-of-type(6):before { content: "Secret Alias"; }
+	td:nth-of-type(7):before { content: "Date of Birth"; }
+	td:nth-of-type(8):before { content: "Dream Vacation City"; }
+	td:nth-of-type(9):before { content: "GPA"; }
+	td:nth-of-type(10):before { content: "Arbitrary Data"; }
+}
