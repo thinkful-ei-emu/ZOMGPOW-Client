@@ -22,19 +22,20 @@ class Header extends React.Component {
     )
   }
 
-  renderLogOutLinks(){
-    if(this.context.teacherClass){
+  renderLogOutLinks(){ 
+    if(Object.entries(this.context.teacherClass).length){
+      console.log('render teacher logoutlinks')
       return this.renderTeacherLogOutLinks()
-    } else {
+    } else {   
       return this.renderStudentLogOutLinks()
     }
   }
 
   renderTeacherLogOutLinks(){
-    let disabled;
-    if(!this.context.sessionStarted){
+    let disabled; 
+    if(!this.context.sessionStarted){   
       disabled = true;
-    } else {
+    } else {     
       disabled = false
     }
     return (
