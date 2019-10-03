@@ -1,7 +1,12 @@
 import React from 'react';
 import './StudentTimer.css';
+import config from '../../config';
+import StudentAuthApiService from '../../Services/student-auth-api-service';
+import openSocket from 'socket.io-client';
 
 class StudentTimer extends React.Component {
+
+  socket = openSocket('http://localhost:8000')
 
   constructor(props){
     super(props)
@@ -13,8 +18,26 @@ class StudentTimer extends React.Component {
   }
 
   componentDidMount(){
-    if(this.props.currTimer){
-      this.handleDisplayTimer(this.props.currTimer.end)
+
+    if(this.props.subgoalTitle){
+      fetch(`${config.API_ENDPOINT}/subgoals/subgoal/timer/${this.props.subgoalTitle}`)
+      .then(res => res.json())
+      .then(res => {
+        let endTime = res.endTime.end_time;
+        let formattedEndTime = parseInt(endTime)
+        this.handleDisplayTimer(formattedEndTime);
+      })
+    }
+    this.socket.on('patch timer', this.rTPatchStudentGoal)
+  }
+
+  rTPatchStudentGoal = async (data) => {
+    const  { subgoalTitle } = this.props;
+    console.log(data)
+    console.log(subgoalTitle)
+    if(subgoalTitle === data.subgoal_title){
+      let newEndTime = parseInt(data.end_time)
+      this.handleDisplayTimer(newEndTime);
     }
   }
 
