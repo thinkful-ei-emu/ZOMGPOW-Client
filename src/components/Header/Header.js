@@ -24,7 +24,6 @@ class Header extends React.Component {
 
   renderLogOutLinks(){ 
     if(Object.entries(this.context.teacherClass).length){
-      console.log('render teacher logoutlinks')
       return this.renderTeacherLogOutLinks()
     } else {   
       return this.renderStudentLogOutLinks()
@@ -67,7 +66,6 @@ class Header extends React.Component {
   }
 
   render(){
-    console.log(TokenService.hasAuthToken(), "AUTH")
     return (
       <header className="header" role="banner">
       

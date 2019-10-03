@@ -35,8 +35,7 @@ export class TeacherProvider extends Component {
         id: jwtPayload.user_id,
         full_name: jwtPayload.full_name,
         email: jwtPayload.email,
-      }
-    console.log(state.user)
+      }    
     this.state = state;  
   }
 

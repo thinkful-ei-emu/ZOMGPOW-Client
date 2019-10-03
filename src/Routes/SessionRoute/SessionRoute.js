@@ -36,7 +36,6 @@ class SessionRoute extends React.Component {
 
 componentDidMount() {
   let classId;
-  console.log('COMPONENT DID MOUNT - setup students runs here');
   if (TokenService.hasAuthToken()) {
     if (!this.state.classId) {
       TeacherAuthService.getTeacherClasses()

@@ -68,7 +68,6 @@ class ExitTicketStudentRoute extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.studentResponse)
     if (this.state.studentResponse === '') {
       return this.setState({ error: 'Oops! We need your answer first!'})
     } else {
@@ -76,7 +75,6 @@ class ExitTicketStudentRoute extends React.Component {
         let data = {
           student_response: this.state.studentResponse
         }
-        console.log('ID', this.state.studentGoalId, 'DATA', data)
         StudentApiService.patchStudentResponse(this.state.studentGoalId, data)
         .then(() => {})
         .catch(error => this.setState({ error: error.message}))      
