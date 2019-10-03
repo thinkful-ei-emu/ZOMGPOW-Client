@@ -12,7 +12,7 @@ class LandingPage extends React.Component {
       <div className="landing-page">
       <section className='description'>
         <h2>Grow Each Student with Your Feedback</h2>
-        <p>
+        <p className='app-description'>
           Sprout is a formative assessment tool used to help
           teachers deliver specific, goal-oriented, and timely feedback in
           the classroom.
@@ -37,7 +37,7 @@ class LandingPage extends React.Component {
           </p>
           <img src={Placeholder} alt='placeholder' height='300px' width='300px'className='placeholder'/>
           </div>
-          <div className='info white-card'>
+          <div className='info white-card middle'>
           <img src={Placeholder} alt='placeholder' height='300px' width='300px'className='placeholder'/>
           <p>In session, teachers can view all students, the 
             current learning target, and each student's current goal.
@@ -60,16 +60,24 @@ class LandingPage extends React.Component {
         <section className='description'>
         <img src={BlueSprout} alt='sprout' height='100px' width='100px' />
         <h2>Exit Ticket Feedback in Real Time</h2>
-          <div className='info'>
-          <p>paragraph</p>
-          <img src={Placeholder} alt='placeholder' height='300px' width='300px'className='placeholder'/>
+          <div className='info blue-card'>
+          <p className='info'>Teachers can include exit tickets when assigning a learning goal.  
+            After ending a session, student responses to the exit ticket can be 
+            monitored in real-time.
+          </p>
+          <img src={Placeholder} alt='placeholder' height='300px' width='300px' className='placeholder'/>
           </div>
         </section>
         <section className='description top-border sprout-background'>
         <h2>Data Collection and Grouping</h2>
           <div className='info white-card'>
-          <p>paragraph</p>
-          <img src={Placeholder} alt='placeholder' height='300px' width='300px'className='placeholder'/>
+          <img src={Placeholder} alt='placeholder' height='300px' width='300px' className='data-card'/>
+          <p>All data collected on a class and student level can be accessed on the Data Display.
+            Sprout tracks many classroom statics, including: the number and percentage of students who complete a learning target, 
+            individual and class average of self-evaluation scores, individual goals set for each student, exit ticket responses, 
+            groups for multiple choice exit ticket responses, and much more!
+          </p>
+          
           </div>
         </section>
         {/* <section className='description top-border'>
@@ -82,6 +90,13 @@ class LandingPage extends React.Component {
           <p>Username: Teacher1</p>
           <p>Password: Teacher1pass!</p>
         </section> */}
+        <footer>
+          
+          <h2> Let Sprout Help You Grow Your Students Today! </h2>
+          <Link to='/register' className='teacher'>
+          Sign Up Now!
+          </Link>
+        </footer>
       </div>
     )
   }
