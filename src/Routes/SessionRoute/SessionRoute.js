@@ -26,13 +26,16 @@ class SessionRoute extends React.Component {
       loaded: false,
       students: [],
       newSubgoal: '',
-      currentSubgoal: ''
+      currentSubgoal: '',
+      checkedHigh: false, 
+      checkedMed: false,
+      checkedLow: false
     }
   }
 
 componentDidMount() {
   let classId;
-  console.log('COMPONENT DID MOUNT');
+  console.log('COMPONENT DID MOUNT - setup students runs here');
   if (TokenService.hasAuthToken()) {
     if (!this.state.classId) {
       TeacherAuthService.getTeacherClasses()
@@ -93,7 +96,7 @@ componentDidMount() {
         student.expand = false;
         student.expired = false;
         student.order = 0;
-        student.priority = 'low'; 
+        student.priority = 'none'; 
         return student;
       })
     }))
@@ -108,14 +111,12 @@ componentDidMount() {
     //setState to the timerId
    this.setState({
     timerId: timerId
-   })
-    this.props.handleStudentTimers(studentUsername, time)
-   
+   })   
   }
 
   componentWillUnmount (){
    //clearTimer to avoid memory leakage
-    // clearTimeout(this.state.timerId)
+    clearTimeout(this.state.timerId)
   }
 
  
@@ -123,34 +124,28 @@ componentDidMount() {
   // Setting the order allows the first timer that ends to remain first in line and
   // subsequent timers to follow in line after
   handleExpire = studentUsername => {
-    console.log('Handle Expire', studentUsername)
     const expiredStudent = this.state.students.find(student => student.user_name === studentUsername);
-    console.log('FIND', expiredStudent)
     const studentOrder = { ...expiredStudent, expired: true, order: new Date() };
-    console.log('Updated Student', studentOrder)
     this.setState({
       students: this.state.students.map(student => student.user_name !== studentUsername ? student : studentOrder)
     })
-    console.log(this.state.students[1])
   }
 
   handleUpdateGoal = (e, studentUsername) => {
     e.preventDefault();
-    console.log('HANDLE UPDATE GOAL!')
     const priority = this.state.updatedPriority;
     const data = { subgoal_title: this.state.updatedSubGoal };
     const filterStudent = [...this.state.students]
     const student = filterStudent.filter(student => student.user_name === studentUsername).pop();
     const goalId = student.studentGoalId;
     this.handleTimer(studentUsername, priority);
-    console.log('Priority', priority, 'data', data, 'student', student, 'goalId', goalId)
 
     StudentApiService.postStudentSubgoal(goalId, data)
       .then(res => {
         const studentToUpdate = this.state.students.filter(student => student.user_name === studentUsername);
         const updatedStudent = {
           ...studentToUpdate[0],
-          subgoal: res.subGoal.subgoal_title,
+          studentSubgoal: res.subGoal.subgoal_title,
           priority: priority,
           expand: false,
           expired: false,
@@ -161,10 +156,8 @@ componentDidMount() {
           students: this.state.students.map(student => student.user_name !== studentUsername ? student : updatedStudent),
         })
         
-        console.log('UPDATING', this.state.students)
       })
       .then(() => {
-        // this.handleTimer(studentUsername, this.state.updatedPriority)
         this.setState({
           updatedSubGoal: '',
           updatedPriority: ''
@@ -177,15 +170,18 @@ componentDidMount() {
   }
 
   // Should toggle when clicking to expand and hide extra student information
-  toggleExpand = (studentUsername) => {
+  toggleExpand = (e, studentUsername) => {
     const studentToExpand = this.state.students.find(student => student.user_name === studentUsername);
     const expiredCheck = studentToExpand.expired === false ? 0 : studentToExpand.order;
     const expandedStudent = { ...studentToExpand, expand: !studentToExpand.expand, expired: false, order: expiredCheck };
-
+    
     this.setState({
       students: this.state.students.map(student => student.user_name !== studentUsername ? student : expandedStudent),
       updatedSubGoal: '',
-      updatedPriority: ''
+      updatedPriority: '',
+      checkedHigh: false,
+      checkedMed: false,
+      checkedLow: false
     })
   }
 
@@ -219,22 +215,22 @@ componentDidMount() {
   // Will make cards for students given
   makeCards = (students) => {
     const allStudents = students.map((student) => {
-      let flag = student.priority === 'high' ? 
-        <img src={HighFlag} alt='high priority flag'/> 
+      let flag = student.expired ? student.priority === 'high' ? 
+        <img src={HighFlag} alt='high priority flag' width='200px'/> 
         : student.priority === 'medium' ? 
-        <img src={MedFlag} alt='medium priority flag'/> 
+        <img src={MedFlag} alt='medium priority flag' width='200px'/> 
         : student.priority === 'low' ? 
-        <img src={LowFlag} alt='low priority flag'/> 
-        : '';
+        <img src={LowFlag} alt='low priority flag' width='200px'/> 
+        : '': '';
         
       return (
         <li
           key={student.user_name}
           className={student.expired === true ? `expired ${student.priority} card` : 'card'}
         >
-        
-          <h3>{student.full_name}</h3><img src={LowFlag} width='200px'/>
-          
+        <div className='flag-container'>
+          <h3>{student.full_name}</h3>{flag}
+        </div>
           {student.iscomplete ? 
             <div>
               <p>Learning Target Complete!</p>
@@ -278,7 +274,8 @@ componentDidMount() {
                       value='high'
                       id='high'
                       name='priority'
-                      onChange={(e) => this.setState({ updatedPriority: 'high' })} />
+                      checked={this.state.checkedHigh}
+                      onChange={(e) => this.setState({ updatedPriority: 'high' , checkedHigh: true, checkedMed: false, checkedLow: false})} />
                     <label
                       className='radio-label'
                       htmlFor='high'><FontAwesomeIcon className='high-priority' icon={['fas', 'search']} />High</label>
@@ -290,7 +287,8 @@ componentDidMount() {
                       value='medium'
                       id='medium'
                       name='priority'
-                      onChange={(e) => this.setState({ updatedPriority: 'medium' })} />
+                      checked={this.state.checkedMed}
+                      onChange={(e) => this.setState({ updatedPriority: 'medium', checkedHigh: false, checkedMed: true, checkedLow: false })} />
                     <label
                       className='radio-label'
                       htmlFor='medium'><FontAwesomeIcon className='medium-priority' icon={['fas', 'search']} />Medium</label>
@@ -302,7 +300,8 @@ componentDidMount() {
                       value='low'
                       id='low'
                       name='priority'
-                      onChange={(e) => this.setState({ updatedPriority: 'low' })} />
+                      checked={this.state.checkedLow}
+                      onChange={(e) => this.setState({ updatedPriority: 'low', checkedHigh: false, checkedMed: false, checkedLow: true })} />
                     <label
                       className='radio-label'
                       htmlFor='low'><FontAwesomeIcon className='low-priority' icon={['fas', 'search']} />Low</label>
@@ -319,7 +318,7 @@ componentDidMount() {
             </div>
             <button
               className={student.expand ? ' button red-button' : 'button purple-button'}
-              onClick={e => this.toggleExpand(student.user_name)}>{student.expand ? 'Cancel' : 'Check In'}</button>
+              onClick={e => this.toggleExpand(e, student.user_name)}>{student.expand ? 'Cancel' : 'Check In'}</button>
           </div>
           }
         </li>
