@@ -83,7 +83,7 @@ class GoalDataDisplay extends React.Component {
       else if (studentResponses[i].response === 'C') {
         arrC.push(studentResponses[i].full_name)
       }
-      else if (studentResponses[i].response === 'D'){
+      else if (studentResponses[i].response === 'D') {
         arrD.push(studentResponses[i].full_name)
       }
 
@@ -128,17 +128,6 @@ class GoalDataDisplay extends React.Component {
         if (exitTicketInfo[0].question_type.toLowerCase() === 'multiple choice') {
           let correctAnswer = exitTicketInfo[0].answer
           let studentResponseRows = this.makeStudentResponseRows(goalData, correctAnswer);
-          // let correctIndex = 0;
-          // if (correctAnswer === 'B') {
-          //   correctIndex = 1
-          // } else if (correctAnswer === 'C') {
-          //   correctIndex = 2
-          // } else if (correctAnswer === 'D') {
-          //   correctIndex = 3
-          // }
-          // let optionClass = 'incorrect-option';
-          // let prefix = 'A: ';
-
           exitTicketElements = <div>
             <h3>{exitTicketInfo[0].question}</h3>
             <div className='exit-ticket-data-container'>
@@ -161,25 +150,6 @@ class GoalDataDisplay extends React.Component {
             </div>
             <div className='exit-ticket-response-container'>
               <h4>Student Responses</h4>
-              {/* <div className='options-header'>           
-              {exitTicketInfo[0].options.map((option, i) => {
-              if(i === correctIndex){
-                optionClass = 'correct-option'
-              } 
-              if(i === 1){
-                prefix = 'B: '
-              } else if (i === 2){
-                prefix = 'C: '
-              } else if (i === 3){
-                prefix = 'D: '
-              }
-              return (
-                
-                <h4 key={i} className={optionClass}>{prefix}{option}</h4>
-              
-              )
-            })}                
-            </div> */}
               <div className="exit-ticket-responses">
                 <div className="a-column">
                   {correctAnswer === 'A' ? <h5 className='correct-option option-title'>A<br></br>{exitTicketInfo[0].options[0]}</h5> : <h5 className='incorrect-option option-title'>A<br></br>{exitTicketInfo[0].options[0]}</h5>}
