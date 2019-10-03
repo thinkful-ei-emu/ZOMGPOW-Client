@@ -230,7 +230,7 @@ componentDidMount() {
           className={student.expired === true ? `expired ${student.priority} card` : 'card'}
         >
         
-          <h3>{student.full_name}</h3><img src={LowFlag} />
+          <h3>{student.full_name}</h3><img src={LowFlag} width='200px'/>
           
           {student.iscomplete ? 
             <div>
