@@ -11,7 +11,7 @@ class Header extends React.Component {
   handleLogoutClick = () => {
     this.context.processLogout();
   }
-
+ 
   renderLogInLinks(){
     return (
       <nav className="login-buttons">
@@ -22,19 +22,19 @@ class Header extends React.Component {
     )
   }
 
-  renderLogOutLinks(){
-    if(this.context.teacherClass){
+  renderLogOutLinks(){ 
+    if(Object.entries(this.context.teacherClass).length){
       return this.renderTeacherLogOutLinks()
-    } else {
+    } else {   
       return this.renderStudentLogOutLinks()
     }
   }
 
   renderTeacherLogOutLinks(){
-    let disabled;
-    if(!this.context.sessionStarted){
+    let disabled; 
+    if(!this.context.sessionStarted){   
       disabled = true;
-    } else {
+    } else {     
       disabled = false
     }
     return (
@@ -66,7 +66,6 @@ class Header extends React.Component {
   }
 
   render(){
-    console.log(TokenService.hasAuthToken(), "AUTH")
     return (
       <header className="header" role="banner">
       
@@ -75,13 +74,12 @@ class Header extends React.Component {
           <Link to='/'>
           Sprout
           </Link>
-        </h1>
-        
-        <div className="links">
+        </h1>        
+        <div className="links">        
           {TokenService.hasAuthToken() 
           ? this.renderLogOutLinks()
           :this.renderLogInLinks()}
-        </div>
+          </div>       
       </header>
     );
   }

@@ -5,7 +5,7 @@ import TokenService from '../../Services/token-service';
 import TeacherContext from '../../Contexts/TeacherContext';
 import Loading from '../../Components/Loading/Loading';
 import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
-import './DataDisplay.css';
+import './DataDisplayO.css';
 
 class DataDisplay extends React.Component {
   static contextType = TeacherContext;
@@ -17,11 +17,8 @@ class DataDisplay extends React.Component {
   }
 
   componentDidMount() {
-    let token;
+    
     if (TokenService.getAuthToken() && !this.state.classId) {
-      token = TokenService.parseAuthToken()
-      console.log('token from teacher dashboard', token)
-
       TeacherAuthApiService.getTeacherClasses()
         .then(classes => this.context.setClass(classes[0]))
         .then(() => this.setState({
@@ -112,14 +109,13 @@ class DataDisplay extends React.Component {
     }
     else {
       let goals = this.makeGoalsTable(dataArr);
-      console.log(dataArr)
-
+      
       if(goals.length){
         return (
-          <div>
+          <div className='data-display-container'>
             <h3>Goals Data</h3>
             <div className='data-table-container'>
-              <table role='table'>
+              <table className = 'data-table main-table'>
                 <thead>
                   <tr>
                     <th>Title</th>

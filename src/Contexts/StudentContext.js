@@ -30,22 +30,7 @@ export class StudentProvider extends Component {
       }
 
     this.state = state;
-    // IdleService.setIdleCallback(this.logoutBecauseIdle)
   }
-
-  // componentDidMount() {
-  //   if (TokenService.hasAuthToken()) {
-  //     IdleService.regiserIdleTimerResets()
-  //     TokenService.queueCallbackBeforeExpiry(() => {
-  //       this.fetchRefreshToken()
-  //     })
-  //   }
-  // }
-
-  // componentWillUnmount() {
-  //   IdleService.unRegisterIdleResets()
-  //   TokenService.clearCallbackBeforeExpiry()
-  // }
 
   setError = error => {
     console.error(error)
@@ -67,40 +52,13 @@ export class StudentProvider extends Component {
       id: jwtPayload.id,
       username: jwtPayload.user_name,
     })
-    // IdleService.regiserIdleTimerResets()
-    // TokenService.queueCallbackBeforeExpiry(() => {
-    //   this.fetchRefreshToken()
-    // })
   }
 
   processLogout = () => {
-    TokenService.clearAuthToken()
-    // TokenService.clearCallbackBeforeExpiry()
-    // IdleService.unRegisterIdleResets()
+    TokenService.clearAuthToken()   
     this.setUser({})
   }
-
-  // logoutBecauseIdle = () => {
-  //   TokenService.clearAuthToken()
-  //   // TokenService.clearCallbackBeforeExpiry()
-  //   // IdleService.unRegisterIdleResets()
-  //   this.setUser({ idle: true })
-  // }
-
-  // fetchRefreshToken = () => {
-  //   StudentAuthApiService.refreshToken()
-  //     .then(res => {
-  //       TokenService.saveAuthToken(res.authToken)
-  //       // TokenService.queueCallbackBeforeExpiry(() => {
-  //       //   this.fetchRefreshToken()
-  //       // })
-  //     })
-  //     .catch(err => {
-  //       this.setError(err)
-  //     })
-  // }
-
-  
+ 
   render() {
     const value = {
       user: this.state.user,
@@ -110,7 +68,7 @@ export class StudentProvider extends Component {
       setUser: this.setUser,
       processLogin: this.processLogin,
       processLogout: this.processLogout
-    } 
+    }
     return (
       <StudentContext.Provider value={value}>
         {this.props.children}

@@ -66,7 +66,7 @@ const StudentAuthApiService = {
     return fetch(`${config.API_ENDPOINT}/class/${classId}/class`, {
       method: 'GET',
       headers: {
-        'authorization': `Bearer ${TokenService.getAuthToken()}`,
+        'authorization': `Bearer ${TokenService.getAuthToken()}`, 
       },
     })
     .then(res =>
@@ -115,7 +115,6 @@ const StudentAuthApiService = {
     )
   },
   getStudentGoals(student_id) {
-    console.log('get student goals run')
     return fetch(`${config.API_ENDPOINT}/goals/student/${student_id}`, {
       headers: {
         authorization: `bearer ${TokenService.getAuthToken()}`
@@ -128,7 +127,6 @@ const StudentAuthApiService = {
     )
   },
   getCurrentStudentGoal(student_id) {
-    console.log('get student goals run')
     return fetch(`${config.API_ENDPOINT}/goals/student/current/${student_id}`, {
       headers: {
         authorization: `bearer ${TokenService.getAuthToken()}`
@@ -215,7 +213,22 @@ const StudentAuthApiService = {
       ? res.json().then(e => Promise.reject(e))
       : res
     )
-  }
+  },
+  updateStudentTimer(subGoalId, endTime){
+    return fetch(`${config.API_ENDPOINT}/subgoals/subgoal/${subGoalId}/timer`, {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `Bearer ${TokenService.getAuthToken()}`,
+      },
+      body: JSON.stringify({endTime})
+    })
+    .then(res =>
+      (!res.ok)
+      ? res.json().then(e => Promise.reject(e))
+      : res
+    )
+  },
 }
 
 export default StudentAuthApiService

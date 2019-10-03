@@ -15,7 +15,7 @@ class StudentDashboard extends React.Component{
   state = {
     studentId: null,
     goals: [],
-    subgoals: [],
+    subgoals: [], 
     error: null,
     timer: false,
     show: true,
@@ -26,11 +26,8 @@ class StudentDashboard extends React.Component{
   };
 
   componentDidMount() {
-    console.log('student dashboard CDM')
-    console.log(this.context.user.id)
     StudentAuthApiService.getStudentGoals(this.context.user.id)
       .then(res => {
-        console.log('goals: ', res.goals)
         const student_goals = res.goals;
         const learningTarget = res.goals[res.goals.length-1];
         const student_subgoals = learningTarget.subgoals;
@@ -77,16 +74,6 @@ class StudentDashboard extends React.Component{
       show: !this.state.show,
     })
   }
-
-  findStudentWithTimer = (studentTimers, currStudent) => {
-    //currStudent is student username
-   
-    let currTimer = studentTimers.find(timer => timer.student === currStudent)
-
-    return currTimer;
-  }
-
-  
   
   rTNewGoal = async (data) => {
     const { goals, studentId } = this.state;
@@ -108,7 +95,7 @@ class StudentDashboard extends React.Component{
     const { subgoals, studentId } = this.state;
     let { studentGoal } = await StudentAuthApiService.getStudentGoalbyStuId(studentId, data.student_goal_id)
     if(studentGoal)
-      this.setState({ goals: [...subgoals, data], currentGoal: data })
+      this.setState({ subgoals: [...subgoals, data], currentGoal: data })
   }
 
   rTPatchSubgoal = async (data) => {
@@ -131,24 +118,7 @@ class StudentDashboard extends React.Component{
 
   render() {
 
-    let currStudent = this.context.user.username;
-    let currTimer = this.findStudentWithTimer(this.props.studentTimers, currStudent);
-    const {loaded, error, currentGoal, learningTarget, subgoals, timer} = this.state;
-    console.log('loaded', loaded)
-    console.log('timer', timer)
-
-
-    
-
-    //grabs the last goal in goals which should be the most current learning target
-    // const learningTarget = this.state.goals[this.state.goals.length-1];
-    //removes the last subgoal from subgoals
-    
-    // let array = [...this.state.subgoals]; 
-    // const currentGoal = array.pop();
-    //maps through the rest of the subgoals
-    
-    // const previousGoals = array.map((sub, index) => <li key={index}>{sub.subgoal_title}</li>);
+    const {loaded, error, currentGoal, learningTarget, subgoals } = this.state;  
 
     if(error){
       return <p>{error.message}</p>
@@ -162,11 +132,9 @@ class StudentDashboard extends React.Component{
             {this.renderExitTicketLink()}
           </div>  
         <div className='goals-container'>
-          {/* Learning Target */}
           <h2>Learning Target: </h2>
           <div className='student-goal'><p>{learningTarget.goal_title}</p></div>
 
-          {/* current goal */}
           <h2>Current Goal:</h2>
           <div className='student-subgoal'>
           <p>{(currentGoal.subgoal_title) ? currentGoal.subgoal_title : currentGoal.goal_title}</p>          
@@ -182,8 +150,7 @@ class StudentDashboard extends React.Component{
        
         >{this.state.show ? 'Hide' : 'Timer'}</button>
         <div className={this.state.show ? '' : 'hidden'}>
-          <StudentTimer currTimer={currTimer} />
-          
+          <StudentTimer subgoalTitle={currentGoal.subgoal_title} studentId={this.state.studentId}/>
         </div>
       </div>
         
@@ -191,15 +158,18 @@ class StudentDashboard extends React.Component{
         <Link to={{
           pathname: '/selfEvaluate', 
           state: {
-            currentGoal: this.state.currentGoal,
-            learningTarget: this.state.learningTarget
+            learningTargetId: learningTarget.id,
+            learningTargetTitle: learningTarget.goal_title
           }
           }}>Ready to self-evaluate?</Link> 
         </div>
         <div>
+  
           <h3>Previous Goals</h3>
           {(subgoals.length) 
-          ? <ul>{subgoals.map((goal, i) => <li key={i}>{(currentGoal.subgoal_title === goal.subgoal_title) ? <p>No previous goals</p> : goal.subgoal_title}</li>)}</ul> 
+          ? <ul>{subgoals.map((goal, i) => {
+          return <li key={i}>{(currentGoal.subgoal_title === goal.subgoal_title) 
+          ? <div></div> : goal.subgoal_title}</li>})}</ul> 
           : <p>No previous goals</p>}
         </div>
       </section>

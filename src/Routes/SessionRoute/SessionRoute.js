@@ -6,6 +6,9 @@ import TeacherAuthService from '../../Services/teacher-auth-api-service';
 import Loading from '../../Components/Loading/Loading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './SessionRoute.css';
+import HighFlag from '../../Images/HighStickyNote.svg';
+import MedFlag from '../../Images/MediumStickyNote.svg';
+import LowFlag from '../../Images/LowStickyNote.svg';
 
 class SessionRoute extends React.Component {
   static contextType = TeacherContext;
@@ -20,10 +23,14 @@ class SessionRoute extends React.Component {
       updatedSubGoal: '',
       updatedPriority: null,
       classId: null,
+      timer: false,
       loaded: false,
       students: [],
       newSubgoal: '',
-      currentSubgoal: ''
+      currentSubgoal: '',
+      checkedHigh: false, 
+      checkedMed: false,
+      checkedLow: false
     }
   }
 
@@ -89,29 +96,35 @@ componentDidMount() {
         student.expand = false;
         student.expired = false;
         student.order = 0;
-        student.priority = 'low';     
+        student.priority = 'none'; 
         return student;
       })
     }))
   }
 
   // Should set timer when sub goal is updated
-  handleTimer = (studentUsername, priority) => {
+  handleTimer = (studentUsername, priority, subGoalId) => {
     // High - 5 min/300000, Medium - 10min/600000, Low - 20 min/1200000 
-    // Testing - high/5 sec(5000), medium/7 sec(7000), low/10 sec(10000)
-    const time = priority === 'high' ? 50000 : priority === 'medium' ? 70000 : 100000;
-    let timerId = setTimeout(this.handleExpire, time, studentUsername);
+    // Testing - high/5 sec(5000), medium/10 sec(10000), low/15 sec(15000)
+    const time = priority === 'high' ? 5000 : priority === 'medium' ? 10000 : 15000;
+    let start = Date.now()
+    let endTime = start + time;
+
+    this.timeId = setTimeout(this.handleExpire, time, studentUsername);
+   
+    StudentApiService.updateStudentTimer(subGoalId, endTime)
+      .then(() => {
+        this.setState({
+          timer: true
+         })
+        })
     //setState to the timerId
-   this.setState({
-    timerId: timerId
-   })
-    this.props.handleStudentTimers(studentUsername, time)
    
   }
 
   componentWillUnmount (){
    //clearTimer to avoid memory leakage
-    clearTimeout(this.state.timerId)
+    clearTimeout(this.timerId)
   }
 
  
@@ -139,19 +152,22 @@ componentDidMount() {
         const studentToUpdate = this.state.students.filter(student => student.user_name === studentUsername);
         const updatedStudent = {
           ...studentToUpdate[0],
-          subgoal: res.subGoal.subgoal_title,
+          studentSubgoal: res.subGoal.subgoal_title,
           priority: priority,
           expand: false,
           expired: false,
           order: 0,
         }
-        this.handleTimer(updatedStudent.user_name, this.state.updatedPriority);
+        
         this.setState({
           students: this.state.students.map(student => student.user_name !== studentUsername ? student : updatedStudent),
+          currSubGoalId: res.subGoal.id
         })
       })
       .then(() => {
-        this.handleTimer(studentUsername, this.state.updatedPriority)
+        this.handleTimer(studentUsername, priority, this.state.currSubGoalId)
+      })
+      .then(() => {
         this.setState({
           updatedSubGoal: '',
           updatedPriority: ''
@@ -164,15 +180,18 @@ componentDidMount() {
   }
 
   // Should toggle when clicking to expand and hide extra student information
-  toggleExpand = (studentUsername) => {
+  toggleExpand = (e, studentUsername) => {
     const studentToExpand = this.state.students.find(student => student.user_name === studentUsername);
     const expiredCheck = studentToExpand.expired === false ? 0 : studentToExpand.order;
     const expandedStudent = { ...studentToExpand, expand: !studentToExpand.expand, expired: false, order: expiredCheck };
-
+    
     this.setState({
       students: this.state.students.map(student => student.user_name !== studentUsername ? student : expandedStudent),
       updatedSubGoal: '',
-      updatedPriority: ''
+      updatedPriority: '',
+      checkedHigh: false,
+      checkedMed: false,
+      checkedLow: false
     })
   }
 
@@ -206,12 +225,22 @@ componentDidMount() {
   // Will make cards for students given
   makeCards = (students) => {
     const allStudents = students.map((student) => {
+      let flag = student.expired ? student.priority === 'high' ? 
+        <img src={HighFlag} alt='high priority flag' width='200px'/> 
+        : student.priority === 'medium' ? 
+        <img src={MedFlag} alt='medium priority flag' width='200px'/> 
+        : student.priority === 'low' ? 
+        <img src={LowFlag} alt='low priority flag' width='200px'/> 
+        : '': '';
+        
       return (
         <li
           key={student.user_name}
-          className={student.expired === true ? `expired ${student.priority}` : ''}
+          className={student.expired === true ? `expired ${student.priority} card` : 'card'}
         >
-          <h3>{student.full_name}</h3>
+        <div className='flag-container'>
+          <h3>{student.full_name}</h3>{flag}
+        </div>
           {student.iscomplete ? 
             <div>
               <p>Learning Target Complete!</p>
@@ -221,14 +250,13 @@ componentDidMount() {
                 }>Undo Completed Learning Target</button>
             </div> 
             : 
-            <div>   
-                    
+            <div className='card-sub'>
             {student.expand && <button 
               className='button green-button'
               onClick={() => this.toggleTargetComplete(student.studentGoalId, student.iscomplete)
                 }>Learning Target Complete</button>}
 
-              <p>{student.studentSubgoal? student.expand? `Student Goal: ${student.studentSubgoal}`: student.studentSubgoal: this.state.learningTarget}</p>
+              <p className='student-goal-learning-target'>{student.studentSubgoal? student.expand? `Student Goal: ${student.studentSubgoal}`: student.studentSubgoal: this.state.learningTarget}</p>
           
             
             <div className={student.expand ? '' : 'hidden'}>
@@ -256,7 +284,8 @@ componentDidMount() {
                       value='high'
                       id='high'
                       name='priority'
-                      onChange={(e) => this.setState({ updatedPriority: 'high' })} />
+                      checked={this.state.checkedHigh}
+                      onChange={(e) => this.setState({ updatedPriority: 'high' , checkedHigh: true, checkedMed: false, checkedLow: false})} />
                     <label
                       className='radio-label'
                       htmlFor='high'><FontAwesomeIcon className='high-priority' icon={['fas', 'search']} />High</label>
@@ -268,7 +297,8 @@ componentDidMount() {
                       value='medium'
                       id='medium'
                       name='priority'
-                      onChange={(e) => this.setState({ updatedPriority: 'medium' })} />
+                      checked={this.state.checkedMed}
+                      onChange={(e) => this.setState({ updatedPriority: 'medium', checkedHigh: false, checkedMed: true, checkedLow: false })} />
                     <label
                       className='radio-label'
                       htmlFor='medium'><FontAwesomeIcon className='medium-priority' icon={['fas', 'search']} />Medium</label>
@@ -280,7 +310,8 @@ componentDidMount() {
                       value='low'
                       id='low'
                       name='priority'
-                      onChange={(e) => this.setState({ updatedPriority: 'low' })} />
+                      checked={this.state.checkedLow}
+                      onChange={(e) => this.setState({ updatedPriority: 'low', checkedHigh: false, checkedMed: false, checkedLow: true })} />
                     <label
                       className='radio-label'
                       htmlFor='low'><FontAwesomeIcon className='low-priority' icon={['fas', 'search']} />Low</label>
@@ -297,7 +328,7 @@ componentDidMount() {
             </div>
             <button
               className={student.expand ? ' button red-button' : 'button purple-button'}
-              onClick={e => this.toggleExpand(student.user_name)}>{student.expand ? 'Cancel' : 'Check In'}</button>
+              onClick={e => this.toggleExpand(e, student.user_name)}>{student.expand ? 'Cancel' : 'Check In'}</button>
           </div>
           }
         </li>

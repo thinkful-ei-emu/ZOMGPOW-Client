@@ -30,6 +30,7 @@ header img {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .logout-buttons .button {
@@ -37,8 +38,8 @@ header img {
 }
 
 
-
 /* MEDIA QUERIES */
+
 
 @media only screen and (min-width: 600px) {
   header {
@@ -51,5 +52,7 @@ header img {
 
   .logout-buttons{
     flex-direction: column
-  }
+  }  
+ 
 }
+

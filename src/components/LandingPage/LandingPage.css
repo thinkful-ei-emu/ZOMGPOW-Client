@@ -1,3 +1,7 @@
+.landing-page{
+  margin-bottom: 150px;
+}
+
 .landing-page .teacher, .landing-page .student {
   text-decoration: none;
   font-family: var(--heading-font);
@@ -41,8 +45,16 @@
   padding: 10px 50px;
 }
 
+.app-description {
+  font-size: 25px;
+  padding: 10px 10%;
+  max-width: 800px;
+  margin: 30px auto;
+}
+
 .top-border {
   border-top: 1px solid var(--darkgray);
+  border-bottom: 1px solid var(--darkgray);
 }
 
 .gray-background {
@@ -62,9 +74,26 @@
   margin-bottom: 15px;
 }
 
-.white-card p {
+.blue-card {
+  background-color: var(--blue);
+  color: white;
+  border-radius: 15px;
+  box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  font-weight: 800;
+}
+
+.middle {
+  background-color: var(--green);
+  color: white;
+  font-weight: 800;
+}
+
+.white-card p, .blue-card p {
   padding: 20px;
   margin-bottom: 0px;
+  font-weight: 800px;
+  font-size: 22px;
 }
 
 .sprout-background {
@@ -72,9 +101,29 @@
   background-size: cover;
 }
 
-.placeholder {
-  border: 3px solid var(--purple);
-  border-radius: 15px;
+.middle {
+  border-right: 2px solid white;
+  border-left: none;
+}
+
+.middle p {
+  font-size: 35px;
+  font-family: var(--heading-font);
+  margin-top: 0;
+}
+
+.blue-card {
+  border-left: 2px solid white;
+}
+
+.data-card {
+  border-right: 2px solid var(--purple);
+  border-left: none;
+}
+
+ .sprout-images{
+  width: 60%;
+  border-radius: 8px;
 }
 @media only screen and (min-width: 600px) {
   .info {
@@ -82,15 +131,20 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    max-width: 630px;
+    max-width: 900px;
     margin: 20px auto;
   }
   .info p {
     width: 60%;
   }
 
-  .white-card img {
+  .white-card img, .blue-card img {
     margin: 10px;
+  }
+
+  footer h2{
+    margin-top: 30px;
+    margin-bottom: 80px;
   }
 
   

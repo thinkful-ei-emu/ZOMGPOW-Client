@@ -27,9 +27,9 @@ class ExitTicketStudentRoute extends React.Component {
     })
     
     StudentApiService.getStudentGoals(this.context.user.id)
-      .then(res => {
-        const studentGoal = res.goals.pop();
-        console.log(studentGoal)
+      .then(res => {      
+        let studentGoals = [...res.goals]       
+        const studentGoal = studentGoals.pop();  
         this.setState({
           exitTicketQuestion: studentGoal.exit_ticket_question,
           exitTicketOptions: studentGoal.exit_ticket_options,
@@ -39,9 +39,25 @@ class ExitTicketStudentRoute extends React.Component {
           loaded: true,
         })
       })
+      .then(() => {
+        StudentApiService.getStudentGoalbyStuId(this.state.studentId, this.state.studentGoalId)
+        .then(res => {    
+        if (res.studentGoal.student_response) {
+          this.setState({
+            motivationalMessage: true
+          })
+        }
+        
+        })
+        .catch(res => {
+          this.setState({ error: res.error })
+        })
+      })
       .catch(res => {
         this.setState({ error: res.error })
       })
+
+      
   }
 
   updateStudentResponse = (e) => {
@@ -52,7 +68,6 @@ class ExitTicketStudentRoute extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.studentResponse)
     if (this.state.studentResponse === '') {
       return this.setState({ error: 'Oops! We need your answer first!'})
     } else {
@@ -60,7 +75,6 @@ class ExitTicketStudentRoute extends React.Component {
         let data = {
           student_response: this.state.studentResponse
         }
-        console.log('ID', this.state.studentGoalId, 'DATA', data)
         StudentApiService.patchStudentResponse(this.state.studentGoalId, data)
         .then(() => {})
         .catch(error => this.setState({ error: error.message}))      
