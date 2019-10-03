@@ -47,14 +47,14 @@
   padding: 3px 8px;
   padding-bottom: 20px;
   margin-bottom: 30px;
-  /* position: relative; */
+  position: relative;
 }
 
 /* priority flags */
 .SessionRoute-container li img {
   position:absolute;
   top: 0px;
-  left:200px;
+  right:91px;
 }
 
 .high-priority {
@@ -97,9 +97,23 @@
   position: relative;
 }
 
+.student-list li {
+  width: 260px;
+  margin: 20px auto;
+}
+
 /* MEDIA QUERIES */
 
+/* @media only screen and (max-width: 360px) and (min-width: 321px) {
+  .SessionRoute-container li img {
+    left:185px;
+  }
+} */
+
 @media only screen and (min-width: 500px) {
+  .SessionRoute-container li img {
+    right: 130px;
+  }
   .student-list {
     display: flex;
     flex-direction: row;

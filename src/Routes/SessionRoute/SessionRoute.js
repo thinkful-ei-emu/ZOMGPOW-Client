@@ -105,8 +105,8 @@ componentDidMount() {
   // Should set timer when sub goal is updated
   handleTimer = (studentUsername, priority, subGoalId) => {
     // High - 5 min/300000, Medium - 10min/600000, Low - 20 min/1200000 
-    // Testing - high/5 sec(5000), medium/7 sec(7000), low/10 sec(10000)
-    const time = priority === 'high' ? 50000 : priority === 'medium' ? 70000 : 100000;
+    // Testing - high/5 sec(5000), medium/10 sec(10000), low/15 sec(15000)
+    const time = priority === 'high' ? 5000 : priority === 'medium' ? 10000 : 15000;
     let start = Date.now()
     let endTime = start + time;
 
