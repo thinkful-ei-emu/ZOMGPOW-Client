@@ -215,7 +215,7 @@ const StudentAuthApiService = {
       ? res.json().then(e => Promise.reject(e))
       : res
     )
-  }
+  },
 }
 
 export default StudentAuthApiService
