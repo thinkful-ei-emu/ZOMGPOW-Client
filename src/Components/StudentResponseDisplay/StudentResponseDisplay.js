@@ -62,31 +62,23 @@ class StudentResponseDisplay extends React.Component {
   }
 
   render() {
-    const { error, classId, loaded, students } = this.state;
+    const { error, loaded, students } = this.state;
     let studentList;
     students.length ? studentList = students : studentList = this.props.students
     console.log(studentList)
     const fullname = studentList.map((student, index) => <li key={index}>{student.full_name}</li>)
-    const response = studentList.map((student, index) => <li key={index}>{student.student_response ? student.student_response : 'awaiting response'}</li>)
+    const response = studentList.map((student, index) => <li key={index}><strong className='student-name'>{student.full_name}: </strong><br></br>{student.student_response ? student.student_response : 'awaiting response'}</li>)
     
     if(!loaded){
       return (<div>loading...</div>)
     }
     return (
       <div className='StudentResponseDisplay-container'>
-        <h2>Students</h2>
         <div className='alert' role='alert'>
           {error && <p>{error}</p>}
         </div>
         <div className='StudentResponseDisplay'>
-          <div className='student-name'>
-            <h3>Student Name</h3>
-            <ul>
-              {fullname}
-            </ul>
-          </div>
           <div className='student-response'>
-            <h3>Response</h3>
             <ul>
               {response}
             </ul>
