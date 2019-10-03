@@ -26,30 +26,10 @@ export default class App extends React.Component {
   constructor(props){
     super(props);
     this.state ={
-      studentTimers: [],
       headerType: null,
     };
   }
 
-  
-
-  handleStudentTimers = (studentUsername, time) => {
-    let start = Date.now();
-    let end = start + time;
-    const timerObj = {
-      student: studentUsername,
-      start,
-      end
-    }
-
-    let newTimers = this.state.studentTimers
-    
-    newTimers.push(timerObj)
-  
-    this.setState({
-      studentTimers: newTimers
-    })
-  }
 
   handleHeaderType = (type) => {
     this.setState({
@@ -107,7 +87,6 @@ export default class App extends React.Component {
             render={(props) => {
               return (
                 <SessionRoute {...props}
-                 handleStudentTimers={this.handleStudentTimers}
                  />
               )
             }}
@@ -117,7 +96,7 @@ export default class App extends React.Component {
             render={(props) => {
               return (
                 
-                <StudentDashboard {...props} studentTimers={this.state.studentTimers} />
+                <StudentDashboard {...props}  />
                 
               );
             }}

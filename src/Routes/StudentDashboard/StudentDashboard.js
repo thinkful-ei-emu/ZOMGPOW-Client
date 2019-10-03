@@ -15,7 +15,7 @@ class StudentDashboard extends React.Component{
   state = {
     studentId: null,
     goals: [],
-    subgoals: [],
+    subgoals: [], 
     error: null,
     timer: false,
     show: true,
@@ -77,16 +77,6 @@ class StudentDashboard extends React.Component{
       show: !this.state.show,
     })
   }
-
-  findStudentWithTimer = (studentTimers, currStudent) => {
-    //currStudent is student username
-   
-    let currTimer = studentTimers.find(timer => timer.student === currStudent)
-
-    return currTimer;
-  }
-
-  
   
   rTNewGoal = async (data) => {
     const { goals, studentId } = this.state;
@@ -131,11 +121,10 @@ class StudentDashboard extends React.Component{
 
   render() {
 
-    let currStudent = this.context.user.username;
-    let currTimer = this.findStudentWithTimer(this.props.studentTimers, currStudent);
-    const {loaded, error, currentGoal, learningTarget, subgoals, timer} = this.state;
+
+    const {loaded, error, currentGoal, learningTarget, subgoals } = this.state;
     console.log('loaded', loaded)
-    console.log('timer', timer)
+    console.log(currentGoal)
 
 
     
@@ -180,8 +169,7 @@ class StudentDashboard extends React.Component{
        
         >{this.state.show ? 'Hide' : 'Timer'}</button>
         <div className={this.state.show ? '' : 'hidden'}>
-          <StudentTimer currTimer={currTimer} />
-          
+          <StudentTimer subgoalTitle={currentGoal.subgoal_title} studentId={this.state.studentId}/>
         </div>
       </div>
         
@@ -199,7 +187,6 @@ class StudentDashboard extends React.Component{
           <h3>Previous Goals</h3>
           {(subgoals.length) 
           ? <ul>{subgoals.map((goal, i) => {
-            console.log('subgoals: ', subgoals)
           return <li key={i}>{(currentGoal.subgoal_title === goal.subgoal_title) 
           ? <div></div> : goal.subgoal_title}</li>})}</ul> 
           : <p>No previous goals</p>}

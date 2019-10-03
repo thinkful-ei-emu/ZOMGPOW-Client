@@ -23,6 +23,7 @@ class SessionRoute extends React.Component {
       updatedSubGoal: '',
       updatedPriority: null,
       classId: null,
+      timer: false,
       loaded: false,
       students: [],
       newSubgoal: '',
@@ -103,20 +104,28 @@ componentDidMount() {
   }
 
   // Should set timer when sub goal is updated
-  handleTimer = (studentUsername, priority) => {
+  handleTimer = (studentUsername, priority, subGoalId) => {
     // High - 5 min/300000, Medium - 10min/600000, Low - 20 min/1200000 
     // Testing - high/5 sec(5000), medium/7 sec(7000), low/10 sec(10000)
-    const time = priority === 'high' ? 5000 : priority === 'medium' ? 7000 : 10000;
-    let timerId = setTimeout(this.handleExpire, time, studentUsername);
+    const time = priority === 'high' ? 50000 : priority === 'medium' ? 70000 : 100000;
+    let start = Date.now()
+    let endTime = start + time;
+
+    this.timeId = setTimeout(this.handleExpire, time, studentUsername);
+   
+    StudentApiService.updateStudentTimer(subGoalId, endTime)
+      .then(() => {
+        this.setState({
+          timer: true
+         })
+        })
     //setState to the timerId
-   this.setState({
-    timerId: timerId
-   })   
+   
   }
 
   componentWillUnmount (){
    //clearTimer to avoid memory leakage
-    clearTimeout(this.state.timerId)
+    clearTimeout(this.timerId)
   }
 
  
@@ -138,7 +147,6 @@ componentDidMount() {
     const filterStudent = [...this.state.students]
     const student = filterStudent.filter(student => student.user_name === studentUsername).pop();
     const goalId = student.studentGoalId;
-    this.handleTimer(studentUsername, priority);
 
     StudentApiService.postStudentSubgoal(goalId, data)
       .then(res => {
@@ -154,8 +162,11 @@ componentDidMount() {
         
         this.setState({
           students: this.state.students.map(student => student.user_name !== studentUsername ? student : updatedStudent),
+          currSubGoalId: res.subGoal.id
         })
-        
+      })
+      .then(() => {
+        this.handleTimer(studentUsername, priority, this.state.currSubGoalId)
       })
       .then(() => {
         this.setState({
