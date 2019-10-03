@@ -1,9 +1,10 @@
 import React from 'react';
 import config from '../../config';
 import TokenService from '../../Services/token-service';
+import { Link } from 'react-router-dom';
 import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
 import TeacherContext from '../../Contexts/TeacherContext';
-import StudentResponseDislpay from '../../Components/StudentResponseDisplay/StudentResponseDisplay';
+import StudentResponseDisplay from '../../Components/StudentResponseDisplay/StudentResponseDisplay';
 
 class ExitTicketTeacherRoute extends React.Component {
 
@@ -60,6 +61,7 @@ class ExitTicketTeacherRoute extends React.Component {
 
     } else {
       const classId = this.context.teacherClass.id;
+      console.log(classId);
       this.setState({
         loaded: true,
         classId
@@ -73,6 +75,24 @@ class ExitTicketTeacherRoute extends React.Component {
     })
   }
 
+  displayStudentResponses = () => {
+    if (this.state.exitTicketQuestion) {
+      return (
+        <section className='TeacherDashboardRoute-student-list TeacherDashboardRoute-section' >
+          <div className='student-answers'>
+            <h2>Student Responses</h2>
+          </div>
+          <StudentResponseDisplay 
+            displayStudents= {this.displayStudents} 
+            classId={this.state.classId} 
+            students={this.state.students}/>
+        </section>
+      ) 
+    } else {
+      return <></>
+    }
+  }
+
   render() {
     let options = this.state.exitTicketOptions ?
       this.state.exitTicketOptions.map((option, index) => <li key={index}>{option}</li>)
@@ -81,24 +101,28 @@ class ExitTicketTeacherRoute extends React.Component {
       if(!this.state.loaded){
         return <div>loading...</div>
       }
+    let studentResponseDisplay = this.displayStudentResponses();
     return (
       <div>
+        <section>
         <h2>{this.state.exitTicketQuestion ? 'Exit Ticket Prompt:' : `You didn't create an exit ticket this time!`}</h2>
         <h3>{this.state.exitTicketQuestion? this.state.exitTicketQuestion : ''}</h3>
         <ul>{options}</ul>
         <h3>{this.state.exitTicketCorrectAnswer ? `Correct Answer: ${this.state.exitTicketCorrectAnswer}` : ''}</h3>
+        </section>
         <div className='student-answers'>
-          <h2>Student Responses</h2>
+          {this.state.exitTicketQuestion && <h2>Student Responses</h2>}
         </div>
         <section className='TeacherDashboardRoute-section'>
         <div className='TeacherDashboardRoute-student-list'>
-          <StudentResponseDislpay 
+          {this.state.exitTicketQuestion && 
+          <StudentResponseDisplay 
             displayStudents= {this.displayStudents} 
             classId={this.state.classId} 
-            students={this.state.students}/>
+            students={this.state.students}/>}
         </div>
         </section>
-        {/* Link to dashboard or data view? */}
+        <Link to={'/dashboard/teacher'} className='button green-button'>Return to Dashboard</Link> 
       </div>
     )
   }

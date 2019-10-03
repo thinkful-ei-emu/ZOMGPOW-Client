@@ -7,6 +7,7 @@ import Loading from '../../Components/Loading/Loading';
 import openSocket from 'socket.io-client';
 import './StudentDashboard.css';
 
+
 class StudentDashboard extends React.Component{
   static contextType = StudentContext;
   socket = openSocket('http://localhost:8000');
@@ -25,29 +26,30 @@ class StudentDashboard extends React.Component{
   };
 
   componentDidMount() {
-    // this.setState({
-    //   studentId: this.context.user.id,
-    // })
+    console.log('student dashboard CDM')
+    console.log(this.context.user.id)
     StudentAuthApiService.getStudentGoals(this.context.user.id)
       .then(res => {
+        console.log('goals: ', res.goals)
         const student_goals = res.goals;
-        const student_subgoals = res.subgoals;
         const learningTarget = res.goals[res.goals.length-1];
-        const currentGoal = res.subgoals[res.subgoals.length-1];
+        const student_subgoals = learningTarget.subgoals;
+        const currentGoal = learningTarget.subgoals[learningTarget.subgoals.length -1] || learningTarget
         this.setState({
+          studentId: this.context.user.id,
           goals: student_goals,
           subgoals: student_subgoals,
           learningTarget: learningTarget,
           currentGoal: currentGoal,
           loaded: true,
         })
-        console.log(this.state.goals)
       })
       .catch(res => {
         this.setState({ error: res.error })
       })
       this.socket.on('new goal', this.rTNewGoal);
       this.socket.on('patch goal', this.rTPatchGoal);
+      this.socket.on('patch student goal', this.rTPatchStudentGoal);
       this.socket.on('new subgoal', this.rTNewSubgoal);
       this.socket.on('patch subgoal', this.rTPatchSubgoal);
   }
@@ -56,15 +58,9 @@ class StudentDashboard extends React.Component{
     this.context.processLogout();
   }
 
-  renderStudentLogout(){
+  renderExitTicketLink(){
     return (
       <nav>
-        <Link 
-          onClick={this.handleLogoutClick}
-          to='/'
-          className='green-button button'>
-          Logout
-        </Link>
         <Link
         to='/student/exitTicket'
         className='button blue-button'
@@ -86,16 +82,17 @@ class StudentDashboard extends React.Component{
     //currStudent is student username
    
     let currTimer = studentTimers.find(timer => timer.student === currStudent)
-    
+
     return currTimer;
-    
   }
+
+  
   
   rTNewGoal = async (data) => {
     const { goals, studentId } = this.state;
     let { student } = await StudentAuthApiService.getStudent(studentId)
     if(data.class_id === student.class_id)
-      this.setState({ goals: [...goals, data] })
+      this.setState({ goals: [...goals, data], learningTarget: data, currentGoal: data })
   }
 
   rTPatchGoal = async (data) => {
@@ -103,23 +100,32 @@ class StudentDashboard extends React.Component{
     let { student } = await StudentAuthApiService.getStudent(studentId)
     if(data.class_id === student.class_id){
       let newGoals = goals.map(goal => data.id === goal.id ? goal = data : goal)
-      this.setState({ goals: newGoals })
+      this.setState({ goals: newGoals, learningTarget: data })
     }
   }
 
   rTNewSubgoal = async (data) => {
     const { subgoals, studentId } = this.state;
-    let { student } = await StudentAuthApiService.getStudent(studentId)
-    if(data.student_id === student.id)
-      this.setState({ goals: [...subgoals, data] })
+    let { studentGoal } = await StudentAuthApiService.getStudentGoalbyStuId(studentId, data.student_goal_id)
+    if(studentGoal)
+      this.setState({ goals: [...subgoals, data], currentGoal: data })
   }
 
   rTPatchSubgoal = async (data) => {
     const { subgoals, studentId } = this.state;
+    let { studentGoal } = await StudentAuthApiService.getStudentGoalbyStuId(studentId, data.student_goal_id)
+    if(studentGoal){
+      let newSubgoals = subgoals.map(subgoals => data.id === subgoals.id ? subgoals = data : subgoals)
+      this.setState({ subgoals: newSubgoals, currentGoal: data })
+    }
+  }
+
+  rTPatchStudentGoal = async (data) => {
+    const { goals, studentId } = this.state;
     let { student } = await StudentAuthApiService.getStudent(studentId)
     if(data.student_id === student.id){
-      let newSubgoals = subgoals.map(subgoals => data.id === subgoals.id ? subgoals = data : subgoals)
-      this.setState({ subgoals: newSubgoals })
+      let newGoals = goals.map(goal => data.id === goal.id ? goal = data : goal)
+      this.setState({ goals: newGoals, learningTarget: data })
     }
   }
 
@@ -127,56 +133,60 @@ class StudentDashboard extends React.Component{
 
     let currStudent = this.context.user.username;
     let currTimer = this.findStudentWithTimer(this.props.studentTimers, currStudent);
-    const {loaded} = this.state;
+    const {loaded, error, currentGoal, learningTarget, subgoals, timer} = this.state;
+    console.log('loaded', loaded)
+    console.log('timer', timer)
+
+
+    
+
+    //grabs the last goal in goals which should be the most current learning target
+    // const learningTarget = this.state.goals[this.state.goals.length-1];
+    //removes the last subgoal from subgoals
+    
+    // let array = [...this.state.subgoals]; 
+    // const currentGoal = array.pop();
+    //maps through the rest of the subgoals
+    
+    // const previousGoals = array.map((sub, index) => <li key={index}>{sub.subgoal_title}</li>);
+
+    if(error){
+      return <p>{error.message}</p>
+    }
     if(!loaded){
       return <Loading />
     }
-
-    //grabs the last goal in goals which should be the most current learning target
-    const learningTarget = this.state.goals[this.state.goals.length-1];
-    //removes the last subgoal from subgoals
-    
-    let array = [...this.state.subgoals]; 
-    const currentGoal = array.pop();
-    //maps through the rest of the subgoals
-    
-    const previousGoals = array.map((sub, index) => <li key={index}>{sub.subgoal_title}</li>);
-    
     return(
       <section className="student-dashboard-section" >
           <div className="links">
-            {this.renderStudentLogout()}
+            {this.renderExitTicketLink()}
           </div>  
         <div className='goals-container'>
           {/* Learning Target */}
           <h2>Learning Target: </h2>
-          {learningTarget === undefined 
-          ? <p>Loading..</p>
-          : <div className='student-goal'><p>{learningTarget.goal_title}</p></div>}
+          <div className='student-goal'><p>{learningTarget.goal_title}</p></div>
 
           {/* current goal */}
-          <h2>Current Goal:</h2> 
-          {currentGoal === undefined
-          ? <> </>
-          :
+          <h2>Current Goal:</h2>
           <div className='student-subgoal'>
-          <p>{currentGoal.subgoal_title}</p>          
-          </div>}
+          <p>{(currentGoal.subgoal_title) ? currentGoal.subgoal_title : currentGoal.goal_title}</p>          
+          </div>
         </div>
 
         <div className='timer-container'>
         
-          <button 
-          className='button blue-button'
+        <button 
+        className='button blue-button'
+        
+        onClick={this.toggleTimer}
+       
+        >{this.state.show ? 'Hide' : 'Timer'}</button>
+        <div className={this.state.show ? '' : 'hidden'}>
+          <StudentTimer currTimer={currTimer} />
           
-          onClick={this.toggleTimer}
-         
-          >{this.state.show ? 'Hide' : 'Timer'}</button>
-          <div className={this.state.show ? '' : 'hidden'}>
-            <StudentTimer currTimer={currTimer}/>
-            
-          </div>
         </div>
+      </div>
+        
         <div>
         <Link to={{
           pathname: '/selfEvaluate', 
@@ -188,11 +198,9 @@ class StudentDashboard extends React.Component{
         </div>
         <div>
           <h3>Previous Goals</h3>
-          {(previousGoals.length > 1) 
-          ? <div>
-          <ul>{previousGoals}</ul>
-          </div>
-          : <></>}
+          {(subgoals.length) 
+          ? <ul>{subgoals.map((goal, i) => <li key={i}>{(currentGoal.subgoal_title === goal.subgoal_title) ? <p>No previous goals</p> : goal.subgoal_title}</li>)}</ul> 
+          : <p>No previous goals</p>}
         </div>
       </section>
     )
