@@ -45,6 +45,10 @@ margin-bottom: 20px;
   margin: 50px auto;
 }
 
-.student-subgoal {
+.student-dashboard-section .student-subgoal {
   background-image: url('../../Images/SalmonGridPaper.svg');
+}
+
+.student-dashboard-section .button > *{
+  pointer-events: none;
 }

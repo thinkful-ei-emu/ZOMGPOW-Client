@@ -2,6 +2,7 @@ import React from 'react';
 import TeacherContext from '../../Contexts/TeacherContext';
 import TokenService from '../../Services/token-service';
 import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
+import Loading from '../../Components/Loading/Loading';
 import { Link } from 'react-router-dom';
 import config from '../../config';
 
@@ -24,7 +25,6 @@ class GoalDataDisplay extends React.Component {
 
   componentDidMount() {
 
-    console.log('From goal data', this.state.goalId, this.context.teacherClass.id)
 
     if (TokenService.getAuthToken() && !this.state.classId) {
       TeacherAuthApiService.getTeacherClasses()
@@ -66,6 +66,35 @@ class GoalDataDisplay extends React.Component {
     })
   }
 
+  makeStudentResponseRows = (studentResponses, correct) => {
+    let arrA = [];
+    let arrB = [];
+    let arrC = [];
+    let arrD = [];
+    console.log('student responses', studentResponses)
+    for (let i = 0; i < studentResponses.length; i++) {
+      console.log(studentResponses[i].response)
+      if (studentResponses[i].response === 'A') {
+        arrA.push(studentResponses[i].full_name)
+      }
+      else if (studentResponses[i].response === 'B') {
+        arrB.push(studentResponses[i].full_name)
+      }
+      else if (studentResponses[i].response === 'C') {
+        arrC.push(studentResponses[i].full_name)
+      }
+      else if (studentResponses[i].response === 'D'){
+        arrD.push(studentResponses[i].full_name)
+      }
+
+
+
+    }
+
+    return { arrA, arrB, arrC, arrD }
+
+  }
+
   makeGoalsTable = goals => {
     let x = '';
     return goals.map((goal, i) => {
@@ -86,71 +115,112 @@ class GoalDataDisplay extends React.Component {
 
   render() {
     const { loaded, goalData, exitTicketInfo, exitTicketHidden } = this.state;
-    console.log(exitTicketInfo[0])
 
     if (!loaded) {
-      return (<div>loading...</div>)
+      return (<Loading />)
     }
     else {
       let goals = this.makeGoalsTable(goalData);
+
       let exitTicketElements;
 
       if (exitTicketInfo.length > 0 && exitTicketInfo[0].question_type !== null) {
-        if(exitTicketInfo[0].question_type.toLowerCase() === 'multiple choice'){
+        if (exitTicketInfo[0].question_type.toLowerCase() === 'multiple choice') {
           let correctAnswer = exitTicketInfo[0].answer
-          let correctIndex = 0;
-          if(correctAnswer === 'B'){
-            correctIndex = 1
-          } else if (correctAnswer === 'C'){
-            correctIndex = 2
-          } else if (correctAnswer === 'D'){
-            correctIndex = 3
-          }
-          let optionClass = 'incorrect-option';
+          let studentResponseRows = this.makeStudentResponseRows(goalData, correctAnswer);
+          // let correctIndex = 0;
+          // if (correctAnswer === 'B') {
+          //   correctIndex = 1
+          // } else if (correctAnswer === 'C') {
+          //   correctIndex = 2
+          // } else if (correctAnswer === 'D') {
+          //   correctIndex = 3
+          // }
+          // let optionClass = 'incorrect-option';
+          // let prefix = 'A: ';
 
           exitTicketElements = <div>
-          <h3>{exitTicketInfo[0].question}</h3> 
-          <ul>
-            {exitTicketInfo[0].options.map((option, i) => {
+            <h3>{exitTicketInfo[0].question}</h3>
+            <div className='exit-ticket-data-container'>
+              <table className='data-table goal-data'>
+                <thead>
+                  <tr>
+                    <th>Total Correct</th>
+                    <th>Total Participants</th>
+                    <th>Avg Correct</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{exitTicketInfo[0].correct_res_total}</td>
+                    <td>{exitTicketInfo[0].res_total}</td>
+                    <td>{exitTicketInfo[0].correct_res_avg}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div className='exit-ticket-response-container'>
+              <h4>Student Responses</h4>
+              {/* <div className='options-header'>           
+              {exitTicketInfo[0].options.map((option, i) => {
               if(i === correctIndex){
                 optionClass = 'correct-option'
+              } 
+              if(i === 1){
+                prefix = 'B: '
+              } else if (i === 2){
+                prefix = 'C: '
+              } else if (i === 3){
+                prefix = 'D: '
               }
               return (
-                <li key={i} className={optionClass}>{option}</li>
+                
+                <h4 key={i} className={optionClass}>{prefix}{option}</h4>
+              
               )
-            })}
-            </ul>   
-          <div className='exit-ticket-data-container'>
-            <table className='data-table goal-data'>
-              <thead>
-                <tr>
-              <th>Total Correct</th>
-              <th>Total Participants</th>
-              <th>Avg Correct</th>
-                </tr>
-              </thead>
-              <tbody>
-           <tr>
-             <td>{exitTicketInfo[0].correct_res_total}</td>
-             <td>{exitTicketInfo[0].res_total}</td>
-             <td>{exitTicketInfo[0].correct_res_avg}</td>
-           </tr>
-              </tbody>
-            </table>
+            })}                
+            </div> */}
+              <div className="exit-ticket-responses">
+                <div className="a-column">
+                  {correctAnswer === 'A' ? <h5 className='correct-option option-title'>A<br></br>{exitTicketInfo[0].options[0]}</h5> : <h5 className='incorrect-option option-title'>A<br></br>{exitTicketInfo[0].options[0]}</h5>}
+                  <ul>
+                    {studentResponseRows.arrA.map((student, index) => <li key={index}>{student}</li>)}
+                  </ul>
+                </div>
+                <div className="b-column">
+                  {correctAnswer === 'B' ? <h5 className='correct-option option-title'>B<br></br>{exitTicketInfo[0].options[1]}</h5> : <h5 className='incorrect-option option-title'>B<br></br>{exitTicketInfo[0].options[1]}</h5>}
+                  <ul>
+                    {studentResponseRows.arrB.map((student, index) => <li key={index}>{student}</li>)}
+                  </ul>
+                </div>
+                <div className="c-column">
+                  {correctAnswer === 'C' ? <h5 className='correct-option option-title'>C<br></br>{exitTicketInfo[0].options[2]}</h5> : <h5 className='incorrect-option option-title'>C<br></br>{exitTicketInfo[0].options[2]}</h5>}
+                  <ul>
+                    {studentResponseRows.arrC.map((student, index) => <li key={index}>{student}</li>)}
+                  </ul>
+                </div>
+                <div className="d-column">
+                  {correctAnswer === 'D' ? <h5 className='correct-option option-title'>D<br></br>{exitTicketInfo[0].options[3]}</h5> : <h5 className='incorrect-option option-title'>D<br></br>{exitTicketInfo[0].options[3]}</h5>}
+                  <ul>
+                    {studentResponseRows.arrD.map((student, index) => <li key={index}>{student}</li>)}
+                  </ul>
+                </div>
+
+              </div>
+            </div>
           </div>
-        </div>
-        } else if (exitTicketInfo[0].question_type.toLowerCase() === 'short answer'){
+        } else if (exitTicketInfo[0].question_type.toLowerCase() === 'short answer') {
           exitTicketElements = (<div className='short-answer-container'>
-          <h3>{exitTicketInfo[0].question}</h3> 
+            <h3>{exitTicketInfo[0].question}</h3>
             <div className='contain-student-res'>
-            {this.handleShortAnswerResponses(goalData)}
+              {this.handleShortAnswerResponses(goalData)}
             </div>
           </div>)
         }
-        
+
       } else {
-         exitTicketElements = <p>No exit ticket submitted for this goal</p>
-         
+        exitTicketElements = <p>No exit ticket submitted for this goal</p>
+
       }
 
 
@@ -178,7 +248,7 @@ class GoalDataDisplay extends React.Component {
             </div>
             <button onClick={this.toggleExitTicketHidden} className='button purple-button'>{(exitTicketHidden) ? 'Hide Exit Ticket Info' : 'View exit ticket'}</button>
             <Link to={'/data'} className='button green-button data-button'>Go back</Link>
-            {(exitTicketHidden) ? exitTicketElements: ''}
+            {(exitTicketHidden) ? exitTicketElements : ''}
           </div>
         )
       } else {

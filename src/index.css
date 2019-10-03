@@ -7,6 +7,8 @@
   --blue: #0ABAD4;
   --green: #81D40A;
   --red: rgb(241, 46, 79);
+  --gray: rgb(226, 226, 226);
+  --darkgray: rgb(81, 81, 81);
 }
 
 /* BUTTONS NEED TWO CLASSES, MAIN BUTTON CLASS AND COLOR */
@@ -73,13 +75,13 @@ button:focus {
 
 /* Design Standards (styles automatically apply) */
 .button:hover {
-  background: black;
+  background: var(--darkgray);
   cursor: pointer;
   transform: translateY(-3px);
 }
 
 a:hover:not(.button) {
-  color: black;
+  color: var(--darkgray);
   cursor: pointer;
 }
 
@@ -100,6 +102,7 @@ input {
   font-size: 15px;
   border: solid 1px darkgray;
   margin: 10px;
+  padding: 5px;
 }
 
 textarea {
@@ -110,6 +113,7 @@ textarea {
   height: 50px;
   border: solid 1px darkgray;
   margin: 10px;
+  padding: 5px;
  }
 
 h1 {
@@ -145,4 +149,5 @@ ul {
 button {
   border: none;
 }
+
 

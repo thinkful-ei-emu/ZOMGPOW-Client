@@ -5,6 +5,7 @@ import TeacherContext from '../../Contexts/TeacherContext'
 import config from '../../config'
 import TokenService from '../../Services/token-service'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Loading from '../../Components/Loading/Loading';
 
 class StudentList extends React.Component {
 
@@ -16,6 +17,7 @@ class StudentList extends React.Component {
     newStudent: null,
     classId: null,
     isDeleting: false,
+    loaded: false,
   }
 
   componentDidMount() {
@@ -37,6 +39,7 @@ class StudentList extends React.Component {
       )
       .then(resStudents => {
         this.props.displayStudents(resStudents)
+        this.setState({ loaded: true })
       })
       .catch(res => {
         this.setState({ error: res.error })
@@ -88,12 +91,12 @@ class StudentList extends React.Component {
   }
 
   render() {
-    const { error, classId, isDeleting} = this.state;
+    const { error, classId, loaded} = this.state;
     const fullname = this.props.students.map((student, index) => <li key={index}>{student.full_name}</li>)
     const username = this.props.students.map((student, index) => <li key={index}>{student.user_name}<span><button className='delete-student' onClick={() => this.handleDeleteStudent(student.user_name, classId)}> <FontAwesomeIcon icon={['far', 'trash-alt']} /></button></span></li>)
     
-    if(isDeleting){
-      return (<div>loading...</div>)
+    if(!loaded){
+      return (<Loading />)
     } 
     return(
       <div className='StudentList-container'>
@@ -135,7 +138,7 @@ class StudentList extends React.Component {
             required
           />
           <div>
-            <button type='submit' className='button blue-button'>Add Student</button>
+            <button type='submit' className='button green-button'>Add Student</button>
           </div>
         </form>
       </div>

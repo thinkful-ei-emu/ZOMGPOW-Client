@@ -5,6 +5,9 @@ const TeacherContext = React.createContext({
   user: {},
   error: null,
   teacherClass: null,
+  sessionStarted: false,
+  startSession: () => { },
+  endSession: () => { },
   setError: () => { },
   clearError: () => { },
   setUser: () => { },
@@ -21,6 +24,7 @@ export class TeacherProvider extends Component {
     const state = { 
       user: {}, 
       teacherClass: {}, 
+      sessionStarted: false,
       error: null 
     }
 
@@ -32,7 +36,7 @@ export class TeacherProvider extends Component {
         full_name: jwtPayload.full_name,
         email: jwtPayload.email,
       }
-
+    console.log(state.user)
     this.state = state;
     // IdleService.setIdleCallback(this.logoutBecauseIdle)
   }
@@ -51,6 +55,18 @@ export class TeacherProvider extends Component {
   //   TokenService.clearCallbackBeforeExpiry()
   // }
 
+  startSession = () => {
+    this.setState({
+      sessionStarted: true
+    })
+  }
+
+  endSession = () => {
+    this.setState({
+      sessionStarted: false
+    })
+  }
+
   setError = error => {
     this.setState({ error })
   }
@@ -68,7 +84,6 @@ export class TeacherProvider extends Component {
   }
 
   processLogin = response => {
-    console.log(response);
     const authToken = response.authToken;
     const user = response.user;
     const teacherClass = response.class;
@@ -115,6 +130,9 @@ export class TeacherProvider extends Component {
       user: this.state.user,
       teacherClass: this.state.teacherClass,
       error: this.state.error,
+      sessionStarted: this.state.sessionStarted,
+      startSession: this.startSession,
+      endSession: this.endSession,
       setError: this.setError,
       clearError: this.clearError,
       setUser: this.setUser,

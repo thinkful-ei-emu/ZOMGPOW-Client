@@ -9,15 +9,20 @@
 }
 
 .high {
-background: var(--purple);
+  background: var(--purple);
 }
 
 .medium {
-background: var(--blue);
+  background: var(--blue);
 }
 
 .low {
-background: var(--green);
+  background: var(--green);
+}
+
+.priority-button:hover{
+  color: var(--purple);
+  cursor: pointer;
 }
 
 .student-list .expired button {
@@ -49,22 +54,66 @@ background: var(--green);
   margin: 5px 20px;
 }
 
-.radio {
+/* .SessionRoute-container input[type="radio"]{
   margin: 0px 5px;
+  display: none;
+} */
+
+.radio-label{
+  padding: 5px;
 }
+
 
 .SessionRoute-container li {
   border: solid 1px darkgray;
   border-radius: 10px;
   padding: 3px 8px;
+  padding-bottom: 20px;
   margin-bottom: 30px;
+  position: relative;
 }
 
 .SessionRoute-container li img {
-  position:relative;
+  position:absolute;
   bottom:60px;
   left:150px;
 }
+
+.high-priority {
+  background: white;
+  color: var(--purple);
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.medium-priority {
+  background: white;
+  color: var(--blue);
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.low-priority {
+  background: white;
+  color: var(--green);
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.update{
+  margin-top: 20px;
+}
+
+.priority-container {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding-left: 25%;
+}
+
+
+
+
 
 /* MEDIA QUERIES */
 
