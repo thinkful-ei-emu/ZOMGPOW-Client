@@ -5,7 +5,7 @@ import TokenService from '../../Services/token-service';
 import TeacherContext from '../../Contexts/TeacherContext';
 import Loading from '../../Components/Loading/Loading';
 import TeacherAuthApiService from '../../Services/teacher-auth-api-service';
-import './DataDisplay.css';
+import './DataDisplayO.css';
 
 class DataDisplay extends React.Component {
   static contextType = TeacherContext;
@@ -119,7 +119,7 @@ class DataDisplay extends React.Component {
           <div>
             <h3>Goals Data</h3>
             <div className='data-table-container'>
-              <table role='table'>
+              <table className = 'data-table'>
                 <thead>
                   <tr>
                     <th>Title</th>
