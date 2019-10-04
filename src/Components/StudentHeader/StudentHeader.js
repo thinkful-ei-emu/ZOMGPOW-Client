@@ -31,7 +31,7 @@ class StudentHeader extends React.Component {
         <Link 
           onClick={this.handleLogoutClick}
           to='/'
-          className='green-button button'>
+          className='red-button button'>
           Logout
         </Link>
       </nav>
