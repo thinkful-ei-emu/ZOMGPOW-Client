@@ -3,6 +3,8 @@ import '../../Components/Header/Header.css';
 import { Link } from 'react-router-dom';
 import StudentContext from '../../Contexts/StudentContext';
 import TokenService from '../../Services/token-service';
+import GreenSprout from '../../Images/green-sprout.svg';
+
 
 class StudentHeader extends React.Component {
   
@@ -10,8 +12,7 @@ class StudentHeader extends React.Component {
   static contextType = StudentContext;
 
   handleLogoutClick = () => {
-    this.context.processLogout();
-    
+    this.context.processLogout();    
   }
 
   renderLogInLinks = () =>{
@@ -30,7 +31,7 @@ class StudentHeader extends React.Component {
         <Link 
           onClick={this.handleLogoutClick}
           to='/'
-          className='green-button button'>
+          className='red-button button'>
           Logout
         </Link>
       </nav>
@@ -42,6 +43,7 @@ class StudentHeader extends React.Component {
     return (
       <header className="header" role="banner">
         <h1>
+          <img src={GreenSprout} alt='sprout' height='80px' width='80px'/>
           <Link to='/'>
           Sprout
           </Link>

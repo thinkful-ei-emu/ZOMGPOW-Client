@@ -26,11 +26,8 @@ class StudentDashboard extends React.Component{
   };
 
   componentDidMount() {
-    console.log('student dashboard CDM')
-    console.log(this.context.user.id)
     StudentAuthApiService.getStudentGoals(this.context.user.id)
       .then(res => {
-        console.log('goals: ', res.goals)
         const student_goals = res.goals;
         const learningTarget = res.goals[res.goals.length-1];
         const student_subgoals = learningTarget.subgoals;
@@ -121,23 +118,7 @@ class StudentDashboard extends React.Component{
 
   render() {
 
-
-    const {loaded, error, currentGoal, learningTarget, subgoals } = this.state;
-    console.log('loaded', loaded)
-    console.log(learningTarget)
-
-
-    
-
-    //grabs the last goal in goals which should be the most current learning target
-    // const learningTarget = this.state.goals[this.state.goals.length-1];
-    //removes the last subgoal from subgoals
-    
-    // let array = [...this.state.subgoals]; 
-    // const currentGoal = array.pop();
-    //maps through the rest of the subgoals
-    
-    // const previousGoals = array.map((sub, index) => <li key={index}>{sub.subgoal_title}</li>);
+    const {loaded, error, currentGoal, learningTarget } = this.state;  
 
     if(error){
       return <p>{error.message}</p>
@@ -182,7 +163,7 @@ class StudentDashboard extends React.Component{
           }
           }}>Ready to self-evaluate?</Link> 
         </div>
-        <div>
+        {/* <div>
   
           <h3>Previous Goals</h3>
           {(subgoals.length) 
@@ -190,7 +171,7 @@ class StudentDashboard extends React.Component{
           return <li key={i}>{(currentGoal.subgoal_title === goal.subgoal_title) 
           ? <div></div> : goal.subgoal_title}</li>})}</ul> 
           : <p>No previous goals</p>}
-        </div>
+        </div> */}
       </section>
     )
   }

@@ -11,7 +11,7 @@ class Header extends React.Component {
   handleLogoutClick = () => {
     this.context.processLogout();
   }
-
+ 
   renderLogInLinks(){
     return (
       <nav className="login-buttons">
@@ -74,13 +74,12 @@ class Header extends React.Component {
           <Link to='/'>
           Sprout
           </Link>
-        </h1>
-        
-        <div className="links">
+        </h1>        
+        <div className="links">        
           {TokenService.hasAuthToken() 
           ? this.renderLogOutLinks()
           :this.renderLogInLinks()}
-        </div>
+          </div>       
       </header>
     );
   }

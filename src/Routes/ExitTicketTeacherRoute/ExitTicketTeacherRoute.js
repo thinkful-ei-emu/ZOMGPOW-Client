@@ -45,7 +45,6 @@ class ExitTicketTeacherRoute extends React.Component {
           }
           return res.json();
         }).then(res => {
-          console.log('RES', res)
           let goal = res.goals.pop();
           this.setState({
             exitTicketQuestion: goal.exit_ticket_question,
@@ -61,7 +60,6 @@ class ExitTicketTeacherRoute extends React.Component {
 
     } else {
       const classId = this.context.teacherClass.id;
-      console.log(classId);
       this.setState({
         loaded: true,
         classId

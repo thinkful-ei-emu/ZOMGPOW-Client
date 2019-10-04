@@ -17,11 +17,8 @@ class DataDisplay extends React.Component {
   }
 
   componentDidMount() {
-    let token;
+    
     if (TokenService.getAuthToken() && !this.state.classId) {
-      token = TokenService.parseAuthToken()
-      console.log('token from teacher dashboard', token)
-
       TeacherAuthApiService.getTeacherClasses()
         .then(classes => this.context.setClass(classes[0]))
         .then(() => this.setState({
@@ -112,8 +109,7 @@ class DataDisplay extends React.Component {
     }
     else {
       let goals = this.makeGoalsTable(dataArr);
-      console.log(dataArr)
-
+      
       if(goals.length){
         return (
           <div className='data-display-container'>
