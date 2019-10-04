@@ -104,7 +104,7 @@ class GoalDataDisplay extends React.Component {
             <Link to={`/data/${this.state.goalId}/${goal.student_goal_id}`} className='data-link'>{goal.full_name}</Link>
           </td>
           <td>{goal.complete ? 'Complete' : 'Incomplete'}</td>
-          <td>{goal.eval_score}</td>
+          <td>{goal.eval_score === null ? 'none' : goal.eval_score}</td>        
         </tr>
       )
     }
