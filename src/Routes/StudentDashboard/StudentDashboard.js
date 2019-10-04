@@ -111,14 +111,14 @@ class StudentDashboard extends React.Component{
     const { goals, studentId } = this.state;
     let { student } = await StudentAuthApiService.getStudent(studentId)
     if(data.student_id === student.id){
-      let newGoals = goals.map(goal => data.id === goal.id ? goal = data : goal)
-      this.setState({ goals: newGoals, learningTarget: data })
+      let newGoals = goals.map(goal => data.id === goal.id ? goal = {...goal, ...data} : goal)
+      this.setState({ goals: newGoals, learningTarget: newGoals[newGoals.length-1] })
     }
   }
 
   render() {
 
-    const {loaded, error, currentGoal, learningTarget, subgoals } = this.state;  
+    const {loaded, error, currentGoal, learningTarget } = this.state;  
 
     if(error){
       return <p>{error.message}</p>
