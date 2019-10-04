@@ -16,19 +16,19 @@ See what Sprout has to offer by using these login credentials:
 ## Screenshots
 ### Teacher Dashboard:
 <img src="src/Images/TeacherDashboard.png">
-#### Create an exit ticket before starting a session:
+### Create an exit ticket before starting a session:
 <img src="src/Images/ExitTicketModal.png">
-- Goal Session in use:
+### Goal Session in use:
 <img src="src/Images/SproutInAction2.png">
-- Teacher View of real-time Exit Ticket responses:
+### Teacher View of real-time Exit Ticket responses:
 <img src="src/Images/ExitTicket.png">
-- Teacher View of students ready for a check-in:
+### Teacher View of students ready for a check-in:
 <img src="src/Images/Priority.png">
-- Student Dashboard View of learning target and personalized goal:
+### Student Dashboard View of learning target and personalized goal:
 <img src="src/Images/StudentDashboard.png">
-- Student Self-Evaluation:
+### Student Self-Evaluation:
 <img src="src/Images/StudentEval.png">
-- Data Views:
+### Data Views:
 <img src="src/Images/DataView.png">
 
 <img src="src/Images/DataView2.png">
