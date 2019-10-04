@@ -53,8 +53,7 @@ class SubGoalDataDisplay extends React.Component {
   makeGoalsTable = goals => {
     return goals.map((goal, i) =>
       <tr key={i}>
-        <td>{goal.title}</td>
-        <td>{goal.complete ? 'Complete' : 'Incomplete'}</td>
+        <td>{goal.title}</td> 
         <td>{goal.eval_score === null ? 'none' : goal.eval_score}</td>
       </tr>)
   }
@@ -77,8 +76,7 @@ class SubGoalDataDisplay extends React.Component {
               <table className='data-table goal-data'>
                 <thead>
                   <tr>
-                    <th>Title</th>
-                    <th>Status</th>
+                    <th>Title</th>                
                     <th>Eval</th>
                   </tr>
                 </thead>
