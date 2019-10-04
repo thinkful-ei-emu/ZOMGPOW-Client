@@ -9,7 +9,7 @@ Sprout is a formative assessment tool used to help teachers deliver specific, go
 
 ### Screenshots
 
-<img src="src/Images/SproutInAction.png">
+<img src="src/Images/SproutInAction2.png">
 
 <img src="src/Images/ExitTicket.png">
 
