@@ -166,8 +166,8 @@ class StudentDashboard extends React.Component{
         <div>
   
           <h3>Previous Goals</h3>
-          {(subgoals.length) 
-          ? <ul>{subgoals.map((goal, i) => {
+          {(subgoals.length > 1) 
+          ? <ul>{subgoals.map((goal, i) => {    
           return <li key={i}>{(currentGoal.subgoal_title === goal.subgoal_title) 
           ? <div></div> : goal.subgoal_title}</li>})}</ul> 
           : <p>No previous goals</p>}
