@@ -14,9 +14,9 @@ See what Sprout has to offer by using these login credentials:
 #### *`Password: Password1!`*
 
 ## Screenshots
-###Teacher Dashboard:
+### Teacher Dashboard:
 <img src="src/Images/TeacherDashboard.png">
-####Create an exit ticket before starting a session:
+#### Create an exit ticket before starting a session:
 <img src="src/Images/ExitTicketModal.png">
 - Goal Session in use:
 <img src="src/Images/SproutInAction2.png">
