@@ -163,7 +163,7 @@ class StudentDashboard extends React.Component{
           }
           }}>Ready to self-evaluate?</Link> 
         </div>
-        <div>
+        {/* <div>
   
           <h3>Previous Goals</h3>
           {(subgoals.length) 
@@ -171,7 +171,7 @@ class StudentDashboard extends React.Component{
           return <li key={i}>{(currentGoal.subgoal_title === goal.subgoal_title) 
           ? <div></div> : goal.subgoal_title}</li>})}</ul> 
           : <p>No previous goals</p>}
-        </div>
+        </div> */}
       </section>
     )
   }
