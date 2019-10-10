@@ -1,6 +1,6 @@
 # Sprout
 Live Link: [Sprout App](https://sprout-app.now.sh/)
-[Sprout Server](https://github.com/thinkful-ei-emu/ZOMGPOW-Server)
+GitHub Repo: [Sprout Server](https://github.com/thinkful-ei-emu/ZOMGPOW-Server)
 
 ## Developers:
 ```Ashley Oelbaum, Christopher Martin, Martha Plantz, Nicholas Gunter, Whitney Wallace, Mantong Zhao```
