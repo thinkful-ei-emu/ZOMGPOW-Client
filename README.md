@@ -1,5 +1,6 @@
 # Sprout
 Live Link: [Sprout App](https://sprout-app.now.sh/)
+
 GitHub Repo: [Sprout Server](https://github.com/thinkful-ei-emu/ZOMGPOW-Server)
 
 ## Developers:
